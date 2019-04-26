@@ -27,22 +27,12 @@ class ProductController extends Controller
 
     public function index()
     {
-        $results = $this->services->paginate();
-        return view('layouts.pages.product.index', compact('results'));
+        return $this->services->paginate();
     }
 
     public function all()
     {
-        $results = $this->services->all();
-        if (request()->wantsJson()) {
-            return $results;
-        }
-    }
-
-
-    public function create()
-    {
-        return view('layouts.pages.product.create');
+        return $this->services->all();
     }
 
     public function store(ProductRequest $request)
@@ -50,10 +40,9 @@ class ProductController extends Controller
         return $this->services->create($request);
     }
 
-    public function edit($id)
+    public function show($id)
     {
-        $result = $this->services->show($id);
-        return view('layouts.pages.product.edit', compact('result'));
+        return $this->services->show($id);
     }
 
     public function update(ProductRequest $request, $id)
@@ -65,6 +54,5 @@ class ProductController extends Controller
     {
         return $this->services->delete($id);
     }
-
 
 }

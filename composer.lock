@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "429faaff651c0b437684b8bb300e8e75",
+    "content-hash": "1ef8f2896da08d66fd06029cbfbe4033",
     "packages": [
+        {
+            "name": "canducci/cep",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/netdragoon/canduccicep.git",
+                "reference": "7de154e13a0e39d1962dc1430b6993e4deb6b720"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/netdragoon/canduccicep/zipball/7de154e13a0e39d1962dc1430b6993e4deb6b720",
+                "reference": "7de154e13a0e39d1962dc1430b6993e4deb6b720",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~2.1",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Canducci\\Cep\\": "src/Canducci/Cep/"
+                },
+                "files": [
+                    "src/Canducci/Cep/CepHelper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "NETDragoon",
+                    "email": "netdragoon@outlook.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CEP do Brasil",
+            "homepage": "https://github.com/netdragoon/canduccicep",
+            "keywords": [
+                "cep",
+                "laravel"
+            ],
+            "time": "2017-11-13T13:58:52+00:00"
+        },
         {
             "name": "defuse/php-encryption",
             "version": "v2.2.1",

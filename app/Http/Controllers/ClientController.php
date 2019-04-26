@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientRequest;
-use App\Models\City;
-use App\Models\State;
 use App\Services\ClientServices;
 
 /**
@@ -29,14 +27,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $results = $this->services->paginate();
-        return view('layouts.pages.client.index', compact('results'));
-    }
-
-    public function create()
-    {
-        $states = State::orderBy('abbr')->get(['id', 'abbr']);
-        return view('layouts.pages.client.create', compact('states'));
+        return $this->services->paginate();
     }
 
     public function store(ClientRequest $request)
@@ -44,12 +35,9 @@ class ClientController extends Controller
         return $this->services->create($request->all());
     }
 
-    public function edit($id)
+    public function show($id)
     {
-        $result = $this->services->show($id);
-        $states = State::orderBy('abbr')->get(['id', 'abbr']);
-        $cities = City::where('state_id', '=', $result['state_id'])->orderBy('name')->get(['id', 'name']);
-        return view('layouts.pages.client.edit', compact('result', 'states', 'cities'));
+        return $this->services->show($id);
     }
 
     public function update(ClientRequest $request, $id)
@@ -61,6 +49,5 @@ class ClientController extends Controller
     {
         return $this->services->delete($id);
     }
-
 
 }

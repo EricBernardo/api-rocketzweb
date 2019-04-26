@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Entities\Client;
 use App\Http\Requests\OrderRequest;
 use App\Services\OrderServices;
 
@@ -28,14 +27,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        $results = $this->services->paginate();
-        return view('layouts.pages.order.index', compact('results'));
-    }
-
-    public function create()
-    {
-        $clients = Client::all(['id', 'title']);
-        return view('layouts.pages.order.create', compact('clients'));
+        return $this->services->paginate();
     }
 
     public function store(OrderRequest $request)
@@ -43,11 +35,9 @@ class OrderController extends Controller
         return $this->services->create($request->all());
     }
 
-    public function edit($id)
+    public function show($id)
     {
-        $result = $this->services->show($id);
-        $clients = Client::all(['id', 'title']);
-        return view('layouts.pages.order.edit', compact('result', 'clients'));
+        return $this->services->show($id);
     }
 
     public function update(OrderRequest $request, $id)
