@@ -17,6 +17,10 @@ Route::post('/auth', 'Auth\AccessTokenController@issueToken');
 
 Route::group(['middleware' => 'auth:api'], function () {
 
+    Route::get('/me', function (Request $request) {
+        return ['data' => $request->user()];
+    });
+
     Route::get('client', 'ClientController@index')->name('client.index');
     Route::get('client/{id}', 'ClientController@show')->name('client.show');
     Route::put('client/{id}', 'ClientController@update')->name('client.update');
