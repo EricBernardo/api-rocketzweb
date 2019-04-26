@@ -20,6 +20,10 @@ class AccessTokenController extends \Laravel\Passport\Http\Controllers\AccessTok
         $user = User::where('email', $username)
             ->first();
 
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
         $validCredentials = Hash::check($password, $user->getAuthPassword());
 
         if (!$validCredentials) {
