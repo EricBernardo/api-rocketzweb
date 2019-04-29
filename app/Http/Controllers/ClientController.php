@@ -32,7 +32,7 @@ class ClientController extends Controller
 
     public function store(ClientRequest $request)
     {
-        return $this->services->create($request->all());
+        return $this->services->create($request);
     }
 
     public function show($id)

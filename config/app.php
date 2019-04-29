@@ -167,6 +167,7 @@ return [
          */
 
         Spatie\Permission\PermissionServiceProvider::class,
+        LaravelLegends\PtBrValidator\ValidatorProvider::class,
 
         /*
          * Application Service Providers...
