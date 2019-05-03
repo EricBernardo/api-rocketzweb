@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     Route::get('client', 'ClientController@index')->name('client.index');
+    Route::get('client/all', 'ClientController@all')->name('client.all');
     Route::get('client/{id}', 'ClientController@show')->name('client.show');
     Route::put('client/{id}', 'ClientController@update')->name('client.update');
     Route::post('client', 'ClientController@store')->name('client.store');
