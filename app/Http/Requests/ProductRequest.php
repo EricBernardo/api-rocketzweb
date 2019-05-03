@@ -15,7 +15,7 @@ class ProductRequest extends FormRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'price' => 'required'
+            'price' => 'required|numeric'
         ];
     }
 }
