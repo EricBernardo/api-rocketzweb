@@ -30,6 +30,11 @@ class CompanyController extends Controller
         return $this->services->paginate();
     }
 
+    public function all()
+    {
+        return $this->services->all();
+    }
+
     public function store(CompanyRequest $request)
     {
         return $this->services->create($request);
