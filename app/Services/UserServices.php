@@ -12,6 +12,17 @@ class UserServices extends DefaultServices
         $this->entity = User::class;
     }
 
+    public function show($id)
+    {
+        $result = $this->entity::where('id', '=', $id)->get()->first();
+
+        if($result->roles()) {
+            $result['role'] = $result->roles()->first()->name;
+        }
+
+        return ['data' => $result];
+    }
+
     public function create($request)
     {
 

@@ -14,7 +14,7 @@ class AlterUsuariosAddFieldApiTokenTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('api_token');
+            $table->text('api_token')->nullable();
         });
     }
 
