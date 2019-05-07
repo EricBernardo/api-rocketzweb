@@ -26,22 +26,22 @@ class OrderServices extends DefaultServices
         $data_insert = array();
 
         $data_insert['client_id'] = $data['client_id'];
-        $data_insert['discount'] = str_replace(',', '.', (str_replace('.', '', ($data['discount'] > 0 ? $data['discount'] : 0))));
+        $data_insert['discount'] = $data['discount'];
         $data_insert['subtotal'] = 0;
         $data_insert['total'] = 0;
 
         $products = [];
 
-        foreach ($data['product_id'] as $i => $value) {
+        foreach ($data['products'] as $i => $value) {
 
-            $product = Product::where('id', '=', $value)->get()->first();
+            $product = Product::where('id', '=', $value['product_id'])->get()->first();
 
-            $data_insert['subtotal'] += ($product['price'] * ($data['quantity'][$i]));
+            $data_insert['subtotal'] += ($product['price'] * ($value['quantity']));
 
             $products[] = [
-                'product_id' => $value,
+                'product_id' => $product['id'],
                 'price'      => $product['price'],
-                'quantity'   => $data['quantity'][$i],
+                'quantity'   => $value['quantity'],
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
@@ -51,17 +51,7 @@ class OrderServices extends DefaultServices
 
         $data_insert['paid'] = $data['paid'] ? date('Y-m-d H:i:s') : null;
 
-        $result = $this->entity::create($data_insert)->products()->sync($products);
-
-        if (request()->wantsJson()) {
-            return $result;
-        }
-
-        $response = [
-            'message' => 'Created.',
-        ];
-
-        return redirect()->back()->with('success', $response['message']);
+        return $this->entity::create($data_insert)->products()->sync($products);
 
     }
 
@@ -73,22 +63,22 @@ class OrderServices extends DefaultServices
         $data_update = array();
 
         $data_update['client_id'] = $data['client_id'];
-        $data_update['discount'] = str_replace(',', '.', (str_replace('.', '', ($data['discount'] > 0 ? $data['discount'] : 0))));
+        $data_update['discount'] = $data['discount'];
         $data_update['subtotal'] = 0;
         $data_update['total'] = 0;
 
         $products = [];
 
-        foreach ($data['product_id'] as $i => $value) {
+        foreach ($data['products'] as $i => $value) {
 
-            $product = Product::where('id', '=', $value)->get()->first();
+            $product = Product::where('id', '=', $value['product_id'])->get()->first();
 
-            $data_update['subtotal'] += ($product['price'] * ($data['quantity'][$i]));
+            $data_update['subtotal'] += ($product['price'] * ($value['quantity']));
 
             $products[] = [
-                'product_id' => $value,
+                'product_id' => $product['id'],
                 'price'      => $product['price'],
-                'quantity'   => $data['quantity'][$i],
+                'quantity'   => $value['quantity'],
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ];

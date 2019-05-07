@@ -14,6 +14,12 @@ class Order extends Model
         'paid',
     ];
 
+    protected $casts = [
+        'discount' => 'float',
+        'subtotal' => 'float',
+        'total' => 'float',
+    ];
+
     public function client()
     {
         return $this->belongsTo(Client::class);

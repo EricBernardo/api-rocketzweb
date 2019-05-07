@@ -32,7 +32,7 @@ class OrderController extends Controller
 
     public function store(OrderRequest $request)
     {
-        return $this->services->create($request->all());
+        return $this->services->create($request);
     }
 
     public function show($id)

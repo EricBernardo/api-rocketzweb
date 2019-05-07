@@ -25,7 +25,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'client_id'  => 'required',
-            'product_id' => 'required',
+            'products' => 'required',
         ];
     }
 }

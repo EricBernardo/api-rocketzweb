@@ -39,8 +39,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('order', 'OrderController@index')->name('order.index');
     Route::get('order/{id}', 'OrderController@show')->name('order.show');
-    Route::put('order/update/{id}', 'OrderController@update')->name('order.update');
-    Route::post('order/store', 'OrderController@store')->name('order.store');
+    Route::put('order/{id}', 'OrderController@update')->name('order.update');
+    Route::post('order', 'OrderController@store')->name('order.store');
     Route::delete('order/{id}', 'OrderController@destroy')->name('order.destroy');
 
     Route::group(['middleware' => ['role:root|administrator']], function () {
