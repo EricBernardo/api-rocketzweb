@@ -58,30 +58,32 @@ class OrderServices extends DefaultServices
     public function update($request, $id)
     {
 
+        $result = $this->entity::where('id', $id)->get()->first();
+
         $data = $request->all();
 
         $data_update = array();
-
         $data_update['client_id'] = $data['client_id'];
         $data_update['discount'] = $data['discount'];
         $data_update['subtotal'] = 0;
         $data_update['total'] = 0;
 
-        $products = [];
-
         foreach ($data['products'] as $i => $value) {
-
             $product = Product::where('id', '=', $value['product_id'])->get()->first();
-
             $data_update['subtotal'] += ($product['price'] * ($value['quantity']));
-
-            $products[] = [
-                'product_id' => $product['id'],
-                'price'      => $product['price'],
-                'quantity'   => $value['quantity'],
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ];
+            if (isset($value['id'])) {
+                $result->products()->newPivotStatement()
+                    ->where('id', $value['id'])->update([
+                        'quantity' => $value['quantity']
+                    ]);
+            } else {
+                $result->products()->attach([
+                    $product['id'] => [
+                        'quantity' => $value['quantity'],
+                        'price'    => $product['price']
+                    ]
+                ]);
+            }
 
         }
 
@@ -89,13 +91,7 @@ class OrderServices extends DefaultServices
 
         $data_update['paid'] = $data['paid'] ? date('Y-m-d H:i:s') : null;
 
-        $result = $this->entity::where('id', $id)->get()->first();
-
         $result->update($data_update);
-
-        $result->products()->detach();
-
-        $result->products()->sync($products);
 
         if (request()->wantsJson()) {
             return $result;
