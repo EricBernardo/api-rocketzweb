@@ -43,7 +43,7 @@ class OrderServices extends DefaultServices
                 'price'      => $product['price'],
                 'quantity'   => $value['quantity'],
                 'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
             ];
         }
 
@@ -68,24 +68,42 @@ class OrderServices extends DefaultServices
         $data_update['subtotal'] = 0;
         $data_update['total'] = 0;
 
+        $products_old = [];
+        $products_new = [];
+
         foreach ($data['products'] as $i => $value) {
-            $product = Product::where('id', '=', $value['product_id'])->get()->first();
-            $data_update['subtotal'] += ($product['price'] * ($value['quantity']));
-            if (isset($value['id'])) {
-                $result->products()->newPivotStatement()
-                    ->where('id', $value['id'])->update([
-                        'quantity' => $value['quantity']
-                    ]);
+
+            if(isset($value['id'])) {
+
+                $data_update['subtotal'] += ($value['price'] * $value['quantity']);
+
+                $products_old[$value['id']] = [
+                    'product_id' => $value['product_id'],
+                    'price'      => $value['price'],
+                    'quantity'   => $value['quantity'],
+                    'updated_at' => date('Y-m-d H:i:s')
+                ];
+
             } else {
-                $result->products()->attach([
-                    $product['id'] => [
-                        'quantity' => $value['quantity'],
-                        'price'    => $product['price']
-                    ]
-                ]);
+
+                $product = Product::where('id', '=', $value['product_id'])->get()->first();
+
+                $data_update['subtotal'] += ($product['price'] * $value['quantity']);
+
+                $products_new[] = [
+                    'product_id' => $value['product_id'],
+                    'price'      => $product['price'],
+                    'quantity'   => $value['quantity'],
+                    'updated_at' => date('Y-m-d H:i:s'),
+                    'created_at' => date('Y-m-d H:i:s')
+                ];
+
             }
 
         }
+
+        $result->products()->sync($products_old);
+        $result->products()->attach($products_new);
 
         $data_update['total'] = ($data_update['subtotal'] - $data_update['discount']);
 
