@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductRequest;
-use App\Http\Resources\ProductResource;
-use App\Services\ProductServices;
+use App\Http\Requests\ProductCategoryRequest;
+use App\Services\ProductCategoryServices;
 
 /**
- * Class ProductController
+ * Class ProductCategoryController
  * @package App\Http\Controllers
  */
-class ProductController extends Controller
+class ProductCategoryController extends Controller
 {
 
     private $services;
@@ -18,9 +17,9 @@ class ProductController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param ProductServices $services
+     * @param ProductCategoryServices $services
      */
-    public function __construct(ProductServices $services)
+    public function __construct(ProductCategoryServices $services)
     {
         $this->middleware('auth');
         $this->services = $services;
@@ -28,7 +27,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        return ProductResource::collection($this->services->paginate());
+        return $this->services->paginate();
     }
 
     public function all()
@@ -36,7 +35,7 @@ class ProductController extends Controller
         return $this->services->all();
     }
 
-    public function store(ProductRequest $request)
+    public function store(ProductCategoryRequest $request)
     {
         return $this->services->create($request);
     }
@@ -46,7 +45,7 @@ class ProductController extends Controller
         return $this->services->show($id);
     }
 
-    public function update(ProductRequest $request, $id)
+    public function update(ProductCategoryRequest $request, $id)
     {
         return $this->services->update($request, $id);
     }
