@@ -27,8 +27,8 @@ class AlterProductsAddFieldCategoryIdTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('client_id');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('product_category_id');
         });
     }
 }

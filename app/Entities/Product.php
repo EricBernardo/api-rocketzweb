@@ -2,7 +2,7 @@
 
 namespace App\Entities;
 
-use App\Http\Controllers\ProductCategoryController;
+use App\Scopes\ProductScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -16,6 +16,18 @@ class Product extends Model
     protected $casts = [
         'price' => 'float',
     ];
+    
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::addGlobalScope(new ProductScope(auth()->guard('api')->user()));
+    }
     
     public function category()
     {
