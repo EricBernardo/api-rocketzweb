@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Scopes\OrderScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -19,6 +20,18 @@ class Order extends Model
         'subtotal' => 'float',
         'total' => 'float',
     ];
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new OrderScope());
+    }
 
     public function client()
     {

@@ -11,13 +11,12 @@ class ProductCategory extends Model
         'title',
         'company_id'
     ];
-    
+
     protected static function boot()
     {
         parent::boot();
-        
+
         static::addGlobalScope(new ProductCategoryScope(auth()->guard('api')->user()));
     }
-    
-    
+
 }

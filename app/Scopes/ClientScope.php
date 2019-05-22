@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
-class ProductScope implements Scope
+class ClientScope implements Scope
 {
 
     private $user;
@@ -19,7 +19,13 @@ class ProductScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
 
-        $builder->whereHas('category');
+        $role = $this->user->roles()->first()->name;
+
+        if ($role != 'root') {
+
+            $builder->where('company_id', '=', $this->user->company_id);
+
+        }
 
     }
 }

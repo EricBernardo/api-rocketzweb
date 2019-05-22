@@ -2,6 +2,7 @@
 
 namespace App\Entities;
 
+use App\Scopes\ClientScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
@@ -17,7 +18,20 @@ class Client extends Model
         'number',
         'complement',
         'state_registration',
-        'cep'
+        'cep',
+        'company_id'
     ];
+
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new ClientScope(auth()->guard('api')->user()));
+    }
 
 }

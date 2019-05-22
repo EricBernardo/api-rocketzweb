@@ -19,17 +19,13 @@ class ClientServices extends DefaultServices
 
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
 
-        $result = $this->entity::create($data);
-
-        if (request()->wantsJson()) {
-            return $result;
+        if ($request->user()->roles()->first()->name != 'root') {
+            $data['company_id'] = $request->user()->company_id;
         }
 
-        $response = [
-            'message' => 'Created.',
-        ];
+        $result = $this->entity::create($data);
 
-        return redirect()->back()->with('success', $response['message']);
+        return ['data' => $result];
 
     }
 
@@ -42,17 +38,13 @@ class ClientServices extends DefaultServices
 
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
 
-        $result->update($data);
-
-        if (request()->wantsJson()) {
-            return $result;
+        if ($request->user()->roles()->first()->name != 'root') {
+            $data['company_id'] = $result['company_id'];
         }
 
-        $response = [
-            'message' => 'Updated.',
-        ];
+        $result->update($data);
 
-        return redirect()->back()->with('success', $response['message']);
+        return ['data' => $result];
 
     }
 
