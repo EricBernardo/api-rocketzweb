@@ -22,6 +22,11 @@ class Client extends Model
         'company_id'
     ];
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     /**
      * The "booting" method of the model.
      *

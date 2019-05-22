@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entities\Client;
+use App\Http\Resources\ClientResource;
 
 class ClientServices extends DefaultServices
 {
@@ -10,6 +11,11 @@ class ClientServices extends DefaultServices
     public function __construct()
     {
         $this->entity = Client::class;
+    }
+
+    public function paginate()
+    {
+        return ClientResource::collection($this->entity::paginate());
     }
 
     public function create($request)
