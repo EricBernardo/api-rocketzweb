@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Entities\Order;
 use App\Entities\Product;
+use App\Http\Resources\OrderResource;
 
 class OrderServices extends DefaultServices
 {
@@ -15,7 +16,7 @@ class OrderServices extends DefaultServices
 
     public function paginate()
     {
-        return $this->entity::orderBy('created_at', 'desc')->with('client')->paginate();
+        return OrderResource::collection($this->entity::orderBy('created_at', 'desc')->paginate());
     }
 
     public function create($request)
@@ -73,7 +74,7 @@ class OrderServices extends DefaultServices
 
         foreach ($data['products'] as $i => $value) {
 
-            if(isset($value['id'])) {
+            if (isset($value['id'])) {
 
                 $data_update['subtotal'] += ($value['price'] * $value['quantity']);
 

@@ -18,6 +18,11 @@ class ClientServices extends DefaultServices
         return ClientResource::collection($this->entity::paginate());
     }
 
+    public function all()
+    {
+        return ClientResource::collection($this->entity::all());
+    }
+
     public function create($request)
     {
 

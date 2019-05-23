@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entities\ProductCategory;
+use App\Http\Resources\ProductCategoryResource;
 
 class ProductCategoryServices extends DefaultServices
 {
@@ -10,6 +11,16 @@ class ProductCategoryServices extends DefaultServices
     public function __construct()
     {
         $this->entity = ProductCategory::class;
+    }
+
+    public function paginate()
+    {
+        return ProductCategoryResource::collection($this->entity::paginate());
+    }
+
+    public function all()
+    {
+        return ProductCategoryResource::collection($this->entity::all());
     }
 
     public function create($request)

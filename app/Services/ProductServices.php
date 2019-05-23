@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entities\Product;
+use App\Http\Resources\ProductResource;
 
 class ProductServices extends DefaultServices
 {
@@ -14,7 +15,12 @@ class ProductServices extends DefaultServices
 
     public function paginate()
     {
-        return $this->entity::with(['category'])->paginate();
+        return ProductResource::collection($this->entity::paginate());
+    }
+
+    public function all()
+    {
+        return ProductResource::collection($this->entity::all());
     }
 
 }

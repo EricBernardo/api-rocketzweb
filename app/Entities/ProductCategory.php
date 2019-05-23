@@ -19,4 +19,9 @@ class ProductCategory extends Model
         static::addGlobalScope(new ProductCategoryScope(auth()->guard('api')->user()));
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
 }
