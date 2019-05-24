@@ -19,6 +19,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
         Route::get('me', 'ProfileController@index')->name('profile.index');
 
+        Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
+
         Route::get('client', 'ClientController@index')->name('client.index');
         Route::get('client/all', 'ClientController@all')->name('client.all');
         Route::get('client/{id}', 'ClientController@show')->name('client.show');
