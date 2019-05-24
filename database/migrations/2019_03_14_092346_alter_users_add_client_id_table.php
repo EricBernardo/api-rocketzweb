@@ -15,7 +15,7 @@ class AlterUsersAddClientIdTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedInteger('client_id')->nullable();
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('restrict');
             $table->index(['client_id']);
         });
     }

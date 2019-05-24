@@ -15,7 +15,7 @@ class AlterUsersAddCompanyIdTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedInteger('company_id')->nullable();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
             $table->index(['company_id']);
         });
     }
