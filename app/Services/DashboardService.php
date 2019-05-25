@@ -14,7 +14,7 @@ class DashboardService extends DefaultServices
 
     public function infos($request)
     {
-        $data['billing'] = $this->billing($request);
+        $data['billings'] = $this->billing($request);
         return ['data' => $data];
     }
 
@@ -22,6 +22,7 @@ class DashboardService extends DefaultServices
     {
 
         $start_date = $request->get('start_date') ? $request->get('start_date') : Carbon::now()->subDay(7);
+
         $end_date = $request->get('end_date') ? $request->get('end_date') : Carbon::now();
 
         $result = \DB::table('orders')
@@ -38,26 +39,26 @@ class DashboardService extends DefaultServices
             ->orderBy('orders.created_at', 'desc')
             ->get();
 
-        $arr_tmp = [];
+        $data = [];
 
         foreach ($result as $item) {
 
             $date = date('Y-m-d', strtotime($item->created_at));
 
-            if (!isset($arr_tmp[$date]['paid'])) {
-                $arr_tmp[$date]['paid'] = 0;
-                $arr_tmp[$date]['paid_no'] = 0;
+            if (!isset($data[$date]['paid'])) {
+                $data[$date]['paid'] = 0;
+                $data[$date]['paid_no'] = 0;
             }
 
             if ($item->paid) {
-                $arr_tmp[$date]['paid'] += ($item->total * 1);
+                $data[$date]['paid'] += ($item->total * 1);
             } else {
-                $arr_tmp[$date]['paid_no'] += ($item->total * 1);
+                $data[$date]['paid_no'] += ($item->total * 1);
             }
 
         }
 
-        return ['data' => $arr_tmp];
+        return $data;
     }
 
 }
