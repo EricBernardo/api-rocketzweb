@@ -34,8 +34,8 @@ class DashboardService extends DefaultServices
                 orders.total,
                 orders.paid
             ")
-            ->where('orders.created_at', '>=', $start_date)
-            ->where('orders.created_at', '<=', $end_date)
+            ->where('orders.created_at', '>=', $start_date . ' 00:00:00')
+            ->where('orders.created_at', '<=', $end_date . ' 23:59:59')
             ->orderBy('orders.created_at', 'desc')
             ->get();
 
