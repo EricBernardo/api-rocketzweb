@@ -28,6 +28,27 @@ class DashboardService extends DefaultServices
         $result = \DB::table('orders')
             ->join('clients', function ($join) use ($request) {
                 $join->on('clients.id', '=', 'orders.client_id');
+
+                if ($request->user()->hasAnyRole('client')) {
+                    $join->where('clients.id', '=', $request->user()->client_id);
+                }
+
+                if ($request->get('client_id')) {
+                    $join->where('clients.id', '=', $request->get('client_id'));
+                }
+
+            })
+            ->join('companies', function ($join) use ($request) {
+                $join->on('companies.id', '=', 'clients.company_id');
+
+                if ($request->user()->hasAnyRole('administrator')) {
+                    $join->where('companies.id', '=', $request->user()->company_id);
+                }
+
+                if ($request->get('company_id')) {
+                    $join->where('companies.id', '=', $request->get('company_id'));
+                }
+
             })
             ->selectRaw("
                 orders.created_at,

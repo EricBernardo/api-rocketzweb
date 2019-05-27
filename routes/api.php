@@ -21,26 +21,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
         Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
 
-        Route::get('client', 'ClientController@index')->name('client.index');
-        Route::get('client/all', 'ClientController@all')->name('client.all');
-        Route::get('client/{id}', 'ClientController@show')->name('client.show');
-        Route::put('client/{id}', 'ClientController@update')->name('client.update');
-        Route::post('client', 'ClientController@store')->name('client.store');
-        Route::delete('client/{id}', 'ClientController@destroy')->name('client.destroy');
-
-        Route::get('product_category', 'ProductCategoryController@index')->name('product_category.index');
-        Route::get('product_category/all', 'ProductCategoryController@all')->name('product_category.all');
-        Route::get('product_category/{id}', 'ProductCategoryController@show')->name('product_category.show');
-        Route::put('product_category/{id}', 'ProductCategoryController@update')->name('product_category.update');
-        Route::post('product_category', 'ProductCategoryController@store')->name('product_category.store');
-        Route::delete('product_category/{id}', 'ProductCategoryController@destroy')->name('product_category.destroy');
-
-        Route::get('product', 'ProductController@index')->name('product.index');
         Route::get('product/all', 'ProductController@all')->name('product.all');
-        Route::get('product/{id}', 'ProductController@show')->name('product.show');
-        Route::put('product/{id}', 'ProductController@update')->name('product.update');
-        Route::post('product', 'ProductController@store')->name('product.store');
-        Route::delete('product/{id}', 'ProductController@destroy')->name('product.destroy');
 
         Route::get('order', 'OrderController@index')->name('order.index');
         Route::get('order/{id}', 'OrderController@show')->name('order.show');
@@ -49,6 +30,26 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::delete('order/{id}', 'OrderController@destroy')->name('order.destroy');
 
         Route::group(['middleware' => ['role:root|administrator']], function () {
+
+            Route::get('client', 'ClientController@index')->name('client.index');
+            Route::get('client/all', 'ClientController@all')->name('client.all');
+            Route::get('client/{id}', 'ClientController@show')->name('client.show');
+            Route::put('client/{id}', 'ClientController@update')->name('client.update');
+            Route::post('client', 'ClientController@store')->name('client.store');
+            Route::delete('client/{id}', 'ClientController@destroy')->name('client.destroy');
+
+            Route::get('product', 'ProductController@index')->name('product.index');
+            Route::get('product/{id}', 'ProductController@show')->name('product.show');
+            Route::put('product/{id}', 'ProductController@update')->name('product.update');
+            Route::post('product', 'ProductController@store')->name('product.store');
+            Route::delete('product/{id}', 'ProductController@destroy')->name('product.destroy');
+
+            Route::get('product_category', 'ProductCategoryController@index')->name('product_category.index');
+            Route::get('product_category/all', 'ProductCategoryController@all')->name('product_category.all');
+            Route::get('product_category/{id}', 'ProductCategoryController@show')->name('product_category.show');
+            Route::put('product_category/{id}', 'ProductCategoryController@update')->name('product_category.update');
+            Route::post('product_category', 'ProductCategoryController@store')->name('product_category.store');
+            Route::delete('product_category/{id}', 'ProductCategoryController@destroy')->name('product_category.destroy');
 
             Route::get('user', 'UserController@index')->name('user.index');
             Route::get('user/{id}', 'UserController@show')->name('user.show');

@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Resources\UserResource;
 use App\User;
 
-class UserServices extends DefaultServices
+class UserServices
 {
 
     public function __construct()
@@ -12,14 +13,22 @@ class UserServices extends DefaultServices
         $this->entity = User::class;
     }
 
+    public function paginate()
+    {
+        return UserResource::collection($this->entity::where('ID', '!=', request()->user()->id)->paginate());
+    }
+
+    public function all($request)
+    {
+        return UserResource::collection($this->entity::where('ID', '!=', $request->user()->id)->all());
+    }
+
     public function show($id)
     {
-        $result = $this->entity::where('id', '=', $id)->get()->first();
-
-        if($result->roles()) {
+        $result = $this->entity::where('ID', '!=', request()->user()->id)->where('id', '=', $id)->get()->first();
+        if ($result->roles()) {
             $result['role'] = $result->roles()->first()->name;
         }
-
         return ['data' => $result];
     }
 
@@ -34,19 +43,15 @@ class UserServices extends DefaultServices
             $data['client_id'] = $request->user()->client_id;
         }
 
+        if (!$request->user()->hasAnyRole('root')) {
+            $data['company_id'] = $request->user()->company_id;
+        }
+
         $result = $this->entity::create($data);
 
         $result->assignRole($data['role']);
 
-        if (request()->wantsJson()) {
-            return $result;
-        }
-
-        $response = [
-            'message' => 'Created.',
-        ];
-
-        return redirect()->back()->with('success', $response['message']);
+        return $result;
 
     }
 
@@ -55,7 +60,7 @@ class UserServices extends DefaultServices
 
         $data = $request->all();
 
-        $result = $this->entity::where('id', $id)->first();
+        $result = $this->entity::where('id', '!=', request()->user()->id)->where('id', $id)->first();
 
         if (isset($data['password']) && $data['password']) {
             $data['password'] = bcrypt($data['password']);
@@ -63,24 +68,27 @@ class UserServices extends DefaultServices
             unset($data['password']);
         }
 
-        if (!$request->user()->hasAnyRole('root')) {
+        if (!$request->user()->hasAnyRole('root') && !$request->user()->hasAnyRole('administrator')) {
             $data['client_id'] = $request->user()->client_id;
+        }
+
+        if (!$request->user()->hasAnyRole('root')) {
+            $data['company_id'] = $request->user()->company_id;
         }
 
         $result->update($data);
 
         $result->syncRoles($data['role']);
 
-        if (request()->wantsJson()) {
-            return $result;
-        }
+        return $result;
 
-        $response = [
-            'message' => 'Updated.',
-        ];
+    }
 
-        return redirect()->back()->with('success', $response['message']);
-
+    public function delete($id)
+    {
+        $result = $this->entity::where('id', '!=', request()->user()->id)->where('id', $id);
+        $result->delete();
+        return null;
     }
 
 }

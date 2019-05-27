@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Entities\Client;
+use App\Entities\Company;
 use App\Scopes\UserScope;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,7 +14,7 @@ use Laravel\Passport\HasApiTokens;
 class User extends Authenticatable
 {
     use Notifiable, HasRoles, HasApiTokens;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,7 +23,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'client_id', 'company_id', 'api_token'
     ];
-    
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -30,7 +32,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'api_token',
     ];
-    
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -39,7 +41,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
     /**
      * The "booting" method of the model.
      *
@@ -48,7 +50,17 @@ class User extends Authenticatable
     protected static function boot()
     {
         parent::boot();
-        
+
         static::addGlobalScope(new UserScope(auth()->guard('api')->user()));
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
     }
 }
