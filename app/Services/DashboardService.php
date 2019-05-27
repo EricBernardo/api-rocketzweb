@@ -51,20 +51,20 @@ class DashboardService extends DefaultServices
 
             })
             ->selectRaw("
-                orders.created_at,
+                orders.date,
                 orders.total,
                 orders.paid
             ")
-            ->where('orders.created_at', '>=', $start_date . ' 00:00:00')
-            ->where('orders.created_at', '<=', $end_date . ' 23:59:59')
-            ->orderBy('orders.created_at', 'desc')
+            ->where('orders.date', '>=', $start_date)
+            ->where('orders.date', '<=', $end_date)
+            ->orderBy('orders.date', 'desc')
             ->get();
 
         $data = [];
 
         foreach ($result as $item) {
 
-            $date = date('Y-m-d', strtotime($item->created_at));
+            $date = date('Y-m-d', strtotime($item->date));
 
             if (!isset($data[$date]['paid'])) {
                 $data[$date]['paid'] = 0;

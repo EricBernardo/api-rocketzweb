@@ -33,6 +33,7 @@ class OrderServices extends DefaultServices
         }
 
         $data_insert['discount'] = $data['discount'];
+        $data_insert['date'] = $data['date'];
         $data_insert['subtotal'] = 0;
         $data_insert['total'] = 0;
 
@@ -75,6 +76,7 @@ class OrderServices extends DefaultServices
             $data_update['client_id'] = $data['client_id'];
         }
         $data_update['discount'] = $data['discount'];
+        $data_update['date'] = $data['date'];
         $data_update['subtotal'] = 0;
         $data_update['total'] = 0;
 

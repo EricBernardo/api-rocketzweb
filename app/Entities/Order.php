@@ -13,12 +13,13 @@ class Order extends Model
         'discount',
         'total',
         'paid',
+        'date',
     ];
 
     protected $casts = [
         'discount' => 'float',
         'subtotal' => 'float',
-        'total' => 'float',
+        'total'    => 'float',
     ];
 
     /**
