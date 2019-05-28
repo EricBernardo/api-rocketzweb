@@ -17,7 +17,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::group(['middleware' => ['role:root|administrator|client']], function () {
 
-        Route::get('me', 'ProfileController@index')->name('profile.index');
+        Route::get('profile', 'ProfileController@index')->name('profile.index');
+        Route::put('profile', 'ProfileController@update')->name('profile.update');
 
         Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
 

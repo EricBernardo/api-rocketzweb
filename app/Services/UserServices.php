@@ -25,7 +25,7 @@ class UserServices
 
     public function show($id)
     {
-        $result = $this->entity::where('ID', '!=', request()->user()->id)->where('id', '=', $id)->get()->first();
+        $result = $this->entity::where('id', '=', $id)->get()->first();
         if ($result->roles()) {
             $result['role'] = $result->roles()->first()->name;
         }
@@ -39,7 +39,7 @@ class UserServices
 
         $data['password'] = bcrypt($data['password']);
 
-        if (!$request->user()->hasAnyRole('root')) {
+        if (!$request->user()->hasAnyRole('root') && !$request->user()->hasAnyRole('administrator')) {
             $data['client_id'] = $request->user()->client_id;
         }
 
@@ -47,11 +47,20 @@ class UserServices
             $data['company_id'] = $request->user()->company_id;
         }
 
+        if ($request->get('role') == 'root') {
+            $data['client_id'] = null;
+            $data['company_id'] = null;
+        }
+
+        if ($request->get('role') == 'administrator') {
+            $data['client_id'] = null;
+        }
+
         $result = $this->entity::create($data);
 
         $result->assignRole($data['role']);
 
-        return $result;
+        return ['data' => $result];
 
     }
 
@@ -60,7 +69,7 @@ class UserServices
 
         $data = $request->all();
 
-        $result = $this->entity::where('id', '!=', request()->user()->id)->where('id', $id)->first();
+        $result = $this->entity::where('id', $id)->first();
 
         if (isset($data['password']) && $data['password']) {
             $data['password'] = bcrypt($data['password']);
@@ -76,17 +85,26 @@ class UserServices
             $data['company_id'] = $request->user()->company_id;
         }
 
+        if ($request->get('role') == 'root') {
+            $data['client_id'] = null;
+            $data['company_id'] = null;
+        }
+
+        if ($request->get('role') == 'administrator') {
+            $data['client_id'] = null;
+        }
+
         $result->update($data);
 
         $result->syncRoles($data['role']);
 
-        return $result;
+        return ['data' => $result];
 
     }
 
     public function delete($id)
     {
-        $result = $this->entity::where('id', '!=', request()->user()->id)->where('id', $id);
+        $result = $this->entity::where('id', $id);
         $result->delete();
         return null;
     }

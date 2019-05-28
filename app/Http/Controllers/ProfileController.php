@@ -32,4 +32,9 @@ class ProfileController extends Controller
         return ['data' => new ProfileResource($request->user())];
     }
 
+    public function update(Request $request)
+    {
+        return $this->services->update($request, $request->user()->id);
+    }
+
 }
