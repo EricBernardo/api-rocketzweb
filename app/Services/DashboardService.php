@@ -57,7 +57,7 @@ class DashboardService extends DefaultServices
             ")
             ->where('orders.date', '>=', $start_date)
             ->where('orders.date', '<=', $end_date)
-            ->orderBy('orders.date', 'desc')
+            ->orderBy('orders.date', 'asc')
             ->get();
 
         $data = [];
