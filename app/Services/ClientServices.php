@@ -20,7 +20,16 @@ class ClientServices extends DefaultServices
 
     public function all()
     {
-        return ClientResource::collection($this->entity::all());
+
+        $result = $this->entity::where(function($q) use ($request) {
+
+            if ($request->get('company_id')) {
+                $q->where('company_id', '=', $request->get('company_id'));
+            }
+            
+        })->all();
+
+        return ClientResource::collection($result);
     }
 
     public function create($request)
