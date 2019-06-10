@@ -27,8 +27,8 @@ class UserRequest extends FormRequest
             'name'       => 'required',
             'email'      => 'required|email',
             'password'   => 'confirmed',
-            'client_id'  => 'required_if:role,root',
-            'company_id' => 'required_if:role,root'
+            'client_id'  => 'required_if:role,client',
+            'company_id' => 'required_if:role,administrator|required_if:role,client'
         ];
     }
 }
