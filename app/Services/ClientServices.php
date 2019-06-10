@@ -18,7 +18,7 @@ class ClientServices extends DefaultServices
         return ClientResource::collection($this->entity::paginate());
     }
 
-    public function all($request)
+    public function all($request = null)
     {
 
         $result = $this->entity::where(function($q) use ($request) {
@@ -27,7 +27,7 @@ class ClientServices extends DefaultServices
                 $q->where('company_id', '=', $request->get('company_id'));
             }
             
-        })->all();
+        })->get();
 
         return ClientResource::collection($result);
     }
