@@ -18,7 +18,7 @@ class ClientServices extends DefaultServices
         return ClientResource::collection($this->entity::paginate());
     }
 
-    public function all()
+    public function all($request)
     {
 
         $result = $this->entity::where(function($q) use ($request) {
