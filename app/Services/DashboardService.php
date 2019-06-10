@@ -45,6 +45,10 @@ class DashboardService extends DefaultServices
                     $join->where('companies.id', '=', $request->user()->company_id);
                 }
 
+                if ($request->user()->hasAnyRole('client')) {
+                    $join->where('companies.id', '=', $request->user()->company_id);
+                }
+
                 if ($request->get('company_id')) {
                     $join->where('companies.id', '=', $request->get('company_id'));
                 }
