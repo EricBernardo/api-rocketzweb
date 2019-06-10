@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ClientRequest;
 use App\Services\ClientServices;
+use Illuminate\Http\Request;
 
 /**
  * Class ClientController
@@ -30,9 +31,9 @@ class ClientController extends Controller
         return $this->services->paginate();
     }
 
-    public function all()
+    public function all(Request $request)
     {
-        return $this->services->all();
+        return $this->services->all($request);
     }
 
     public function store(ClientRequest $request)
