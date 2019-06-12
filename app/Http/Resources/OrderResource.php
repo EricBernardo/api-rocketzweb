@@ -19,6 +19,7 @@ class OrderResource extends JsonResource
             'total'    => $this->total,
             'paid'     => $this->paid,
             'date'     => $this->date,
+            'discount' => $this->discount,
             'client'   => new ClientResource($this->client),
             'products' => $this->products,
         ];
