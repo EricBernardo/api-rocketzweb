@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Builder;
 class OrderScope implements Scope
 {
 
+    private $user;
+
+    public function __construct($user)
+    {
+        $this->user = $user;
+    }
+
     public function apply(Builder $builder, Model $model)
     {
 

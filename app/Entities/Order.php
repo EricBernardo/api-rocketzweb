@@ -31,7 +31,7 @@ class Order extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new OrderScope());
+        static::addGlobalScope(new OrderScope(auth()->guard('api')->user()));
     }
 
     public function client()
