@@ -18,9 +18,18 @@ class ProductServices extends DefaultServices
         return ProductResource::collection($this->entity::paginate());
     }
 
-    public function all()
+    public function list($request)
     {
-        return ProductResource::collection($this->entity::all());
+
+        $result = $this->entity::whereHas('category', function($q) use ($request) {
+
+            if ($request->get('company_id')) {
+                $q->where('company_id', '=', $request->get('company_id'));
+            }
+
+        })->get();
+
+        return ProductResource::collection($result);
     }
 
 }

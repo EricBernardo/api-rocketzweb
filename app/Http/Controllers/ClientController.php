@@ -20,7 +20,7 @@ class ClientController extends Controller
      *
      * @param ClientServices $services
      */
-    
+
     public function __construct(ClientServices $services)
     {
         $this->middleware('auth');
@@ -34,7 +34,7 @@ class ClientController extends Controller
 
     public function all(Request $request)
     {
-        return $this->services->all($request);
+        return $this->services->list($request);
     }
 
     public function store(ClientRequest $request)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Services\ProductServices;
+use Illuminate\Http\Request;
 
 /**
  * Class ProductController
@@ -31,9 +32,9 @@ class ProductController extends Controller
         return $this->services->paginate();
     }
 
-    public function all()
+    public function all(Request $request)
     {
-        return $this->services->all();
+        return $this->services->list($request);
     }
 
     public function store(ProductRequest $request)
