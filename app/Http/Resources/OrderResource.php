@@ -20,7 +20,7 @@ class OrderResource extends JsonResource
             'paid'     => $this->paid,
             'date'     => $this->date,
             'client'   => new ClientResource($this->client),
-            'products' => new ProductResource($this->products),
+            'products' => $this->products,
         ];
     }
 }
