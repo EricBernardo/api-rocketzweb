@@ -136,8 +136,8 @@ class OrderServices extends DefaultServices
     }
 
     public function show($id)
-    {
-        return $this->entity::with(['products'])->where('id', '=', $id)->get()->first();
+    {        
+        return new OrderResource($this->entity::where('id', '=', $id)->get()->first());
     }
 
 }
