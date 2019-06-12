@@ -21,6 +21,8 @@ class ProductScope implements Scope
 
         $builder->whereHas('category');
 
+        $role = $this->user->roles()->first()->name;
+
         if ($role == 'client') {
             $builder->where('client_id', '=', $this->user->client_id);
         }
