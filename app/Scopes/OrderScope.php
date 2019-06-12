@@ -14,5 +14,11 @@ class OrderScope implements Scope
 
         $builder->whereHas('client');
 
+        $role = $this->user->roles()->first()->name;
+
+        if ($role == 'client') {
+            $builder->where('client_id', '=', $this->user->client_id);
+        }
+
     }
 }

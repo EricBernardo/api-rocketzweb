@@ -19,13 +19,7 @@ class ProductScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
 
-        $builder->whereHas('category');
-
-        $role = $this->user->roles()->first()->name;
-
-        if ($role == 'client') {
-            $builder->where('client_id', '=', $this->user->client_id);
-        }
+        $builder->whereHas('category');        
 
     }
 }
