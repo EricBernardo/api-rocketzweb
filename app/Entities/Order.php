@@ -14,6 +14,7 @@ class Order extends Model
         'total',
         'paid',
         'date',
+        'observation',
     ];
 
     protected $casts = [
