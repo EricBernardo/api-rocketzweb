@@ -32,9 +32,9 @@ class OrderServices extends DefaultServices
             $data_insert['client_id'] = $data['client_id'];
         }
 
+        $data_insert['observation'] = $data['observation'];
         $data_insert['discount'] = $data['discount'];
         $data_insert['date'] = $data['date'];
-        $data_insert['observation'] = $data['observation'];
         $data_insert['subtotal'] = 0;
         $data_insert['total'] = 0;
 
@@ -71,14 +71,16 @@ class OrderServices extends DefaultServices
         $data = $request->all();
 
         $data_update = array();
+        
         if ($request->user()->hasAnyRole('client')) {
             $data_update['client_id'] = $request->user()->client_id;
         } else {
             $data_update['client_id'] = $data['client_id'];
         }
+
+        $data_update['observation'] = $data['observation'];
         $data_update['discount'] = $data['discount'];
         $data_update['date'] = $data['date'];
-        $data_update['observation'] = $data['observation'];
         $data_update['subtotal'] = 0;
         $data_update['total'] = 0;
 
