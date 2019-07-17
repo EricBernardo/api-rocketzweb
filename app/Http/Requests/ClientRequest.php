@@ -25,7 +25,7 @@ class ClientRequest extends FormRequest
     {
         return [
             'title'        => 'required',
-            'cnpj'         => 'required|cnpj',
+            'cnpj'         => 'cnpj',
             'address'      => 'required',
             'state_id'     => 'required',
             'city_id'      => 'required',
