@@ -10,12 +10,14 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('nfe', 'NotaFiscalEletronicaController@index')->name('nfe.index');
 
 Route::post('/auth', 'Auth\AccessTokenController@issueToken');
 
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::group(['middleware' => ['role:root|administrator|client']], function () {
+
 
         Route::get('profile', 'ProfileController@index')->name('profile.index');
         Route::put('profile', 'ProfileController@update')->name('profile.update');
