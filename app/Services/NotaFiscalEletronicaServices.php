@@ -38,7 +38,7 @@ class NotaFiscalEletronicaServices
         $nfe->taginfNFe($std);
 
         $std = new \stdClass();
-        $std->cUF = 35;
+        $std->cUF = 43;
         $std->cNF = '80070008';
         $std->natOp = 'VENDA';
 
@@ -275,9 +275,9 @@ class NotaFiscalEletronicaServices
 
         $configJson = json_encode($this->config);
 
-        $certificadoDigital = file_get_contents(public_path('certificado.pfx'));
+        $certificadoDigital = file_get_contents(public_path('storage/certificado.pfx'));
 
-        $tools = new Tools($configJson, Certificate::readPfx($certificadoDigital, '231269'));
+        $tools = new Tools($configJson, Certificate::readPfx($certificadoDigital, '96265851'));
 
         try {
 

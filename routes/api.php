@@ -10,6 +10,14 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('upload', function () {
+    request()->file('file')->store(
+        'my-file',
+        's3'
+    );
+})->name('upload');
+
 Route::get('nfe', 'NotaFiscalEletronicaController@index')->name('nfe.index');
 
 Route::post('/auth', 'Auth\AccessTokenController@issueToken');
