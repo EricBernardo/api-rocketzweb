@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompanyFileRequest;
 use App\Http\Requests\CompanyRequest;
 use App\Services\CompanyServices;
 
@@ -40,9 +41,9 @@ class CompanyController extends Controller
         return $this->services->create($request);
     }
 
-    public function store_file()
+    public function store_file(CompanyFileRequest $request)
     {
-        return $this->services->create_file();
+        return $this->services->create_file($request);
     }
 
     public function show($id)

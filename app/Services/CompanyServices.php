@@ -12,16 +12,16 @@ class CompanyServices extends DefaultServices
         $this->entity = Company::class;
     }
 
-    public function create_file()
+    public function create_file($request)
     {
 
-        return 'vaivai.jpx';
+        return [$_FILES];
 
         $result = null;
 
-        if(request()->file('file')) {
+        if($request->file('file')) {
 
-            $result = request()->file('file')->store(
+            $result = $request->file('file')->store(
                 'certs',
                 's3'
             );
