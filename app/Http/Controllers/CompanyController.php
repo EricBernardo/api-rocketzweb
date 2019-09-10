@@ -40,6 +40,11 @@ class CompanyController extends Controller
         return $this->services->create($request);
     }
 
+    public function store_file()
+    {
+        return $this->services->create_file();
+    }
+
     public function show($id)
     {
         return $this->services->show($id);

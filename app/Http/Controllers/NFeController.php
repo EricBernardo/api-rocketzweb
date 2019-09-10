@@ -9,7 +9,7 @@ use App\Services\UserServices;
  * Class UserController
  * @package App\Http\Controllers
  */
-class UserController extends Controller
+class NFeController extends Controller
 {
 
     private $services;

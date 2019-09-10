@@ -17,6 +17,8 @@ class CompanyResource extends JsonResource
         return [
             'id'    => $this->id,
             'title' => $this->title,
+            'cert_file' => $this->cert_file,
+            'cert_password' => $this->cert_password,
         ];
     }
 }
