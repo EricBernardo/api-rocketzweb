@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompanyFileRequest;
 use App\Http\Requests\CompanyRequest;
 use App\Services\CompanyServices;
+use Illuminate\Http\Request;
 
 /**
  * Class CompanyController
@@ -59,6 +60,11 @@ class CompanyController extends Controller
     public function destroy($id)
     {
         return $this->services->delete($id);
+    }
+
+    public function destroy_file(Request $request)
+    {
+        return $this->services->delete_file($request->get('id'));
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Storage;
 use NFePHP\Common\Certificate;
 use NFePHP\NFe\Common\Standardize;
 use NFePHP\NFe\Make;
@@ -275,7 +276,7 @@ class NotaFiscalEletronicaServices
 
         $configJson = json_encode($this->config);
 
-        $certificadoDigital = file_get_contents(public_path('storage/certificado.pfx'));
+        $certificadoDigital = Storage::disk('s3')->get('certs/eSrO6LCuDTF0iKf5F5ycoH8zl0dPWHgQCRhpndmX.bin');
 
         $tools = new Tools($configJson, Certificate::readPfx($certificadoDigital, '96265851'));
 

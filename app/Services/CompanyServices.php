@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Entities\Company;
 use Illuminate\Support\Facades\Storage;
+use NFePHP\Common\Certificate;
 
 class CompanyServices extends DefaultServices
 {
@@ -26,16 +27,48 @@ class CompanyServices extends DefaultServices
         $result = null;
 
         if($request->file('file')) {
-
             $result = $request->file('file')->store(
                 'certs',
                 's3'
             );
-
         }
 
         return ['data' => $result];
 
+    }
+
+    public function update($request, $id)
+    {
+
+        $result = $this->entity::where('id', $id)->first();
+
+        if($request->get('cert_file')) {
+
+            $certDigital = Storage::disk('s3')->get($request->get('cert_file'));
+
+            $isExpired = Certificate::readPfx($certDigital, $request->get('cert_password'))->isExpired();
+
+            if($isExpired) {
+                return response()->json([
+                    'message' => "O arquivo .PFX expirou."
+                ])->setStatusCode(500);
+            }
+
+        }
+
+        if($result['cert_file'] && $result['cert_file'] != $request->get('cert_file')) {
+
+            $this->delete_file($result['cert_file']);
+        }
+
+        $result->update($request->all());
+
+        return ['data' => $result];
+
+    }
+
+    public function delete_file($id) {
+        return ['data' => Storage::disk('s3')->delete($id)];
     }
 
 }
