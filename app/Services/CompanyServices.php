@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entities\Company;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyServices extends DefaultServices
 {
@@ -15,7 +16,12 @@ class CompanyServices extends DefaultServices
     public function create_file($request)
     {
 
-        return [$_FILES];
+        if(substr($_FILES['file']['name'], -4) != '.pfx') {
+            return response()->json([
+                'message' => 'The given data was invalid.',
+                'errors' => ['file' => ["O arquivo deve ser do tipo: pfx."]]
+            ])->setStatusCode(422);
+        }
 
         $result = null;
 

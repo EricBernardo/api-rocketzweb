@@ -24,7 +24,7 @@ class CompanyFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required|mimes:pfx|max:2048',
+            'file' => 'required',
         ];
     }
 }
