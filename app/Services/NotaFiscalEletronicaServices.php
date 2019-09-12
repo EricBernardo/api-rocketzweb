@@ -16,7 +16,7 @@ class NotaFiscalEletronicaServices
     {
         $this->config = [
             "atualizacao" => "2019-08-23T13:48:00-02:00",
-            "tpAmb" => 2, // Se deixar o tpAmb como 2 você emitirá a nota em ambiente de homologação(teste) e as notas fiscais aqui não tem valor fiscal
+            "tpAmb" => 2, // Se deixar o tpAmb como 2 vocï¿½ emitirï¿½ a nota em ambiente de homologaï¿½ï¿½o(teste) e as notas fiscais aqui nï¿½o tem valor fiscal
             "razaosocial" => "Empresa teste",
             "siglaUF" => "RS",
             "cnpj" => "78767865000156",
@@ -43,7 +43,7 @@ class NotaFiscalEletronicaServices
         $std->cNF = '80070008';
         $std->natOp = 'VENDA';
 
-        $std->indPag = 0; //NÃO EXISTE MAIS NA VERSÃO 4.00
+        $std->indPag = 0; //Nï¿½O EXISTE MAIS NA VERSï¿½O 4.00
 
         $std->mod = 55;
         $std->serie = 1;
@@ -68,7 +68,7 @@ class NotaFiscalEletronicaServices
         $nfe->tagide($std);
 
         $std = new \stdClass();
-        $std->vTroco = null; //incluso no layout 4.00, obrigatório informar para NFCe (65)
+        $std->vTroco = null; //incluso no layout 4.00, obrigatï¿½rio informar para NFCe (65)
         $nfe->tagpag($std);
 
         $std = new \stdClass();
@@ -78,7 +78,7 @@ class NotaFiscalEletronicaServices
         $std->tBand = '01';
         $std->cAut = '3333333';
         $std->tpIntegra = 1; //incluso na NT 2015/002
-        $std->indPag = '0'; //0= Pagamento à Vista 1= Pagamento à Prazo
+        $std->indPag = '0'; //0= Pagamento ï¿½ Vista 1= Pagamento ï¿½ Prazo
         $nfe->tagdetPag($std);
 
         $std = new \stdClass();
@@ -98,14 +98,14 @@ class NotaFiscalEletronicaServices
         $std->xLgr = "Rua Teste";
         $std->nro = '203';
         $std->xBairro = 'Centro';
-        $std->cMun = 3506003; //Código de município precisa ser válido e igual o  cMunFG
+        $std->cMun = 3506003; //Cï¿½digo de municï¿½pio precisa ser vï¿½lido e igual o  cMunFG
         $std->xMun = 'Bauru';
         $std->UF = 'SP';
         $std->CEP = '80045190';
         $std->cPais = '1058';
         $std->xPais = 'BRASIL';
         $nfe->tagenderEmit($std);
-
+//
         $std = new \stdClass();
         $std->xNome = "";
         $std->indIEDest = 1;
@@ -276,13 +276,13 @@ class NotaFiscalEletronicaServices
 
         $configJson = json_encode($this->config);
 
-        $certificadoDigital = Storage::disk('s3')->get('certs/eSrO6LCuDTF0iKf5F5ycoH8zl0dPWHgQCRhpndmX.bin');
+        $certificadoDigital = Storage::disk('s3')->get('certs/iKaEeMEMBqe3Zcqe6UqTe5uqRgtJZgIekso04lHc.bin');
 
         $tools = new Tools($configJson, Certificate::readPfx($certificadoDigital, '96265851'));
 
         try {
 
-            $xmlAssinado = $tools->signNFe($xml); // O conteúdo do XML assinado fica armazenado na variável $xmlAssinado
+            $xmlAssinado = $tools->signNFe($xml); // O conteï¿½do do XML assinado fica armazenado na variï¿½vel $xmlAssinado
 
             try {
 
@@ -299,21 +299,21 @@ class NotaFiscalEletronicaServices
                     exit("[$std->cStat] $std->xMotivo");
                 }
 
-                $recibo = $std->infRec->nRec; // Vamos usar a variável $recibo para consultar o status da nota
+                $recibo = $std->infRec->nRec; // Vamos usar a variï¿½vel $recibo para consultar o status da nota
 
                 $protocolo = $tools->sefazConsultaRecibo($recibo);
 
                 dd($protocolo);
 
             } catch (\Exception $e) {
-                //aqui você trata possiveis exceptions do envio
-                var_dump('aqui você trata possiveis exceptions do envio');
+                //aqui vocï¿½ trata possiveis exceptions do envio
+                var_dump('aqui vocï¿½ trata possiveis exceptions do envio');
                 exit($e->getMessage());
             }
 
         } catch (\Exception $e) {
-            //aqui você trata possíveis exceptions da assinatura
-            var_dump('aqui você trata possíveis exceptions da assinatura');
+            //aqui vocï¿½ trata possï¿½veis exceptions da assinatura
+            var_dump('aqui vocï¿½ trata possï¿½veis exceptions da assinatura');
             exit($e->getMessage());
         }
 

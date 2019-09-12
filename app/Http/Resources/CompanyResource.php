@@ -19,6 +19,16 @@ class CompanyResource extends JsonResource
             'title' => $this->title,
             'cert_file' => $this->cert_file,
             'cert_password' => $this->cert_password,
+            'fantasy' => $this->fantasy,
+            'ie' => $this->ie,
+            'crt' => $this->crt,
+            'cnpj' => $this->cnpj,
+            'address' => $this->address,
+            'number' => $this->number,
+            'neighborhood' => $this->neighborhood,
+            'state_id' => $this->state_id,            
+            'city_id' => $this->city_id,            
+            'cep' => $this->cep
         ];
     }
 }
