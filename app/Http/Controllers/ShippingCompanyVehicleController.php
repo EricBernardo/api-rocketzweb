@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ShippingCompanyRequest;
-use App\Services\ShippingCompanyServices;
+use App\Http\Requests\ShippingCompanyVehicleRequest;
+use App\Services\ShippingCompanyVehicleServices;
 use Illuminate\Http\Request;
 
 /**
- * Class ShippingCompanyController
+ * Class ShippingCompanyVehicleController
  * @package App\Http\Controllers
  */
-class ShippingCompanyController extends Controller
+class ShippingCompanyVehicleController extends Controller
 {
 
     private $services;
@@ -18,10 +18,10 @@ class ShippingCompanyController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param ShippingCompanyServices $services
+     * @param ShippingCompanyVehicleServices $services
      */
 
-    public function __construct(ShippingCompanyServices $services)
+    public function __construct(ShippingCompanyVehicleServices $services)
     {
         $this->middleware('auth');
         $this->services = $services;
@@ -34,10 +34,10 @@ class ShippingCompanyController extends Controller
 
     public function all(Request $request)
     {
-        return $this->services->all($request);
+        return $this->services->list($request);
     }
 
-    public function store(ShippingCompanyRequest $request)
+    public function store(ShippingCompanyVehicleRequest $request)
     {        
         return $this->services->create($request);
     }
@@ -47,7 +47,7 @@ class ShippingCompanyController extends Controller
         return $this->services->show($id);
     }
 
-    public function update(ShippingCompanyRequest $request, $id)
+    public function update(ShippingCompanyVehicleRequest $request, $id)
     {
         return $this->services->update($request, $id);
     }

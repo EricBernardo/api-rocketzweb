@@ -42,6 +42,13 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::post('shipping_company', 'ShippingCompanyController@store')->name('shipping_company.store');
             Route::delete('shipping_company/{id}', 'ShippingCompanyController@destroy')->name('shipping_company.destroy');
 
+            Route::get('shipping_company_vehicle', 'ShippingCompanyVehicleController@index')->name('shipping_company_vehicle.index');
+            Route::get('shipping_company_vehicle/all', 'ShippingCompanyVehicleController@all')->name('shipping_company_vehicle.all');
+            Route::get('shipping_company_vehicle/{id}', 'ShippingCompanyVehicleController@show')->name('shipping_company_vehicle.show');
+            Route::put('shipping_company_vehicle/{id}', 'ShippingCompanyVehicleController@update')->name('shipping_company_vehicle.update');
+            Route::post('shipping_company_vehicle', 'ShippingCompanyVehicleController@store')->name('shipping_company_vehicle.store');
+            Route::delete('shipping_company_vehicle/{id}', 'ShippingCompanyVehicleController@destroy')->name('shipping_company_vehicle.destroy');
+
             Route::get('client', 'ClientController@index')->name('client.index');
             Route::get('client/all', 'ClientController@all')->name('client.all');
             Route::get('client/{id}', 'ClientController@show')->name('client.show');

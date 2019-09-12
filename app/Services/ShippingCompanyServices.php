@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entities\ShippingCompany;
+use App\Http\Resources\ShippingCompanyResource;
 
 class ShippingCompanyServices extends DefaultServices
 {
@@ -10,6 +11,11 @@ class ShippingCompanyServices extends DefaultServices
     public function __construct()
     {
         $this->entity = ShippingCompany::class;
+    }
+
+    public function paginate()
+    {
+        return ShippingCompanyResource::collection($this->entity::paginate());
     }
 
     public function create($request)
