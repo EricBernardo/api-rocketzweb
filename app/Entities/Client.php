@@ -19,7 +19,10 @@ class Client extends Model
         'complement',
         'state_registration',
         'cep',
-        'company_id'
+        'company_id',
+        'ie',
+        'indIEDest',
+        'email'
     ];
 
     public function company()

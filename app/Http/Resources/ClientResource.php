@@ -27,6 +27,9 @@ class ClientResource extends JsonResource
             'complement'         => $this->complement,
             'state_registration' => $this->state_registration,
             'cep'                => $this->cep,
+            'ie'                 => $this->ie,
+            'indIEDest'          => $this->indIEDest,
+            'email'              => $this->email,
             'company'            => new CompanyResource($this->company()->first())
         ];
     }
