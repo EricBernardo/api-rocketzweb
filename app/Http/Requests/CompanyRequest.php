@@ -25,6 +25,16 @@ class CompanyRequest extends FormRequest
     {
         return [
             'title' => 'required',
+            'fantasy' => 'required',
+            'ie' => 'required',
+            'crt' => 'required',
+            'cnpj' => 'required|cnpj',
+            'address' => 'required',
+            'number' => 'required',
+            'neighborhood' => 'required',
+            'state_id' => 'required',            
+            'city_id' => 'required',            
+            'cep' => 'required',
         ];
     }
 }

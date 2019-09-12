@@ -14,6 +14,19 @@ class CompanyServices extends DefaultServices
         $this->entity = Company::class;
     }
 
+    public function create($request)
+    {
+
+        $data = $request->all();
+
+        $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
+        
+        $result = $this->entity::create($data);
+
+        return ['data' => $result];
+
+    }
+
     public function create_file($request)
     {
 
@@ -57,11 +70,14 @@ class CompanyServices extends DefaultServices
         }
 
         if($result['cert_file'] && $result['cert_file'] != $request->get('cert_file')) {
-
             $this->delete_file($result['cert_file']);
         }
 
-        $result->update($request->all());
+        $data = $request->all();
+
+        $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
+
+        $result->update($data);
 
         return ['data' => $result];
 
