@@ -18,4 +18,10 @@ class ShippingCompanyVehicleServices extends DefaultServices
         return ShippingCompanyVehicleResource::collection($this->entity::paginate());
     }
 
+    public function show($id)
+    {
+        $result = new ShippingCompanyVehicleResource($this->entity::where('id', '=', $id)->get()->first());
+        return ['data' => $result];
+    }
+
 }

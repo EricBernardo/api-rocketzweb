@@ -18,6 +18,20 @@ class ShippingCompanyServices extends DefaultServices
         return ShippingCompanyResource::collection($this->entity::paginate());
     }
 
+    public function all()
+    {
+
+        $result = $this->entity::where(function($q) {
+
+            if (request()->get('company_id')) {
+                $q->where('company_id', '=', request()->get('company_id'));
+            }
+
+        })->get();
+
+        return ShippingCompanyResource::collection($result);
+    }
+
     public function create($request)
     {
 
