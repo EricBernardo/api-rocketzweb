@@ -32,7 +32,7 @@ class AlterProductsAddFieldsNfeTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {                                    
             $table->dropColumn('cfop');
-            $table->dropColumn('ucom', 10)->nullable();
+            $table->dropColumn('ucom');
             $table->dropColumn('csosn');
             $table->dropColumn('ipi_ipint_cst');
             $table->dropColumn('pis_ipint_cst');

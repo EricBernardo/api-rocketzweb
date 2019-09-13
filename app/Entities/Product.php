@@ -17,12 +17,13 @@ class Product extends Model
         'ipi_ipint_cst',
         'pis_ipint_cst',
         'cofins_cofinsnt_cst',
+        'weigh'
     ];
-    
+
     protected $casts = [
         'price' => 'float',
     ];
-    
+
     /**
      * The "booting" method of the model.
      *
@@ -31,13 +32,13 @@ class Product extends Model
     protected static function boot()
     {
         parent::boot();
-        
+
         static::addGlobalScope(new ProductScope(auth()->guard('api')->user()));
     }
-    
+
     public function category()
     {
         return $this->belongsTo(ProductCategory::class, 'product_category_id');
     }
-    
+
 }

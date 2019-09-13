@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
             'ipi_ipint_cst' => $this->ipi_ipint_cst,
             'pis_ipint_cst' => $this->pis_ipint_cst,
             'cofins_cofinsnt_cst' => $this->cofins_cofinsnt_cst,
+            'weigh' => $this->weigh,
             'category' => new ProductCategoryResource($this->category),
         ];
     }

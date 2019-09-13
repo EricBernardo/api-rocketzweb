@@ -15,7 +15,7 @@ class ProductRequest extends FormRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -33,6 +33,7 @@ class ProductRequest extends FormRequest
             'ipi_ipint_cst' => 'required',
             'pis_ipint_cst' => 'required',
             'cofins_cofinsnt_cst' => 'required',
+            'weigh' => 'required'
         ];
     }
 }
