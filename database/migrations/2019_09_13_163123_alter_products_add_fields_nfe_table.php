@@ -14,12 +14,12 @@ class AlterProductsAddFieldsNfeTable extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {                        
-            $table->integer('cfop')->nullable();
+            $table->string('cfop', 10)->nullable();
             $table->string('ucom', 10)->nullable();
-            $table->integer('csosn')->nullable();
-            $table->integer('ipi_ipint_cst')->nullable();
-            $table->integer('pis_ipint_cst')->nullable();
-            $table->integer('cofins_cofinsnt_cst')->nullable();
+            $table->string('csosn', 10)->nullable();
+            $table->string('ipi_ipint_cst', 10)->nullable();
+            $table->string('pis_ipint_cst', 10)->nullable();
+            $table->string('cofins_cofinsnt_cst', 10)->nullable();
         });
     }
 

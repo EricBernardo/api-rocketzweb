@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="efd01ed8-c730-47cb-95da-7f5a6492fb49" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Entities/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Entities/Product.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Entities/ProductCategory.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Entities/ProductCategory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/ProductCategoryRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/ProductCategoryRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/ProductRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/ProductRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ProductCategoryResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ProductCategoryResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ProductResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ProductResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_09_13_093017_alter_produtc_categories_add_field_cfop_talbe.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_09_13_095040_alter_produtc_categories_add_field_business_unit_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_09_13_163123_alter_products_add_fields_nfe_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_09_13_163123_alter_products_add_fields_nfe_table.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,29 +43,18 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="rocketzweb: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="MySQL - rocketzweb@192.168.10.10" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="rocketzweb: schema" type="76f4a085:MysqlImplModel$Schema" />
+        <item name="products: table" type="285a2a93:MysqlImplModel$Table" />
+      </path>
     </expand>
     <select />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Schema/Blueprint.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="11186">
-              <caret line="664" column="27" selection-start-line="664" selection-start-column="20" selection-end-line="664" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ShippingCompanyVehicleController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Services/ShippingCompanyVehicleServices.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -133,7 +115,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Entities/ShippingCompany.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
@@ -142,13 +124,22 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="das://ecf40e5a-158e-4465-89e0-a1d58733ca02/schema/rocketzweb/table/migrations">
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://ecf40e5a-158e-4465-89e0-a1d58733ca02/schema/rocketzweb/table/products">
           <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
             <state projectRestartId="3d1bb193-56a7-4614-8e56-4ead2bf85a0a">
               <filtering>
                 <filter text="" />
               </filtering>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2019_09_13_163123_alter_products_add_fields_nfe_table.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
             </state>
           </provider>
         </entry>
@@ -198,7 +189,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Scopes/OrderScope.php" />
         <option value="$PROJECT_DIR$/app/Scopes/ClientScope.php" />
         <option value="$PROJECT_DIR$/app/Scopes/ProductCategoryScope.php" />
         <option value="$PROJECT_DIR$/app/Scopes/ProductScope.php" />
@@ -249,6 +239,7 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/ShippingCompanyVehicleController.php" />
         <option value="$PROJECT_DIR$/app/Services/ShippingCompanyVehicleServices.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/ShippingCompanyVehicleResource.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_09_13_163123_alter_products_add_fields_nfe_table.php" />
       </list>
     </option>
   </component>
@@ -479,12 +470,12 @@
       <workItem from="1568240765066" duration="5680000" />
       <workItem from="1568310815175" duration="6708000" />
       <workItem from="1568377999391" duration="328000" />
-      <workItem from="1568402836976" duration="778000" />
+      <workItem from="1568402836976" duration="1046000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70866000" />
+    <option name="totallyTimeSpent" value="71134000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -517,20 +508,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Services/UserServices.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="62" column="35" selection-start-line="62" selection-start-column="35" selection-end-line="62" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/DashboardService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="302">
@@ -885,10 +862,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Entities/ShippingCompany.php">
+    <entry file="file://$PROJECT_DIR$/database/migrations/2019_09_13_163123_alter_products_add_fields_nfe_table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+        <state relative-caret-position="374">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://ecf40e5a-158e-4465-89e0-a1d58733ca02/schema/rocketzweb/table/products">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="3d1bb193-56a7-4614-8e56-4ead2bf85a0a">
+          <filtering>
+            <filter text="" />
+          </filtering>
         </state>
       </provider>
     </entry>
@@ -898,6 +884,13 @@
           <filtering>
             <filter text="" />
           </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Entities/ShippingCompany.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
         </state>
       </provider>
     </entry>
