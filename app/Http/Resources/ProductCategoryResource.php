@@ -17,6 +17,7 @@ class ProductCategoryResource extends JsonResource
         return [
             'id'      => $this->id,
             'title'   => $this->title,
+            'cfop'    => $this->cfop,
             'company' => new CompanyResource($this->company()->first())
         ];
     }
