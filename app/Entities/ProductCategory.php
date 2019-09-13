@@ -10,8 +10,6 @@ class ProductCategory extends Model
     protected $fillable = [
         'title',
         'company_id',
-        'cfop',
-        'business_unit'
     ];
 
     protected static function boot()

@@ -25,8 +25,6 @@ class ProductCategoryRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'cfop'  => 'required',
-            'business_unit' => 'required'
         ];
     }
 }

@@ -26,7 +26,13 @@ class ProductRequest extends FormRequest
         return [
             'product_category_id' => 'required',
             'title'               => 'required',
-            'price'               => 'required|numeric'
+            'price'               => 'required|numeric',
+            'cfop' => 'required',
+            'ucom' => 'required',
+            'csosn' => 'required',
+            'ipi_ipint_cst' => 'required',
+            'pis_ipint_cst' => 'required',
+            'cofins_cofinsnt_cst' => 'required',
         ];
     }
 }

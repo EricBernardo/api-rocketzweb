@@ -11,6 +11,12 @@ class Product extends Model
         'product_category_id',
         'title',
         'price',
+        'cfop',
+        'ucom',
+        'csosn',
+        'ipi_ipint_cst',
+        'pis_ipint_cst',
+        'cofins_cofinsnt_cst',
     ];
     
     protected $casts = [
