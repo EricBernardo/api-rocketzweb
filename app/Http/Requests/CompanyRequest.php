@@ -35,6 +35,11 @@ class CompanyRequest extends FormRequest
             'state_id' => 'required',            
             'city_id' => 'required',            
             'cep' => 'required',
+            'irpj'  => 'required',
+            'cofins'  => 'required',
+            'pis'  => 'required',
+            'csll'  => 'required',
+            'iss'  => 'required',
         ];
     }
 }

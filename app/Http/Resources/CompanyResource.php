@@ -28,7 +28,12 @@ class CompanyResource extends JsonResource
             'neighborhood' => $this->neighborhood,
             'state_id' => $this->state_id,            
             'city_id' => $this->city_id,            
-            'cep' => $this->cep
+            'cep' => $this->cep,
+            'irpj'  => $this->irpj,
+            'cofins'  => $this->cofins,
+            'pis'  => $this->pis,
+            'csll'  => $this->csll,
+            'iss'  => $this->iss,
         ];
     }
 }

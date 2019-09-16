@@ -20,6 +20,11 @@ class Company extends Model
         'state_id',            
         'city_id',            
         'cep',
+        'irpj',
+        'cofins',
+        'pis',
+        'csll',
+        'iss',
     ];
 
 }
