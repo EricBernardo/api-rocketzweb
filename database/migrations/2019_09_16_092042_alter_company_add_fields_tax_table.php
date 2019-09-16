@@ -14,11 +14,11 @@ class AlterCompanyAddFieldsTaxTable extends Migration
     public function up()
     {
         Schema::table('companies', function (Blueprint $table) {                                    
-            $table->double('irpj', 3, 1)->default(0);
-            $table->double('cofins', 3, 1)->default(0);
-            $table->double('pis', 3, 1)->default(0);
-            $table->double('csll', 3, 1)->default(0);
-            $table->double('iss', 3, 1)->default(0);
+            $table->double('irpj', 4, 1)->default(0);
+            $table->double('cofins', 4, 1)->default(0);
+            $table->double('pis', 4, 1)->default(0);
+            $table->double('csll', 4, 1)->default(0);
+            $table->double('iss', 4, 1)->default(0);
         });
     }
 
