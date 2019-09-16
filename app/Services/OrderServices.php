@@ -35,6 +35,9 @@ class OrderServices extends DefaultServices
         $data_insert['observation'] = $data['observation'];
         $data_insert['discount'] = $data['discount'];
         $data_insert['date'] = $data['date'];
+        $data_insert['freight_value'] = $data['freight_value'];
+        $data_insert['shipping_company_id'] = $data['shipping_company_id'];
+        $data_insert['shipping_company_vehicle_id'] = $data['shipping_company_vehicle_id'];
         $data_insert['subtotal'] = 0;
         $data_insert['total'] = 0;
 
@@ -81,6 +84,9 @@ class OrderServices extends DefaultServices
         $data_update['observation'] = $data['observation'];
         $data_update['discount'] = $data['discount'];
         $data_update['date'] = $data['date'];
+        $data_update['freight_value'] = $data['freight_value'];
+        $data_update['shipping_company_id'] = $data['shipping_company_id'];
+        $data_update['shipping_company_vehicle_id'] = $data['shipping_company_vehicle_id'];
         $data_update['subtotal'] = 0;
         $data_update['total'] = 0;
 

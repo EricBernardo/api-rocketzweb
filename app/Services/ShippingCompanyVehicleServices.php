@@ -11,7 +11,7 @@ class ShippingCompanyVehicleServices extends DefaultServices
     public function __construct()
     {
         $this->entity = ShippingCompanyVehicle::class;
-    }
+    } 
 
     public function paginate()
     {

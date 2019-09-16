@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ShippingCompanyVehicleRequest;
 use App\Services\ShippingCompanyVehicleServices;
-use Illuminate\Http\Request;
 
 /**
  * Class ShippingCompanyVehicleController
@@ -32,9 +31,9 @@ class ShippingCompanyVehicleController extends Controller
         return $this->services->paginate();
     }
 
-    public function all(Request $request)
+    public function all()
     {
-        return $this->services->list($request);
+        return $this->services->all();
     }
 
     public function store(ShippingCompanyVehicleRequest $request)

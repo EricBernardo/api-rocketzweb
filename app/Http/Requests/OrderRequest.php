@@ -26,6 +26,8 @@ class OrderRequest extends FormRequest
         return [
             'client_id'  => 'required_if:role,!=,client',
             'products' => 'required',
+            'shipping_company_id' => 'required',
+            'shipping_company_vehicle_id' => 'required'
         ];
     }
 }

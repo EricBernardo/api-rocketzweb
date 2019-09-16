@@ -15,12 +15,16 @@ class Order extends Model
         'paid',
         'date',
         'observation',
+        'shipping_company_id',
+        'shipping_company_vehicle_id',
+        'freight_value'
     ];
 
     protected $casts = [
         'discount' => 'float',
         'subtotal' => 'float',
         'total'    => 'float',
+        'freight_value' => 'float'
     ];
 
     /**
