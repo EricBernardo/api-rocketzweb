@@ -13,10 +13,10 @@ class Product extends Model
         'price',
         'cfop',
         'ucom',
-        'csosn',
-        'ipi_ipint_cst',
-        'pis_ipint_cst',
-        'cofins_cofinsnt_cst',
+        'icms',
+        'ipi',
+        'pis',
+        'cofins',
         'weigh'
     ];
 

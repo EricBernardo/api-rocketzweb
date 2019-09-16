@@ -16,10 +16,10 @@ class AlterProductsAddFieldsNfeTable extends Migration
         Schema::table('products', function (Blueprint $table) {                        
             $table->string('cfop', 10)->nullable();
             $table->string('ucom', 10)->nullable();
-            $table->string('csosn', 10)->nullable();
-            $table->string('ipi_ipint_cst', 10)->nullable();
-            $table->string('pis_ipint_cst', 10)->nullable();
-            $table->string('cofins_cofinsnt_cst', 10)->nullable();
+            $table->string('icms', 10)->nullable();
+            $table->string('ipi', 10)->nullable();
+            $table->string('pis', 10)->nullable();
+            $table->string('cofins', 10)->nullable();
         });
     }
 
@@ -33,10 +33,10 @@ class AlterProductsAddFieldsNfeTable extends Migration
         Schema::table('products', function (Blueprint $table) {                                    
             $table->dropColumn('cfop');
             $table->dropColumn('ucom');
-            $table->dropColumn('csosn');
-            $table->dropColumn('ipi_ipint_cst');
-            $table->dropColumn('pis_ipint_cst');
-            $table->dropColumn('cofins_cofinsnt_cst');
+            $table->dropColumn('icms');
+            $table->dropColumn('ipi');
+            $table->dropColumn('pis');
+            $table->dropColumn('cofins');
         });
     }
 }

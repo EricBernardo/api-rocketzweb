@@ -29,10 +29,10 @@ class ProductRequest extends FormRequest
             'price'               => 'required|numeric',
             'cfop' => 'required',
             'ucom' => 'required',
-            'csosn' => 'required',
-            'ipi_ipint_cst' => 'required',
-            'pis_ipint_cst' => 'required',
-            'cofins_cofinsnt_cst' => 'required',
+            'icms' => 'required',
+            'ipi' => 'required',
+            'pis' => 'required',
+            'cofins' => 'required',
             'weigh' => 'required'
         ];
     }
