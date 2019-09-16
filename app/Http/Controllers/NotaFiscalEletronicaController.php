@@ -25,9 +25,9 @@ class NotaFiscalEletronicaController extends Controller
         $this->services = $services;
     }
 
-    public function index()
+    public function store($id)
     {
-        return $this->services->gerarNota();
+        return $this->services->gerarNota($id);
     }
 
 }

@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('nfe', 'NotaFiscalEletronicaController@index')->name('nfe.index');
+
 
 Route::post('/auth', 'Auth\AccessTokenController@issueToken');
 
@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::group(['middleware' => ['role:root|administrator|client']], function () {
 
+        Route::post('nfe/{id}', 'NotaFiscalEletronicaController@store')->name('nfe.store');
 
         Route::get('profile', 'ProfileController@index')->name('profile.index');
         Route::put('profile', 'ProfileController@update')->name('profile.update');

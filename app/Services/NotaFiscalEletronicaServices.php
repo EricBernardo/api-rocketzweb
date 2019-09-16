@@ -12,23 +12,30 @@ class NotaFiscalEletronicaServices
 {
     private $config = [];
 
-    public function __construct()
+    private $service;
+
+    public function __construct(OrderServices $service)
     {
+        $this->service = $service;
+    }
+
+    public function gerarNota($id)
+    {
+
+        $date = date('Y-m-d H:i:s');
+
+        $order = $this->service->show($id);
+dd($order['client']['company']['state']['id']);
         $this->config = [
-            "atualizacao" => "2019-08-23T13:48:00-02:00",
+            "atualizacao" => $date,
             "tpAmb" => 2, // Se deixar o tpAmb como 2 voc� emitir� a nota em ambiente de homologa��o(teste) e as notas fiscais aqui n�o tem valor fiscal
-            "razaosocial" => "Empresa teste",
-            "siglaUF" => "RS",
-            "cnpj" => "78767865000156",
+            "razaosocial" => $order['client']['company']['title'],
+            "siglaUF" => $order['client']['company']['state']['abbr'],
+            "cnpj" => $order['client']['company']['cnpj'],
             "schemes" => "PL_008i2",
             "versao" => "4.00",
             "tokenIBPT" => "AAAAAAA"
         ];
-    }
-
-    public function gerarNota()
-    {
-
 
         $nfe = new Make();
 
@@ -39,22 +46,38 @@ class NotaFiscalEletronicaServices
         $nfe->taginfNFe($std);
 
         $std = new \stdClass();
-        $std->cUF = 43;
+        $std->cUF = $order['client']['company']['state']['id'];
         $std->cNF = '80070008';
-        $std->natOp = 'VENDA';
+        $std->natOp = 'Venda';
 
         $std->indPag = 0; //N�O EXISTE MAIS NA VERS�O 4.00
 
         $std->mod = 55;
         $std->serie = 1;
         $std->nNF = 2;
-        $std->dhEmi = '2019-08-23T13:48:00-02:00';
+        $std->dhEmi = $date;
         $std->dhSaiEnt = null;
         $std->tpNF = 1;
+        // 0 = Entrada.
+        // 1 = Saída.
         $std->idDest = 1;
-        $std->cMunFG = 3518800;
+        // 1 = significa que se trata de uma operação interna.
+        // 2 = significa que se trata de uma operação interestadual.
+        // 3 = significa que se trata de uma operação com exterior.
+        $std->cMunFG = $order['client']['company']['city']['id'];
         $std->tpImp = 1;
+        //0 = Sem geração de DANFE;
+        //1 = DANFE normal, Retrato;
+        //2 = DANFE normal, Paisagem;
+        //3 = DANFE Simplificado;
         $std->tpEmis = 1;
+        //1 = Emissão normal (não em contingência)
+        //2 = Contingência FS-IA, com impressão do DANFE em formulário de segurança
+        //3 = Contingência SCAN (Sistema de Contingência do Ambiente Nacional)
+        //4 = Contingência DPEC (Declaração Prévia da Emissão em Contingência)
+        //5 = Contingência FS-DA, com impressão do DANFE em formulário de segurança
+        //6 = Contingência SVC-AN (SEFAZ Virtual de Contingência do AN)
+        //7 = Contingência SVC-RS (SEFAZ Virtual de Contingência do RS)
         $std->cDV = 2;
         $std->tpAmb = 2;
         $std->finNFe = 1;
@@ -66,10 +89,6 @@ class NotaFiscalEletronicaServices
         $std->xJust = null;
 
         $nfe->tagide($std);
-
-        $std = new \stdClass();
-        $std->vTroco = null; //incluso no layout 4.00, obrigat�rio informar para NFCe (65)
-        $nfe->tagpag($std);
 
         $std = new \stdClass();
         $std->tPag = '03';
@@ -139,7 +158,7 @@ class NotaFiscalEletronicaServices
         $std->cProd = "CFOP9999";
         $std->cEAN = "SEM GTIN";
         $std->xProd = "POSTE DE LUX";
-        $std->NCM = "00";
+        $std->NCM = "68101900"; //68101900 = Outros
 
         $std->cBenef = ""; //incluido no layout 4.00
 

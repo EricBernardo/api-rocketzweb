@@ -13,6 +13,7 @@ class State extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'name',
         'abbr',
     ];
