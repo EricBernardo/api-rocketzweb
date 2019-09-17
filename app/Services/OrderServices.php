@@ -36,6 +36,13 @@ class OrderServices extends DefaultServices
         $data_insert['discount'] = $data['discount'];
         $data_insert['date'] = $data['date'];
         $data_insert['freight_value'] = $data['freight_value'];
+        $data_insert['finNFe'] = $data['finNFe'];
+        $data_insert['tpNF'] = $data['tpNF'];
+        $data_insert['idDest'] = $data['idDest'];
+        $data_insert['tpImp'] = $data['tpImp'];
+        $data_insert['tpEmis'] = $data['tpEmis'];
+        $data_insert['indFinal'] = $data['indFinal'];
+        $data_insert['indPres'] = $data['indPres'];
         $data_insert['shipping_company_id'] = $data['shipping_company_id'];
         $data_insert['shipping_company_vehicle_id'] = $data['shipping_company_vehicle_id'];
         $data_insert['subtotal'] = 0;
@@ -85,6 +92,13 @@ class OrderServices extends DefaultServices
         $data_update['discount'] = $data['discount'];
         $data_update['date'] = $data['date'];
         $data_update['freight_value'] = $data['freight_value'];
+        $data_update['finNFe'] = $data['finNFe'];
+        $data_update['tpNF'] = $data['tpNF'];
+        $data_update['idDest'] = $data['idDest'];
+        $data_update['tpImp'] = $data['tpImp'];
+        $data_update['tpEmis'] = $data['tpEmis'];
+        $data_update['indFinal'] = $data['indFinal'];
+        $data_update['indPres'] = $data['indPres'];
         $data_update['shipping_company_id'] = $data['shipping_company_id'];
         $data_update['shipping_company_vehicle_id'] = $data['shipping_company_vehicle_id'];
         $data_update['subtotal'] = 0;

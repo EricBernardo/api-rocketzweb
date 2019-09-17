@@ -2,11 +2,7 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Storage;
-use NFePHP\Common\Certificate;
-use NFePHP\NFe\Common\Standardize;
 use NFePHP\NFe\Make;
-use NFePHP\NFe\Tools;
 
 class NotaFiscalEletronicaServices
 {
@@ -21,14 +17,13 @@ class NotaFiscalEletronicaServices
 
     public function gerarNota($id)
     {
-
-        $date = date('Y-m-d H:i:s');
+        $date = date('Y-m-d\TH:i:s');
 
         $order = $this->service->show($id);
-dd($order['client']['company']['state']['id']);
+
         $this->config = [
             "atualizacao" => $date,
-            "tpAmb" => 2, // Se deixar o tpAmb como 2 voc� emitir� a nota em ambiente de homologa��o(teste) e as notas fiscais aqui n�o tem valor fiscal
+            "tpAmb" => 2, // Se deixar o tpAmb como 2 você emitir a nota em ambiente de homologação(teste) e as notas fiscais aqui não tem valor fiscal
             "razaosocial" => $order['client']['company']['title'],
             "siglaUF" => $order['client']['company']['state']['abbr'],
             "cnpj" => $order['client']['company']['cnpj'],
@@ -47,296 +42,267 @@ dd($order['client']['company']['state']['id']);
 
         $std = new \stdClass();
         $std->cUF = $order['client']['company']['state']['id'];
-        $std->cNF = '80070008';
-        $std->natOp = 'Venda';
-
-        $std->indPag = 0; //N�O EXISTE MAIS NA VERS�O 4.00
-
-        $std->mod = 55;
-        $std->serie = 1;
-        $std->nNF = 2;
+        $std->cNF = '51004416';
+        $std->natOp = '5.101 Venda de producao do estabelecimento';
+        $std->mod = '55';
+        $std->serie = '1';
+        $std->nNF = $order['id'];
         $std->dhEmi = $date;
-        $std->dhSaiEnt = null;
-        $std->tpNF = 1;
-        // 0 = Entrada.
-        // 1 = Saída.
-        $std->idDest = 1;
-        // 1 = significa que se trata de uma operação interna.
-        // 2 = significa que se trata de uma operação interestadual.
-        // 3 = significa que se trata de uma operação com exterior.
+        $std->dhSaiEnt = $date;
+        $std->tpNF = '1';
+        $std->idDest = '1';
         $std->cMunFG = $order['client']['company']['city']['id'];
-        $std->tpImp = 1;
-        //0 = Sem geração de DANFE;
-        //1 = DANFE normal, Retrato;
-        //2 = DANFE normal, Paisagem;
-        //3 = DANFE Simplificado;
-        $std->tpEmis = 1;
-        //1 = Emissão normal (não em contingência)
-        //2 = Contingência FS-IA, com impressão do DANFE em formulário de segurança
-        //3 = Contingência SCAN (Sistema de Contingência do Ambiente Nacional)
-        //4 = Contingência DPEC (Declaração Prévia da Emissão em Contingência)
-        //5 = Contingência FS-DA, com impressão do DANFE em formulário de segurança
-        //6 = Contingência SVC-AN (SEFAZ Virtual de Contingência do AN)
-        //7 = Contingência SVC-RS (SEFAZ Virtual de Contingência do RS)
-        $std->cDV = 2;
-        $std->tpAmb = 2;
-        $std->finNFe = 1;
-        $std->indFinal = 0;
-        $std->indPres = 0;
-        $std->procEmi = 0;
-        $std->verProc = '3.10.31';
-        $std->dhCont = null;
-        $std->xJust = null;
+        $std->tpImp = '1';
+        $std->tpEmis = '1';
+        $std->cDV = '5';
+        $std->tpAmb = '2';
+        $std->finNFe = '1';
+        $std->indFinal = '0';
+        $std->indPres = '1';
+        $std->procEmi = '0'; //Emissão de NF-e com aplicativo do contribuinte.
+        $std->verProc = 'RocketzWeb 1.0';
 
         $nfe->tagide($std);
 
         $std = new \stdClass();
-        $std->tPag = '03';
-        $std->vPag = 200.00; //Obs: deve ser informado o valor pago pelo cliente
-        $std->CNPJ = '12345678901234';
-        $std->tBand = '01';
-        $std->cAut = '3333333';
-        $std->tpIntegra = 1; //incluso na NT 2015/002
-        $std->indPag = '0'; //0= Pagamento � Vista 1= Pagamento � Prazo
-        $nfe->tagdetPag($std);
-
-        $std = new \stdClass();
-        $std->xNome = "Jose alencar";
-        $std->xFant = "JOJO AL";
-        $std->IE = "ISENTO";
-        $std->IEST = 32;
-        $std->IM = "";
-        $std->CNAE = "";
-        $std->CRT = 3;
-        $std->CNPJ = ""; //indicar apenas um CNPJ ou CPF
-        $std->CPF = "484.712.360-36";
+        $std->xNome = $order['client']['company']['title'];
+        $std->IE = $order['client']['company']['ie'];
+        $std->CRT = 1;
+        $std->CNPJ = $order['client']['company']['cnpj'];
+        $std->CPF = ""; //indicar apenas um CNPJ ou CPF
 
         $nfe->tagemit($std);
 
         $std = new \stdClass();
-        $std->xLgr = "Rua Teste";
-        $std->nro = '203';
-        $std->xBairro = 'Centro';
-        $std->cMun = 3506003; //C�digo de munic�pio precisa ser v�lido e igual o  cMunFG
-        $std->xMun = 'Bauru';
-        $std->UF = 'SP';
-        $std->CEP = '80045190';
+        $std->xLgr = $order['client']['company']['address'];
+        $std->nro = $order['client']['company']['number'];
+        $std->xBairro = $order['client']['company']['neighborhood'];
+        $std->cMun = $order['client']['company']['city']['id'];
+        $std->xMun = $order['client']['company']['city']['name'];
+        $std->UF = $order['client']['company']['state']['abbr'];
+        $std->CEP = $order['client']['company']['cep'];
         $std->cPais = '1058';
         $std->xPais = 'BRASIL';
+        $std->fone = $order['client']['company']['phone'];
+
         $nfe->tagenderEmit($std);
-//
+
         $std = new \stdClass();
-        $std->xNome = "";
+        $std->xNome = $order['client']['title'];
+        $std->CNPJ = $order['client']['cnpj']; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
+        $std->CPF = "";
+        $std->IE = $order['client']['ie'];
         $std->indIEDest = 1;
-        $std->IE = "ISENTO";
-        $std->ISUF = "";
-        $std->IM = "";
-        $std->email = "";
-        $std->CNPJ = ""; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
-        $std->CPF = "484.712.360-36";
-        $std->idEstrangeiro = null;
 
         $nfe->tagdest($std);
 
         $std = new \stdClass();
-        $std->xLgr = "Sousa filho";
-        $std->nro = 32;
-        $std->xCpl = "Casa";
-        $std->xBairro = "Jose sil";
-        $std->cMun = 1234568;
-        $std->xMun = "dsa dsa";
-        $std->UF = "RS";
-        $std->CEP = "93347085";
-        $std->cPais = "";
-        $std->xPais = "";
-        $std->fone = "";
+        $std->xLgr = $order['client']['address'];
+        $std->nro = $order['client']['number'];
+        $std->xBairro = $order['client']['neighborhood'];
+        $std->cMun = $order['client']['city']['id'];
+        $std->xMun = $order['client']['city']['name'];
+        $std->UF = $order['client']['state']['abbr'];
+        $std->CEP = $order['client']['cep'];
+        $std->cPais = '1058';
+        $std->xPais = 'BRASIL';
+        $std->fone = $order['client']['phone'];
 
         $nfe->tagenderDest($std);
 
+        $count = 1;
+
+        $vProdTotal = 0;
+
+        $vTotTribTotal = 0;
+
+        $vPeso = 0;
+
+        foreach ($order['products'] as $key => $item) {
+
+            $vPeso += $item['weigh'];
+
+            $std = new \stdClass();
+            $std->item = $count;
+            $std->cProd = '133';
+            $std->cEAN = 'SEM GTIN';
+            $std->xProd = $item['title'];
+            $std->NCM = '68101900';
+            $std->CEST = '0000000';
+            $std->CFOP = $item['cfop'];
+            $std->uCom = $item['ucom'];
+            $std->qCom = $item['pivot']['quantity'];
+            $std->vUnCom = $item['pivot']['price'];
+
+            $vProd = $std->vProd = $item['pivot']['price'] * $item['pivot']['quantity'];
+
+            $vProdTotal += $vProd;
+
+            $std->cEANTrib = 'SEM GTIN';
+            $std->uTrib = $item['ucom'];
+            $std->qTrib = $item['pivot']['quantity'];
+            $std->vUnTrib = $item['pivot']['price'];
+            $std->indTot = '1';
+
+            $nfe->tagprod($std);
+
+            $std = new \stdClass();
+            $std->item = $count; //item da NFe
+            $std->CEST = '0000000';
+
+            $nfe->tagCEST($std);
+
+            $std = new \stdClass();
+
+            $std->item = $count;
+
+            $std->vTotTrib = 0;
+
+            $vTotTrib = 0;
+
+            $vTotTrib += ($order['client']['company']['cofins'] * $vProd) / 100;
+
+            $vTotTrib += ($order['client']['company']['pis'] * $vProd) / 100;
+
+            $vTotTrib += ($order['client']['company']['irpj'] * $vProd) / 100;
+
+            $vTotTrib += ($order['client']['company']['csll'] * $vProd) / 100;
+
+            $vTotTrib += ($order['client']['company']['iss'] * $vProd) / 100;
+
+            $std->vTotTrib = $vTotTrib;
+
+            $vTotTribTotal += $vTotTrib;
+
+            $nfe->tagimposto($std);
+
+            $std = new \stdClass();
+            $std->item = $count;
+            $std->orig = '0';
+            $std->CSOSN = $item['icms'];
+
+            $nfe->tagICMSSN($std);
+
+            $std = new \stdClass();
+            $std->item = $count;
+            $std->cEnq = '999';
+            $std->CST = $item['ipi'];
+
+            $nfe->tagIPI($std);
+
+            $std = new \stdClass();
+            $std->item = $count;
+            $std->CST = $item['pis'];
+
+            $nfe->tagPIS($std);
+
+            $std = new \stdClass();
+            $std->item = $count;
+            $std->CST = $item['cofins'];
+
+            $nfe->tagCOFINS($std);
+
+            $count++;
+        }
+
         $std = new \stdClass();
-        $std->item = 1; //item da NFe
-        $std->cProd = "CFOP9999";
-        $std->cEAN = "SEM GTIN";
-        $std->xProd = "POSTE DE LUX";
-        $std->NCM = "68101900"; //68101900 = Outros
-
-        $std->cBenef = ""; //incluido no layout 4.00
-
-        $std->EXTIPI = "";
-        $std->CFOP = "6110";
-        $std->uCom = "QUAL";
-        $std->qCom = 0;
-        $std->vUnCom = "12.00";
-        $std->vProd = "1.00";
-        $std->cEANTrib = "SEM GTIN";
-        $std->uTrib = "12";
-        $std->qTrib = "12";
-        $std->vUnTrib = "12";
-        $std->vFrete = "";
-        $std->vSeg = "";
-        $std->vDesc = "";
-        $std->vOutro = "";
-        $std->indTot = 0;
-        $std->xPed = "";
-        $std->nItemPed = "";
-        $std->nFCI = "";
-
-        $nfe->tagprod($std);
-
-        $std = new \stdClass();
-        $std->item = 1; //item da NFe
-        $std->vTotTrib = 1000.00;
-
-        $nfe->tagimposto($std);
-
-        $std = new \stdClass();
-        $std->item = 1;
-        $std->orig = 0;
-        $std->CST = '00';
-        $std->modBC = 0;
-        $std->vBC = '0.20';
-        $std->pICMS = '18.0000';
-        $std->vICMS = '0.04';
-        $nfe->tagICMS($std);
-
-        $std = new \stdClass();
-        $std->item = 1; //item da NFe
-        $std->clEnq = null;
-        $std->CNPJProd = null;
-        $std->cSelo = null;
-        $std->qSelo = null;
-        $std->cEnq = '999';
-        $std->CST = '50';
-        $std->vIPI = 150.00;
-        $std->vBC = 1000.00;
-        $std->pIPI = 15.00;
-        $std->qUnid = null;
-        $std->vUnid = null;
-
-        $nfe->tagIPI($std);
-
-        $std = new \stdClass();
-        $std->item = 1; //item da NFe
-        $std->CST = '07';
-        $std->vBC = null;
-        $std->pPIS = null;
-        $std->vPIS = null;
-        $std->qBCProd = null;
-        $std->vAliqProd = null;
-
-        $nfe->tagPIS($std);
-
-        $std = new \stdClass();
-        $std->item = 1; //item da NFe
-        $std->vCOFINS = 289.30;
-        $std->vBC = 2893.00;
-        $std->pCOFINS = 10.00;
-        $std->qBCProd = null;
-        $std->vAliqProd = null;
-
-        $nfe->tagCOFINSST($std);
-
-        $std = new \stdClass();
-        $std->vBC = 1000.00;
-        $std->vICMS = 1000.00;
-        $std->vICMSDeson = 1000.00;
-        $std->vFCP = 1000.00; //incluso no layout 4.00
-        $std->vBCST = 1000.00;
-        $std->vST = 1000.00;
-        $std->vFCPST = 1000.00; //incluso no layout 4.00
-        $std->vFCPSTRet = 1000.00; //incluso no layout 4.00
-        $std->vProd = 1000.00;
-        $std->vFrete = 1000.00;
-        $std->vSeg = 1000.00;
-        $std->vDesc = 1000.00;
-        $std->vII = 1000.00;
-        $std->vIPI = 1000.00;
-        $std->vIPIDevol = 1000.00; //incluso no layout 4.00
-        $std->vPIS = 1000.00;
-        $std->vCOFINS = 1000.00;
-        $std->vOutro = 1000.00;
-        $std->vNF = 1000.00;
-        $std->vTotTrib = 1000.00;
+        $std->vBC = 0.00;
+        $std->vICMS = 0.00;
+        $std->vICMSDeson = 0.00;
+        $std->vFCP = 0.00;
+        $std->vBCST = 0.00;
+        $std->vST = 0.00;
+        $std->vFCPST = 0.00;
+        $std->vFCPSTRet = 0.00;
+        $std->vProd = $vProdTotal;
+        $std->vFrete = 0.00;
+        $std->vSeg = 0.00;
+        $std->vDesc = 0.00;
+        $std->vII = 0.00;
+        $std->vIPI = 0.00;
+        $std->vIPIDevol = 0.00;
+        $std->vPIS = 0.00;
+        $std->vCOFINS = 0.00;
+        $std->vOutro = 0.00;
+        $std->vNF = $vProdTotal;
+        $std->vTotTrib = $vTotTribTotal;
 
         $nfe->tagICMSTot($std);
 
         $std = new \stdClass();
-        $std->modFrete = 1;
+        $std->modFrete = 0;
 
         $nfe->tagtransp($std);
 
         $std = new \stdClass();
-        $std->item = 1; //indicativo do numero do volume
-        $std->qVol = 2;
-        $std->esp = 'caixa';
-        $std->marca = 'OLX';
-        $std->nVol = '11111';
-        $std->pesoL = 10.50;
-        $std->pesoB = 11.00;
+        $std->item = 1;
+        $std->pesoL = $vPeso;
+        $std->pesoB = $vPeso;
 
         $nfe->tagvol($std);
 
         $std = new \stdClass();
-        $std->nFat = '1233';
-        $std->vOrig = 1254.22;
-        $std->vDesc = null;
-        $std->vLiq = 1254.22;
-
-        $nfe->tagfat($std);
+        $std->vTroco = 0.00; //aqui pode ter troco
+        $nfe->tagpag($std);
 
         $std = new \stdClass();
-        $std->nDup = '1233-1';
-        $std->dVenc = '2017-08-22';
-        $std->vDup = 1254.22;
+        $std->indPag = 0; //0= Pagamento à Vista 1= Pagamento à Prazo
+        $std->tPag = '01';
+        $std->vPag = $vProdTotal;
 
-        $nfe->tagdup($std);
+        $nfe->tagdetPag($std);
+
+        $std = new \stdClass();
+        $std->infCpl = 'DOCUMENTO EMITIDO POR ME OU EPP OPTANTE DOCUMENTO EMITIDO POR ME OU EPP OPTANTE PELO SIMMPLES NACIONAL NAO GERA DIREITO A CREDITO FISCAL DE ICMS E DE ISS E IPI CFE LEI 123/2006.';
+
+        $nfe->taginfAdic($std);
 
         $xml = $nfe->getXML();
+        die($xml);
 
-        $configJson = json_encode($this->config);
-
-        $certificadoDigital = Storage::disk('s3')->get('certs/iKaEeMEMBqe3Zcqe6UqTe5uqRgtJZgIekso04lHc.bin');
-
-        $tools = new Tools($configJson, Certificate::readPfx($certificadoDigital, '96265851'));
-
-        try {
-
-            $xmlAssinado = $tools->signNFe($xml); // O conte�do do XML assinado fica armazenado na vari�vel $xmlAssinado
-
-            try {
-
-                $idLote = str_pad(rand(11111111111111, 999999999999999), 15, '0', STR_PAD_LEFT); // Identificador do lote
-
-                $resp = $tools->sefazEnviaLote([$xmlAssinado], $idLote);
-
-                $st = new Standardize();
-
-                $std = $st->toStd($resp);
-
-                if ($std->cStat != 103) {
-                    //erro registrar e voltar
-                    exit("[$std->cStat] $std->xMotivo");
-                }
-
-                $recibo = $std->infRec->nRec; // Vamos usar a vari�vel $recibo para consultar o status da nota
-
-                $protocolo = $tools->sefazConsultaRecibo($recibo);
-
-                dd($protocolo);
-
-            } catch (\Exception $e) {
-                //aqui voc� trata possiveis exceptions do envio
-                var_dump('aqui voc� trata possiveis exceptions do envio');
-                exit($e->getMessage());
-            }
-
-        } catch (\Exception $e) {
-            //aqui voc� trata poss�veis exceptions da assinatura
-            var_dump('aqui voc� trata poss�veis exceptions da assinatura');
-            exit($e->getMessage());
-        }
+//        $configJson = json_encode($this->config);
+//
+//        $certificadoDigital = Storage::disk('s3')->get('certs/iKaEeMEMBqe3Zcqe6UqTe5uqRgtJZgIekso04lHc.bin');
+//
+//        $tools = new Tools($configJson, Certificate::readPfx($certificadoDigital, '96265851'));
+//
+//        try {
+//
+//            $xmlAssinado = $tools->signNFe($xml); // O conte�do do XML assinado fica armazenado na vari�vel $xmlAssinado
+//
+//            try {
+//
+//                $idLote = str_pad(rand(11111111111111, 999999999999999), 15, '0', STR_PAD_LEFT); // Identificador do lote
+//
+//                $resp = $tools->sefazEnviaLote([$xmlAssinado], $idLote);
+//
+//                $st = new Standardize();
+//
+//                $std = $st->toStd($resp);
+//
+//                if ($std->cStat != 103) {
+//                    //erro registrar e voltar
+//                    exit("[$std->cStat] $std->xMotivo");
+//                }
+//
+//                $recibo = $std->infRec->nRec; // Vamos usar a vari�vel $recibo para consultar o status da nota
+//
+//                $protocolo = $tools->sefazConsultaRecibo($recibo);
+//
+//                dd($protocolo);
+//
+//            } catch (\Exception $e) {
+//                //aqui voc� trata possiveis exceptions do envio
+//                var_dump('aqui voc� trata possiveis exceptions do envio');
+//                exit($e->getMessage());
+//            }
+//
+//        } catch (\Exception $e) {
+//            //aqui voc� trata poss�veis exceptions da assinatura
+//            var_dump('aqui voc� trata poss�veis exceptions da assinatura');
+//            exit($e->getMessage());
+//        }
 
     }
-
 
 }

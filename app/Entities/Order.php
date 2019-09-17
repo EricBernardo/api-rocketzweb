@@ -17,13 +17,20 @@ class Order extends Model
         'observation',
         'shipping_company_id',
         'shipping_company_vehicle_id',
-        'freight_value'
+        'freight_value',
+        'finNFe',
+        'tpNF',
+        'idDest',
+        'tpImp',
+        'tpEmis',
+        'indFinal',
+        'indPres'
     ];
 
     protected $casts = [
         'discount' => 'float',
         'subtotal' => 'float',
-        'total'    => 'float',
+        'total' => 'float',
         'freight_value' => 'float'
     ];
 

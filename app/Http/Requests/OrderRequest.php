@@ -24,10 +24,17 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id'  => 'required_if:role,!=,client',
+            'client_id' => 'required_if:role,!=,client',
             'products' => 'required',
             'shipping_company_id' => 'required',
-            'shipping_company_vehicle_id' => 'required'
+            'shipping_company_vehicle_id' => 'required',
+            'finNFe' => 'required',
+            'tpNF' => 'required',
+            'idDest' => 'required',
+            'tpImp' => 'required',
+            'tpEmis' => 'required',
+            'indFinal' => 'required',
+            'indPres' => 'required',
         ];
     }
 }
