@@ -40,6 +40,7 @@ class CompanyRequest extends FormRequest
             'pis'  => 'required',
             'csll'  => 'required',
             'iss'  => 'required',
+            'phone'  => 'required',
         ];
     }
 }

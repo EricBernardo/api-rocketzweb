@@ -2,6 +2,8 @@
 
 namespace App\Entities;
 
+use App\Models\City;
+use App\Models\State;
 use App\Scopes\ClientScope;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +30,16 @@ class Client extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(State::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 
     /**
