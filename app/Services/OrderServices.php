@@ -43,6 +43,9 @@ class OrderServices extends DefaultServices
         $data_insert['tpEmis'] = $data['tpEmis'];
         $data_insert['indFinal'] = $data['indFinal'];
         $data_insert['indPres'] = $data['indPres'];
+        $data_insert['indPag'] = $data['indPag'];
+        $data_insert['tPag'] = $data['tPag'];
+        $data_insert['modFrete'] = $data['modFrete'];
         $data_insert['shipping_company_id'] = $data['shipping_company_id'];
         $data_insert['shipping_company_vehicle_id'] = $data['shipping_company_vehicle_id'];
         $data_insert['subtotal'] = 0;
@@ -58,8 +61,8 @@ class OrderServices extends DefaultServices
 
             $products[] = [
                 'product_id' => $product['id'],
-                'price'      => $product['price'],
-                'quantity'   => $value['quantity'],
+                'price' => $product['price'],
+                'quantity' => $value['quantity'],
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ];
@@ -81,7 +84,7 @@ class OrderServices extends DefaultServices
         $data = $request->all();
 
         $data_update = array();
-        
+
         if ($request->user()->hasAnyRole('client')) {
             $data_update['client_id'] = $request->user()->client_id;
         } else {
@@ -99,6 +102,9 @@ class OrderServices extends DefaultServices
         $data_update['tpEmis'] = $data['tpEmis'];
         $data_update['indFinal'] = $data['indFinal'];
         $data_update['indPres'] = $data['indPres'];
+        $data_update['indPag'] = $data['indPag'];
+        $data_update['tPag'] = $data['tPag'];
+        $data_update['modFrete'] = $data['modFrete'];
         $data_update['shipping_company_id'] = $data['shipping_company_id'];
         $data_update['shipping_company_vehicle_id'] = $data['shipping_company_vehicle_id'];
         $data_update['subtotal'] = 0;
@@ -115,8 +121,8 @@ class OrderServices extends DefaultServices
 
                 $products_old[$value['id']] = [
                     'product_id' => $value['product_id'],
-                    'price'      => $value['price'],
-                    'quantity'   => $value['quantity'],
+                    'price' => $value['price'],
+                    'quantity' => $value['quantity'],
                     'updated_at' => date('Y-m-d H:i:s')
                 ];
 
@@ -128,8 +134,8 @@ class OrderServices extends DefaultServices
 
                 $products_new[] = [
                     'product_id' => $value['product_id'],
-                    'price'      => $product['price'],
-                    'quantity'   => $value['quantity'],
+                    'price' => $product['price'],
+                    'quantity' => $value['quantity'],
                     'updated_at' => date('Y-m-d H:i:s'),
                     'created_at' => date('Y-m-d H:i:s')
                 ];
@@ -160,7 +166,7 @@ class OrderServices extends DefaultServices
     }
 
     public function show($id)
-    {        
+    {
         return new OrderResource($this->entity::where('id', '=', $id)->get()->first());
     }
 

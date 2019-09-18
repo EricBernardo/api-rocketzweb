@@ -49,17 +49,17 @@ class NotaFiscalEletronicaServices
         $std->nNF = $order['id'];
         $std->dhEmi = $date;
         $std->dhSaiEnt = $date;
-        $std->tpNF = '1';
-        $std->idDest = '1';
+        $std->tpNF = $order['tpNF'];
+        $std->idDest = $order['idDest'];
         $std->cMunFG = $order['client']['company']['city']['id'];
-        $std->tpImp = '1';
-        $std->tpEmis = '1';
+        $std->tpImp = $order['tpImp'];
+        $std->tpEmis = $order['tpEmis'];
         $std->cDV = '5';
         $std->tpAmb = '2';
-        $std->finNFe = '1';
-        $std->indFinal = '0';
-        $std->indPres = '1';
-        $std->procEmi = '0'; //Emissão de NF-e com aplicativo do contribuinte.
+        $std->finNFe = $order['finNFe'];
+        $std->indFinal = $order['indFinal'];
+        $std->indPres = $order['indPres'];
+        $std->procEmi = '0'; //Emissão de NF-e com aplicativo do contribuinte. PODE DEIXAR FIXO
         $std->verProc = 'RocketzWeb 1.0';
 
         $nfe->tagide($std);
@@ -92,7 +92,7 @@ class NotaFiscalEletronicaServices
         $std->CNPJ = $order['client']['cnpj']; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
         $std->CPF = "";
         $std->IE = $order['client']['ie'];
-        $std->indIEDest = 1;
+        $std->indIEDest = $order['client']['indIEDest'];
 
         $nfe->tagdest($std);
 
@@ -116,19 +116,14 @@ class NotaFiscalEletronicaServices
 
         $vTotTribTotal = 0;
 
-        $vPeso = 0;
-
         foreach ($order['products'] as $key => $item) {
-
-            $vPeso += $item['weigh'];
 
             $std = new \stdClass();
             $std->item = $count;
-            $std->cProd = '133';
+            $std->cProd = $item['id'];
             $std->cEAN = 'SEM GTIN';
             $std->xProd = $item['title'];
-            $std->NCM = '68101900';
-            $std->CEST = '0000000';
+            $std->NCM = '68101900'; //Outros. DEIXAR FIXO
             $std->CFOP = $item['cfop'];
             $std->uCom = $item['ucom'];
             $std->qCom = $item['pivot']['quantity'];
@@ -142,7 +137,7 @@ class NotaFiscalEletronicaServices
             $std->uTrib = $item['ucom'];
             $std->qTrib = $item['pivot']['quantity'];
             $std->vUnTrib = $item['pivot']['price'];
-            $std->indTot = '1';
+            $std->indTot = '1'; //DEIXAR FIXO
 
             $nfe->tagprod($std);
 
@@ -178,14 +173,14 @@ class NotaFiscalEletronicaServices
 
             $std = new \stdClass();
             $std->item = $count;
-            $std->orig = '0';
+            $std->orig = '0'; // Origem da mercadoria: 0 - Nacional. DEIXAR FIXO
             $std->CSOSN = $item['icms'];
 
             $nfe->tagICMSSN($std);
 
             $std = new \stdClass();
             $std->item = $count;
-            $std->cEnq = '999';
+            $std->cEnq = '999'; //DEIXAR FIXO
             $std->CST = $item['ipi'];
 
             $nfe->tagIPI($std);
@@ -201,6 +196,13 @@ class NotaFiscalEletronicaServices
             $std->CST = $item['cofins'];
 
             $nfe->tagCOFINS($std);
+
+            $std = new \stdClass();
+            $std->item = $count;
+            $std->pesoL = $item['weigh'];
+            $std->pesoB = $item['weigh'];
+
+            $nfe->tagvol($std);
 
             $count++;
         }
@@ -230,34 +232,28 @@ class NotaFiscalEletronicaServices
         $nfe->tagICMSTot($std);
 
         $std = new \stdClass();
-        $std->modFrete = 0;
+        $std->modFrete = $order['modFrete'];
 
         $nfe->tagtransp($std);
-
-        $std = new \stdClass();
-        $std->item = 1;
-        $std->pesoL = $vPeso;
-        $std->pesoB = $vPeso;
-
-        $nfe->tagvol($std);
 
         $std = new \stdClass();
         $std->vTroco = 0.00; //aqui pode ter troco
         $nfe->tagpag($std);
 
         $std = new \stdClass();
-        $std->indPag = 0; //0= Pagamento à Vista 1= Pagamento à Prazo
-        $std->tPag = '01';
+        $std->indPag = $order['indPag'];
+        $std->tPag = $order['tPag'];
         $std->vPag = $vProdTotal;
 
         $nfe->tagdetPag($std);
 
         $std = new \stdClass();
-        $std->infCpl = 'DOCUMENTO EMITIDO POR ME OU EPP OPTANTE DOCUMENTO EMITIDO POR ME OU EPP OPTANTE PELO SIMMPLES NACIONAL NAO GERA DIREITO A CREDITO FISCAL DE ICMS E DE ISS E IPI CFE LEI 123/2006.';
+        $std->infCpl = 'DOCUMENTO EMITIDO POR ME OU EPP OPTANTE PELO SIMPLES NACIONAL NAO GERA DIREITO A CREDITO FISCAL DE ICMS E DE ISS E IPI CFE LEI 123/2006.';
 
         $nfe->taginfAdic($std);
 
         $xml = $nfe->getXML();
+        
         die($xml);
 
 //        $configJson = json_encode($this->config);

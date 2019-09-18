@@ -24,7 +24,10 @@ class Order extends Model
         'tpImp',
         'tpEmis',
         'indFinal',
-        'indPres'
+        'indPres',
+        'indPag',
+        'tPag',
+        'modFrete',
     ];
 
     protected $casts = [

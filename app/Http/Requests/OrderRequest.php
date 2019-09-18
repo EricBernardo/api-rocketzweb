@@ -35,6 +35,9 @@ class OrderRequest extends FormRequest
             'tpEmis' => 'required',
             'indFinal' => 'required',
             'indPres' => 'required',
+            'indPag' => 'required',
+            'tPag' => 'required',
+            'modFrete' => 'required',
         ];
     }
 }

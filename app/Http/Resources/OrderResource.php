@@ -31,6 +31,9 @@ class OrderResource extends JsonResource
             'tpEmis' => $this->tpEmis,
             'indFinal' => $this->indFinal,
             'indPres' => $this->indPres,
+            'indPag' => $this->indPag,
+            'tPag' => $this->tPag,
+            'modFrete' => $this->modFrete,
             'client' => new ClientResource($this->client),
             'products' => $this->products,
         ];
