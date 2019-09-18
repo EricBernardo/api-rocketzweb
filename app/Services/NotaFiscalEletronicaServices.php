@@ -2,7 +2,12 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Storage;
+use NFePHP\Common\Certificate;
+use NFePHP\DA\NFe\Danfe;
+use NFePHP\NFe\Common\Standardize;
 use NFePHP\NFe\Make;
+use NFePHP\NFe\Tools;
 
 class NotaFiscalEletronicaServices
 {
@@ -15,9 +20,88 @@ class NotaFiscalEletronicaServices
         $this->service = $service;
     }
 
-    public function gerarNota($id)
+    public function show($id)
     {
-        $date = date('Y-m-d\TH:i:s');
+
+        $order = $this->service->show($id);
+
+        if ($order['xml']) {
+
+            try {
+
+                $xml = Storage::disk('s3')->get($order['xml']);
+
+                if ($xml) {
+
+                    $danfe = new Danfe($xml, 'P', 'A4', '', 'I', '');
+
+                    $danfe->montaDANFE();
+
+                    $render = $danfe->render();
+
+                    return $render;
+
+                } else {
+
+                    return response()->json(
+                        [
+                            'message' => 'XML não encontrado'
+                        ]
+                    )->setStatusCode(500);
+
+                }
+
+            } catch (InvalidArgumentException $e) {
+                return response()->json(
+                    [
+                        'message' => "Ocorreu um erro durante o processamento :" . $e->getMessage()
+                    ]
+                )->setStatusCode(500);
+            }
+
+        }
+
+    }
+
+    public function delete($id)
+    {
+
+        $date = date('Y-m-d\TH:i:sT:00');
+
+        $order = $this->service->show($id);
+
+        $this->config = [
+            "atualizacao" => $date,
+            "tpAmb" => 2, // Se deixar o tpAmb como 2 você emitir a nota em ambiente de homologação(teste) e as notas fiscais aqui não tem valor fiscal
+            "razaosocial" => $order['client']['company']['title'],
+            "siglaUF" => $order['client']['company']['state']['abbr'],
+            "cnpj" => $order['client']['company']['cnpj'],
+            "schemes" => "PL_008i2",
+            "versao" => "4.00",
+            "tokenIBPT" => "AAAAAAA"
+        ];
+
+        $configJson = json_encode($this->config);
+
+        $certificateDigital = Storage::disk('s3')->get($order['client']['company']['cert_file']);
+
+        $tools = new Tools($configJson, Certificate::readPfx($certificateDigital, $order['client']['company']['cert_password']));
+
+        $protocol = $tools->sefazConsultaRecibo($order['receipt']);
+        dd($protocol);
+        $stdCl = new Standardize($protocol);
+
+        $arr = $stdCl->toArray();
+
+        $result = $tools->sefazCancela($arr['protNFe']['infProt']['chNFe'], 'TESTES', $arr['nRec']);
+
+        dd($result);
+
+    }
+
+    public function store($id)
+    {
+        $date = date('Y-m-d\TH:i:sT:00');
 
         $order = $this->service->show($id);
 
@@ -83,7 +167,7 @@ class NotaFiscalEletronicaServices
         $std->CEP = $order['client']['company']['cep'];
         $std->cPais = '1058';
         $std->xPais = 'BRASIL';
-        $std->fone = $order['client']['company']['phone'];
+        $std->fone = preg_replace('/\D/', '', $order['client']['company']['phone']);
 
         $nfe->tagenderEmit($std);
 
@@ -106,7 +190,7 @@ class NotaFiscalEletronicaServices
         $std->CEP = $order['client']['cep'];
         $std->cPais = '1058';
         $std->xPais = 'BRASIL';
-        $std->fone = $order['client']['phone'];
+        $std->fone = preg_replace('/\D/', '', $order['client']['phone']);
 
         $nfe->tagenderDest($std);
 
@@ -252,52 +336,95 @@ class NotaFiscalEletronicaServices
 
         $nfe->taginfAdic($std);
 
-        $xml = $nfe->getXML();
-        
-        die($xml);
+        try {
 
-//        $configJson = json_encode($this->config);
-//
-//        $certificadoDigital = Storage::disk('s3')->get('certs/iKaEeMEMBqe3Zcqe6UqTe5uqRgtJZgIekso04lHc.bin');
-//
-//        $tools = new Tools($configJson, Certificate::readPfx($certificadoDigital, '96265851'));
-//
-//        try {
-//
-//            $xmlAssinado = $tools->signNFe($xml); // O conte�do do XML assinado fica armazenado na vari�vel $xmlAssinado
-//
-//            try {
-//
-//                $idLote = str_pad(rand(11111111111111, 999999999999999), 15, '0', STR_PAD_LEFT); // Identificador do lote
-//
-//                $resp = $tools->sefazEnviaLote([$xmlAssinado], $idLote);
-//
-//                $st = new Standardize();
-//
-//                $std = $st->toStd($resp);
-//
-//                if ($std->cStat != 103) {
-//                    //erro registrar e voltar
-//                    exit("[$std->cStat] $std->xMotivo");
-//                }
-//
-//                $recibo = $std->infRec->nRec; // Vamos usar a vari�vel $recibo para consultar o status da nota
-//
-//                $protocolo = $tools->sefazConsultaRecibo($recibo);
-//
-//                dd($protocolo);
-//
-//            } catch (\Exception $e) {
-//                //aqui voc� trata possiveis exceptions do envio
-//                var_dump('aqui voc� trata possiveis exceptions do envio');
-//                exit($e->getMessage());
-//            }
-//
-//        } catch (\Exception $e) {
-//            //aqui voc� trata poss�veis exceptions da assinatura
-//            var_dump('aqui voc� trata poss�veis exceptions da assinatura');
-//            exit($e->getMessage());
-//        }
+            $xml = $nfe->getXML();
+
+            $path_xml = 'xml/' . $nfe->getChave() . '.xml';
+
+            if (Storage::disk('s3')->put($path_xml, $xml)) {
+
+                $order->update([
+                    'xml' => $path_xml
+                ]);
+
+                $configJson = json_encode($this->config);
+
+                $certificateDigital = Storage::disk('s3')->get($order['client']['company']['cert_file']);
+
+                $tools = new Tools($configJson, Certificate::readPfx($certificateDigital, $order['client']['company']['cert_password']));
+
+                try {
+
+                    $xmlAssinado = $tools->signNFe($xml); // O conte�do do XML assinado fica armazenado na vari�vel $xmlAssinado
+
+                    try {
+
+                        $idLote = str_pad(rand(11111111111111, 999999999999999), 15, '0', STR_PAD_LEFT); // Identificador do lote
+
+                        $resp = $tools->sefazEnviaLote([$xmlAssinado], $idLote);
+
+                        $st = new Standardize();
+
+                        $std = $st->toStd($resp);
+
+                        if ($std->cStat != 103) {
+                            return response()->json(
+                                [
+                                    'message' => $std->cStat . ' - ' . $std->xMotivo
+                                ]
+                            )->setStatusCode(500);
+                        }
+
+                        $receipt = $std->infRec->nRec;
+
+                        $protocol = $tools->sefazConsultaRecibo($receipt);
+
+                        $st = new Standardize();
+
+                        $std = $st->toStd($protocol);
+
+                        if ($std->protNFe->infProt->cStat != 103) {
+                            return response()->json(
+                                [
+                                    'message' => $std->protNFe->infProt->cStat . ' - ' . $std->protNFe->infProt->xMotivo
+                                ]
+                            )->setStatusCode(500);
+                        }
+
+                        $order->update([
+                            'receipt' => $receipt
+                        ]);
+
+                        return [
+                            'receipt' => $receipt
+                        ];
+
+                    } catch (\Exception $e) {
+                        return response()->json(
+                            [
+                                'message' => 'Erro do envio: ' . $e->getMessage()
+                            ]
+                        )->setStatusCode(500);
+                    }
+
+                } catch (\Exception $e) {
+                    return response()->json(
+                        [
+                            'message' => 'Erro da assinatura: ' . $e->getMessage()
+                        ]
+                    )->setStatusCode(500);
+                }
+
+            }
+
+        } catch (\Exception $e) {
+            return response()->json(
+                [
+                    'message' => 'Erro ao gerar o xml: ' . $e->getMessage()
+                ]
+            )->setStatusCode(500);
+        }
 
     }
 

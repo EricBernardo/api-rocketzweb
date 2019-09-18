@@ -46,6 +46,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/neitanod/forceutf8" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nesbot/carbon" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nfephp-org/sped-common" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nfephp-org/sped-da" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nfephp-org/sped-gtin" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nfephp-org/sped-nfe" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
@@ -111,6 +112,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/translation" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/translation-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tecnickcom/tc-lib-barcode" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tecnickcom/tc-lib-color" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/tijsverkoyen/css-to-inline-styles" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/vlucas/phpdotenv" />

@@ -20,6 +20,7 @@ class CompanyServices extends DefaultServices
         $data = $request->all();
 
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
+        $data['cep'] = preg_replace('/\D/', '', $data['cep']);
         
         $result = $this->entity::create($data);
 
@@ -76,6 +77,7 @@ class CompanyServices extends DefaultServices
         $data = $request->all();
 
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
+        $data['cep'] = preg_replace('/\D/', '', $data['cep']);
 
         $result->update($data);
 

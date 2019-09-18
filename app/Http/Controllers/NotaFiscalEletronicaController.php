@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NotaFiscalEletronicaRequest;
 use App\Services\NotaFiscalEletronicaServices;
 
 /**
@@ -21,13 +20,23 @@ class NotaFiscalEletronicaController extends Controller
      */
     public function __construct(NotaFiscalEletronicaServices $services)
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
         $this->services = $services;
+    }
+
+    public function show($id)
+    {
+        return $this->services->show($id);
     }
 
     public function store($id)
     {
-        return $this->services->gerarNota($id);
+        return $this->services->store($id);
+    }
+
+    public function destroy($id)
+    {
+        return $this->services->delete($id);
     }
 
 }

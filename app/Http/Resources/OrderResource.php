@@ -34,6 +34,8 @@ class OrderResource extends JsonResource
             'indPag' => $this->indPag,
             'tPag' => $this->tPag,
             'modFrete' => $this->modFrete,
+            'receipt' => $this->receipt,
+            'xml' => $this->xml,
             'client' => new ClientResource($this->client),
             'products' => $this->products,
         ];

@@ -114,6 +114,9 @@
       <path value="$PROJECT_DIR$/vendor/nfephp-org/sped-common" />
       <path value="$PROJECT_DIR$/vendor/nfephp-org/sped-nfe" />
       <path value="$PROJECT_DIR$/vendor/justinrainbow/json-schema" />
+      <path value="$PROJECT_DIR$/vendor/tecnickcom/tc-lib-barcode" />
+      <path value="$PROJECT_DIR$/vendor/tecnickcom/tc-lib-color" />
+      <path value="$PROJECT_DIR$/vendor/nfephp-org/sped-da" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

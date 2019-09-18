@@ -19,7 +19,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::group(['middleware' => ['role:root|administrator|client']], function () {
 
+        Route::get('nfe/{id}', 'NotaFiscalEletronicaController@show')->name('nfe.show');
         Route::post('nfe/{id}', 'NotaFiscalEletronicaController@store')->name('nfe.store');
+        Route::delete('nfe/{id}', 'NotaFiscalEletronicaController@destroy')->name('nfe.destroy');
 
         Route::get('profile', 'ProfileController@index')->name('profile.index');
         Route::put('profile', 'ProfileController@update')->name('profile.update');

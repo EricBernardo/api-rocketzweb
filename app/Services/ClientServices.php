@@ -38,6 +38,7 @@ class ClientServices extends DefaultServices
         $data = $request->all();
 
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
+        $data['cep'] = preg_replace('/\D/', '', $data['cep']);
 
         if ($request->user()->roles()->first()->name != 'root') {
             $data['company_id'] = $request->user()->company_id;
@@ -57,6 +58,7 @@ class ClientServices extends DefaultServices
         $result = $this->entity::where('id', $id)->first();
 
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
+        $data['cep'] = preg_replace('/\D/', '', $data['cep']);
 
         if ($request->user()->roles()->first()->name != 'root') {
             $data['company_id'] = $result['company_id'];

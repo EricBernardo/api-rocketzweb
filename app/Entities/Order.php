@@ -28,6 +28,8 @@ class Order extends Model
         'indPag',
         'tPag',
         'modFrete',
+        'receipt',
+        'xml'
     ];
 
     protected $casts = [
