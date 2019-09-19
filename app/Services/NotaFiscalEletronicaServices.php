@@ -63,6 +63,38 @@ class NotaFiscalEletronicaServices
 
     }
 
+    public function showProtocol($id)
+    {
+
+        $date = date('Y-m-d\TH:i:sT:00');
+
+        $order = $this->service->show($id);
+
+        $this->config = [
+            "atualizacao" => $date,
+            "tpAmb" => 2, // Se deixar o tpAmb como 2 você emitir a nota em ambiente de homologação(teste) e as notas fiscais aqui não tem valor fiscal
+            "razaosocial" => $order['client']['company']['title'],
+            "siglaUF" => $order['client']['company']['state']['abbr'],
+            "cnpj" => $order['client']['company']['cnpj'],
+            "schemes" => "PL_008i2",
+            "versao" => "4.00",
+            "tokenIBPT" => "AAAAAAA"
+        ];
+
+        $configJson = json_encode($this->config);
+
+        $certificateDigital = Storage::disk('s3')->get($order['client']['company']['cert_file']);
+
+        $tools = new Tools($configJson, Certificate::readPfx($certificateDigital, $order['client']['company']['cert_password']));
+
+        $protocol = $tools->sefazConsultaRecibo($order['receipt']);
+
+        $st = new Standardize();
+
+        return $st->toStd($protocol);
+
+    }
+
     public function delete($id)
     {
 
@@ -88,7 +120,7 @@ class NotaFiscalEletronicaServices
         $tools = new Tools($configJson, Certificate::readPfx($certificateDigital, $order['client']['company']['cert_password']));
 
         $protocol = $tools->sefazConsultaRecibo($order['receipt']);
-        dd($protocol);
+//        dd($protocol);
         $stdCl = new Standardize($protocol);
 
         $arr = $stdCl->toArray();
@@ -340,82 +372,101 @@ class NotaFiscalEletronicaServices
 
             $xml = $nfe->getXML();
 
-            $path_xml = 'xml/' . $nfe->getChave() . '.xml';
+            $xmlKey = $nfe->getChave();
 
-            if (Storage::disk('s3')->put($path_xml, $xml)) {
+            if ($xmlKey) {
 
-                $order->update([
-                    'xml' => $path_xml
-                ]);
+                $path_xml = 'xml/' . $xmlKey . '.xml';
 
-                $configJson = json_encode($this->config);
+                if (Storage::disk('s3')->put($path_xml, $xml)) {
 
-                $certificateDigital = Storage::disk('s3')->get($order['client']['company']['cert_file']);
+                    $order->update([
+                        'xml' => $path_xml
+                    ]);
 
-                $tools = new Tools($configJson, Certificate::readPfx($certificateDigital, $order['client']['company']['cert_password']));
+                    $configJson = json_encode($this->config);
 
-                try {
+                    $certificateDigital = Storage::disk('s3')->get($order['client']['company']['cert_file']);
 
-                    $xmlAssinado = $tools->signNFe($xml); // O conte�do do XML assinado fica armazenado na vari�vel $xmlAssinado
+                    $tools = new Tools($configJson, Certificate::readPfx($certificateDigital, $order['client']['company']['cert_password']));
 
                     try {
 
-                        $idLote = str_pad(rand(11111111111111, 999999999999999), 15, '0', STR_PAD_LEFT); // Identificador do lote
+                        $xmlAssinado = $tools->signNFe($xml); // O conte�do do XML assinado fica armazenado na vari�vel $xmlAssinado
 
-                        $resp = $tools->sefazEnviaLote([$xmlAssinado], $idLote);
+                        try {
 
-                        $st = new Standardize();
+                            $idLote = str_pad(rand(11111111111111, 999999999999999), 15, '0', STR_PAD_LEFT); // Identificador do lote
 
-                        $std = $st->toStd($resp);
+                            $resp = $tools->sefazEnviaLote([$xmlAssinado], $idLote);
 
-                        if ($std->cStat != 103) {
+                            $st = new Standardize();
+
+                            $std = $st->toStd($resp);
+
+                            if ($std->cStat != 103) {
+                                return response()->json(
+                                    [
+                                        'message' => $std->cStat . ' - ' . $std->xMotivo
+                                    ]
+                                )->setStatusCode(500);
+                            }
+
+                            $receipt = $std->infRec->nRec;
+
+//                        $protocol = $tools->sefazConsultaRecibo($receipt);
+//
+//                        $st = new Standardize();
+//
+//                        $std = $st->toStd($protocol);
+//
+//                        if ($std->protNFe->infProt->cStat != 103) {
+//                            return response()->json(
+//                                [
+//                                    'message' => $std->protNFe->infProt->cStat . ' - ' . $std->protNFe->infProt->xMotivo
+//                                ]
+//                            )->setStatusCode(500);
+//                        }
+
+                            $order->update([
+                                'receipt' => $receipt
+                            ]);
+
+                            return [
+                                'receipt' => $receipt,
+                                'xml' => $path_xml
+                            ];
+
+                        } catch (\Exception $e) {
                             return response()->json(
                                 [
-                                    'message' => $std->cStat . ' - ' . $std->xMotivo
+                                    'message' => 'Erro do envio: ' . $e->getMessage()
                                 ]
                             )->setStatusCode(500);
                         }
-
-                        $receipt = $std->infRec->nRec;
-
-                        $protocol = $tools->sefazConsultaRecibo($receipt);
-
-                        $st = new Standardize();
-
-                        $std = $st->toStd($protocol);
-
-                        if ($std->protNFe->infProt->cStat != 103) {
-                            return response()->json(
-                                [
-                                    'message' => $std->protNFe->infProt->cStat . ' - ' . $std->protNFe->infProt->xMotivo
-                                ]
-                            )->setStatusCode(500);
-                        }
-
-                        $order->update([
-                            'receipt' => $receipt
-                        ]);
-
-                        return [
-                            'receipt' => $receipt
-                        ];
 
                     } catch (\Exception $e) {
                         return response()->json(
                             [
-                                'message' => 'Erro do envio: ' . $e->getMessage()
+                                'message' => 'Erro da assinatura: ' . $e->getMessage()
                             ]
                         )->setStatusCode(500);
                     }
 
-                } catch (\Exception $e) {
+                } else {
                     return response()->json(
                         [
-                            'message' => 'Erro da assinatura: ' . $e->getMessage()
+                            'message' => 'XML não foi salvo no S3'
                         ]
                     )->setStatusCode(500);
                 }
 
+            } else {
+                return response()->json(
+                    [
+                        'message' => 'Chave não encontrada'
+                    ]
+                )->setStatusCode(500);
             }
 
         } catch (\Exception $e) {
