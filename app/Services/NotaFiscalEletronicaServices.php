@@ -63,7 +63,7 @@ class NotaFiscalEletronicaServices
 
     }
 
-    public function showProtocol($id)
+    public function protocol($id)
     {
 
         $date = date('Y-m-d\TH:i:sT:00');
@@ -91,7 +91,7 @@ class NotaFiscalEletronicaServices
 
         $st = new Standardize();
 
-        return $st->toStd($protocol);
+        return ['data' => $st->toArray($protocol)];
 
     }
 

@@ -29,6 +29,11 @@ class NotaFiscalEletronicaController extends Controller
         return $this->services->show($id);
     }
 
+    public function protocol($id)
+    {
+        return $this->services->protocol($id);
+    }
+
     public function store($id)
     {
         return $this->services->store($id);

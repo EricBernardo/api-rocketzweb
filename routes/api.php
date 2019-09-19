@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['middleware' => ['role:root|administrator|client']], function () {
 
         Route::get('nfe/{id}', 'NotaFiscalEletronicaController@show')->name('nfe.show');
+        Route::get('nfe/{id}/protocol', 'NotaFiscalEletronicaController@protocol')->name('nfe.protocal');
         Route::post('nfe/{id}', 'NotaFiscalEletronicaController@store')->name('nfe.store');
         Route::delete('nfe/{id}', 'NotaFiscalEletronicaController@destroy')->name('nfe.destroy');
 
