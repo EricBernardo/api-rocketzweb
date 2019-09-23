@@ -15,8 +15,17 @@ class NotaFiscalEletronicaServices
 
     private $service;
 
+    private $nfe;
+
     public function __construct(OrderServices $service)
     {
+        $this->config = [
+            "atualizacao" => date('Y-m-d\TH:i:sT:00'),
+            "tpAmb" => 2, // Se deixar o tpAmb como 2 você emitir a nota em ambiente de homologação(teste) e as notas fiscais aqui não tem valor fiscal
+            "schemes" => "PL_008i2",
+            "versao" => "4.00",
+            "tokenIBPT" => "AAAAAAA"
+        ];
         $this->service = $service;
     }
 
@@ -33,13 +42,11 @@ class NotaFiscalEletronicaServices
 
                 if ($xml) {
 
-                    $danfe = new Danfe($xml, 'P', 'A4', '', 'I', '');
+                    $data = new Danfe($xml, 'P', 'A4', '', 'I', '');
 
-                    $danfe->montaDANFE();
+                    $data->montaDANFE();
 
-                    $render = $danfe->render();
-
-                    return $render;
+                    return $data->render();
 
                 } else {
 
@@ -63,31 +70,26 @@ class NotaFiscalEletronicaServices
 
     }
 
+    private function setOrder($id)
+    {
+
+        $this->order = $this->service->show($id);
+
+        $this->config["razaosocial"] = $this->order['client']['company']['title'];
+        $this->config["siglaUF"] = $this->order['client']['company']['state']['abbr'];
+        $this->config["cnpj"] = $this->order['client']['company']['cnpj'];
+    }
+
     public function protocol($id)
     {
 
-        $date = date('Y-m-d\TH:i:sT:00');
+        $this->setOrder($id);
 
-        $order = $this->service->show($id);
+        $certificateDigital = Storage::disk('s3')->get($this->order['client']['company']['cert_file']);
 
-        $this->config = [
-            "atualizacao" => $date,
-            "tpAmb" => 2, // Se deixar o tpAmb como 2 você emitir a nota em ambiente de homologação(teste) e as notas fiscais aqui não tem valor fiscal
-            "razaosocial" => $order['client']['company']['title'],
-            "siglaUF" => $order['client']['company']['state']['abbr'],
-            "cnpj" => $order['client']['company']['cnpj'],
-            "schemes" => "PL_008i2",
-            "versao" => "4.00",
-            "tokenIBPT" => "AAAAAAA"
-        ];
+        $tools = new Tools(json_encode($this->config), Certificate::readPfx($certificateDigital, $this->order['client']['company']['cert_password']));
 
-        $configJson = json_encode($this->config);
-
-        $certificateDigital = Storage::disk('s3')->get($order['client']['company']['cert_file']);
-
-        $tools = new Tools($configJson, Certificate::readPfx($certificateDigital, $order['client']['company']['cert_password']));
-
-        $protocol = $tools->sefazConsultaRecibo($order['receipt']);
+        $protocol = $tools->sefazConsultaRecibo($this->order['receipt']);
 
         $st = new Standardize();
 
@@ -98,29 +100,14 @@ class NotaFiscalEletronicaServices
     public function delete($id)
     {
 
-        $date = date('Y-m-d\TH:i:sT:00');
+        $this->setOrder($id);
 
-        $order = $this->service->show($id);
+        $certificateDigital = Storage::disk('s3')->get($this->order['client']['company']['cert_file']);
 
-        $this->config = [
-            "atualizacao" => $date,
-            "tpAmb" => 2, // Se deixar o tpAmb como 2 você emitir a nota em ambiente de homologação(teste) e as notas fiscais aqui não tem valor fiscal
-            "razaosocial" => $order['client']['company']['title'],
-            "siglaUF" => $order['client']['company']['state']['abbr'],
-            "cnpj" => $order['client']['company']['cnpj'],
-            "schemes" => "PL_008i2",
-            "versao" => "4.00",
-            "tokenIBPT" => "AAAAAAA"
-        ];
+        $tools = new Tools(json_encode($this->config), Certificate::readPfx($certificateDigital, $this->order['client']['company']['cert_password']));
 
-        $configJson = json_encode($this->config);
+        $protocol = $tools->sefazConsultaRecibo($this->order['receipt']);
 
-        $certificateDigital = Storage::disk('s3')->get($order['client']['company']['cert_file']);
-
-        $tools = new Tools($configJson, Certificate::readPfx($certificateDigital, $order['client']['company']['cert_password']));
-
-        $protocol = $tools->sefazConsultaRecibo($order['receipt']);
-//        dd($protocol);
         $stdCl = new Standardize($protocol);
 
         $arr = $stdCl->toArray();
@@ -133,98 +120,22 @@ class NotaFiscalEletronicaServices
 
     public function store($id)
     {
-        $date = date('Y-m-d\TH:i:sT:00');
 
-        $order = $this->service->show($id);
+        $this->setOrder($id);
 
-        $this->config = [
-            "atualizacao" => $date,
-            "tpAmb" => 2, // Se deixar o tpAmb como 2 você emitir a nota em ambiente de homologação(teste) e as notas fiscais aqui não tem valor fiscal
-            "razaosocial" => $order['client']['company']['title'],
-            "siglaUF" => $order['client']['company']['state']['abbr'],
-            "cnpj" => $order['client']['company']['cnpj'],
-            "schemes" => "PL_008i2",
-            "versao" => "4.00",
-            "tokenIBPT" => "AAAAAAA"
-        ];
+        $this->nfe = new Make();
 
-        $nfe = new Make();
+        $this->taginfNFe();
 
-        $std = new \stdClass();
-        $std->versao = '4.00';
-        $std->Id = null;
-        $std->pk_nItem = '';
-        $nfe->taginfNFe($std);
+        $this->tagide();
 
-        $std = new \stdClass();
-        $std->cUF = $order['client']['company']['state']['id'];
-        $std->cNF = '51004416';
-        $std->natOp = '5.101 Venda de producao do estabelecimento';
-        $std->mod = '55';
-        $std->serie = '1';
-        $std->nNF = $order['id'];
-        $std->dhEmi = $date;
-        $std->dhSaiEnt = $date;
-        $std->tpNF = $order['tpNF'];
-        $std->idDest = $order['idDest'];
-        $std->cMunFG = $order['client']['company']['city']['id'];
-        $std->tpImp = $order['tpImp'];
-        $std->tpEmis = $order['tpEmis'];
-        $std->cDV = '5';
-        $std->tpAmb = '2';
-        $std->finNFe = $order['finNFe'];
-        $std->indFinal = $order['indFinal'];
-        $std->indPres = $order['indPres'];
-        $std->procEmi = '0'; //Emissão de NF-e com aplicativo do contribuinte. PODE DEIXAR FIXO
-        $std->verProc = 'RocketzWeb 1.0';
+        $this->tagemit();
 
-        $nfe->tagide($std);
+        $this->tagenderEmit();
 
-        $std = new \stdClass();
-        $std->xNome = $order['client']['company']['title'];
-        $std->IE = $order['client']['company']['ie'];
-        $std->CRT = 1;
-        $std->CNPJ = $order['client']['company']['cnpj'];
-        $std->CPF = ""; //indicar apenas um CNPJ ou CPF
+        $this->tagdest();
 
-        $nfe->tagemit($std);
-
-        $std = new \stdClass();
-        $std->xLgr = $order['client']['company']['address'];
-        $std->nro = $order['client']['company']['number'];
-        $std->xBairro = $order['client']['company']['neighborhood'];
-        $std->cMun = $order['client']['company']['city']['id'];
-        $std->xMun = $order['client']['company']['city']['name'];
-        $std->UF = $order['client']['company']['state']['abbr'];
-        $std->CEP = $order['client']['company']['cep'];
-        $std->cPais = '1058';
-        $std->xPais = 'BRASIL';
-        $std->fone = preg_replace('/\D/', '', $order['client']['company']['phone']);
-
-        $nfe->tagenderEmit($std);
-
-        $std = new \stdClass();
-        $std->xNome = $order['client']['title'];
-        $std->CNPJ = $order['client']['cnpj']; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
-        $std->CPF = "";
-        $std->IE = $order['client']['ie'];
-        $std->indIEDest = $order['client']['indIEDest'];
-
-        $nfe->tagdest($std);
-
-        $std = new \stdClass();
-        $std->xLgr = $order['client']['address'];
-        $std->nro = $order['client']['number'];
-        $std->xBairro = $order['client']['neighborhood'];
-        $std->cMun = $order['client']['city']['id'];
-        $std->xMun = $order['client']['city']['name'];
-        $std->UF = $order['client']['state']['abbr'];
-        $std->CEP = $order['client']['cep'];
-        $std->cPais = '1058';
-        $std->xPais = 'BRASIL';
-        $std->fone = preg_replace('/\D/', '', $order['client']['phone']);
-
-        $nfe->tagenderDest($std);
+        $this->tagenderDest();
 
         $count = 1;
 
@@ -232,7 +143,7 @@ class NotaFiscalEletronicaServices
 
         $vTotTribTotal = 0;
 
-        foreach ($order['products'] as $key => $item) {
+        foreach ($this->order['products'] as $key => $item) {
 
             $std = new \stdClass();
             $std->item = $count;
@@ -255,13 +166,13 @@ class NotaFiscalEletronicaServices
             $std->vUnTrib = $item['pivot']['price'];
             $std->indTot = '1'; //DEIXAR FIXO
 
-            $nfe->tagprod($std);
+            $this->nfe->tagprod($std);
 
             $std = new \stdClass();
             $std->item = $count; //item da NFe
             $std->CEST = '0000000';
 
-            $nfe->tagCEST($std);
+            $this->nfe->tagCEST($std);
 
             $std = new \stdClass();
 
@@ -271,54 +182,54 @@ class NotaFiscalEletronicaServices
 
             $vTotTrib = 0;
 
-            $vTotTrib += ($order['client']['company']['cofins'] * $vProd) / 100;
+            $vTotTrib += ($this->order['client']['company']['cofins'] * $vProd) / 100;
 
-            $vTotTrib += ($order['client']['company']['pis'] * $vProd) / 100;
+            $vTotTrib += ($this->order['client']['company']['pis'] * $vProd) / 100;
 
-            $vTotTrib += ($order['client']['company']['irpj'] * $vProd) / 100;
+            $vTotTrib += ($this->order['client']['company']['irpj'] * $vProd) / 100;
 
-            $vTotTrib += ($order['client']['company']['csll'] * $vProd) / 100;
+            $vTotTrib += ($this->order['client']['company']['csll'] * $vProd) / 100;
 
-            $vTotTrib += ($order['client']['company']['iss'] * $vProd) / 100;
+            $vTotTrib += ($this->order['client']['company']['iss'] * $vProd) / 100;
 
             $std->vTotTrib = $vTotTrib;
 
             $vTotTribTotal += $vTotTrib;
 
-            $nfe->tagimposto($std);
+            $this->nfe->tagimposto($std);
 
             $std = new \stdClass();
             $std->item = $count;
             $std->orig = '0'; // Origem da mercadoria: 0 - Nacional. DEIXAR FIXO
             $std->CSOSN = $item['icms'];
 
-            $nfe->tagICMSSN($std);
+            $this->nfe->tagICMSSN($std);
 
             $std = new \stdClass();
             $std->item = $count;
             $std->cEnq = '999'; //DEIXAR FIXO
             $std->CST = $item['ipi'];
 
-            $nfe->tagIPI($std);
+            $this->nfe->tagIPI($std);
 
             $std = new \stdClass();
             $std->item = $count;
             $std->CST = $item['pis'];
 
-            $nfe->tagPIS($std);
+            $this->nfe->tagPIS($std);
 
             $std = new \stdClass();
             $std->item = $count;
             $std->CST = $item['cofins'];
 
-            $nfe->tagCOFINS($std);
+            $this->nfe->tagCOFINS($std);
 
             $std = new \stdClass();
             $std->item = $count;
             $std->pesoL = $item['weigh'];
             $std->pesoB = $item['weigh'];
 
-            $nfe->tagvol($std);
+            $this->nfe->tagvol($std);
 
             $count++;
         }
@@ -345,34 +256,26 @@ class NotaFiscalEletronicaServices
         $std->vNF = $vProdTotal;
         $std->vTotTrib = $vTotTribTotal;
 
-        $nfe->tagICMSTot($std);
+        $this->nfe->tagICMSTot($std);
+
+        $this->tagtransp();
+
+        $this->tagpag();
 
         $std = new \stdClass();
-        $std->modFrete = $order['modFrete'];
-
-        $nfe->tagtransp($std);
-
-        $std = new \stdClass();
-        $std->vTroco = 0.00; //aqui pode ter troco
-        $nfe->tagpag($std);
-
-        $std = new \stdClass();
-        $std->indPag = $order['indPag'];
-        $std->tPag = $order['tPag'];
+        $std->indPag = $this->order['indPag'];
+        $std->tPag = $this->order['tPag'];
         $std->vPag = $vProdTotal;
 
-        $nfe->tagdetPag($std);
+        $this->nfe->tagdetPag($std);
 
-        $std = new \stdClass();
-        $std->infCpl = 'DOCUMENTO EMITIDO POR ME OU EPP OPTANTE PELO SIMPLES NACIONAL NAO GERA DIREITO A CREDITO FISCAL DE ICMS E DE ISS E IPI CFE LEI 123/2006.';
-
-        $nfe->taginfAdic($std);
+        $this->taginfAdic();
 
         try {
 
-            $xml = $nfe->getXML();
+            $xml = $this->nfe->getXML();
 
-            $xmlKey = $nfe->getChave();
+            $xmlKey = $this->nfe->getChave();
 
             if ($xmlKey) {
 
@@ -380,15 +283,15 @@ class NotaFiscalEletronicaServices
 
                 if (Storage::disk('s3')->put($path_xml, $xml)) {
 
-                    $order->update([
+                    $this->order->update([
                         'xml' => $path_xml
                     ]);
 
                     $configJson = json_encode($this->config);
 
-                    $certificateDigital = Storage::disk('s3')->get($order['client']['company']['cert_file']);
+                    $certificateDigital = Storage::disk('s3')->get($this->order['client']['company']['cert_file']);
 
-                    $tools = new Tools($configJson, Certificate::readPfx($certificateDigital, $order['client']['company']['cert_password']));
+                    $tools = new Tools($configJson, Certificate::readPfx($certificateDigital, $this->order['client']['company']['cert_password']));
 
                     try {
 
@@ -428,7 +331,7 @@ class NotaFiscalEletronicaServices
 //                            )->setStatusCode(500);
 //                        }
 
-                            $order->update([
+                            $this->order->update([
                                 'receipt' => $receipt
                             ]);
 
@@ -477,6 +380,124 @@ class NotaFiscalEletronicaServices
             )->setStatusCode(500);
         }
 
+    }
+
+    private function taginfNFe()
+    {
+        $std = new \stdClass();
+        $std->versao = '4.00';
+        $std->Id = null;
+        $std->pk_nItem = '';
+        $this->nfe->taginfNFe($std);
+    }
+
+    private function tagide()
+    {
+        $std = new \stdClass();
+        $std->cUF = $this->order['client']['company']['state']['id'];
+        $std->cNF = '51004416';
+        $std->natOp = '5.101 Venda de producao do estabelecimento';
+        $std->mod = '55';
+        $std->serie = '1';
+        $std->nNF = $this->order['id'];
+        $std->dhEmi = date('Y-m-d\TH:i:sT:00');
+        $std->dhSaiEnt = date('Y-m-d\TH:i:sT:00');
+        $std->tpNF = $this->order['tpNF'];
+        $std->idDest = $this->order['idDest'];
+        $std->cMunFG = $this->order['client']['company']['city']['id'];
+        $std->tpImp = $this->order['tpImp'];
+        $std->tpEmis = $this->order['tpEmis'];
+        $std->cDV = '5';
+        $std->tpAmb = '2';
+        $std->finNFe = $this->order['finNFe'];
+        $std->indFinal = $this->order['indFinal'];
+        $std->indPres = $this->order['indPres'];
+        $std->procEmi = '0'; //Emissão de NF-e com aplicativo do contribuinte. PODE DEIXAR FIXO
+        $std->verProc = 'RocketzWeb 1.0';
+
+        $this->nfe->tagide($std);
+    }
+
+    private function tagemit()
+    {
+        $std = new \stdClass();
+        $std->xNome = $this->order['client']['company']['title'];
+        $std->IE = $this->order['client']['company']['ie'];
+        $std->CRT = 1;
+        $std->CNPJ = $this->order['client']['company']['cnpj'];
+        $std->CPF = ""; //indicar apenas um CNPJ ou CPF
+
+        $this->nfe->tagemit($std);
+    }
+
+    private function tagenderEmit()
+    {
+        $std = new \stdClass();
+        $std->xLgr = $this->order['client']['company']['address'];
+        $std->nro = $this->order['client']['company']['number'];
+        $std->xBairro = $this->order['client']['company']['neighborhood'];
+        $std->cMun = $this->order['client']['company']['city']['id'];
+        $std->xMun = $this->order['client']['company']['city']['name'];
+        $std->UF = $this->order['client']['company']['state']['abbr'];
+        $std->CEP = $this->order['client']['company']['cep'];
+        $std->cPais = '1058';
+        $std->xPais = 'BRASIL';
+        $std->fone = preg_replace('/\D/', '', $this->order['client']['company']['phone']);
+
+        $this->nfe->tagenderEmit($std);
+    }
+
+    private function tagdest()
+    {
+        $std = new \stdClass();
+        $std->xNome = $this->order['client']['title'];
+        $std->CNPJ = $this->order['client']['cnpj']; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
+        $std->CPF = "";
+        $std->IE = $this->order['client']['ie'];
+        $std->indIEDest = $this->order['client']['indIEDest'];
+
+        $this->nfe->tagdest($std);
+    }
+
+    private function tagenderDest()
+    {
+        $std = new \stdClass();
+        $std->xLgr = $this->order['client']['address'];
+        $std->nro = $this->order['client']['number'];
+        $std->xBairro = $this->order['client']['neighborhood'];
+        $std->cMun = $this->order['client']['city']['id'];
+        $std->xMun = $this->order['client']['city']['name'];
+        $std->UF = $this->order['client']['state']['abbr'];
+        $std->CEP = $this->order['client']['cep'];
+        $std->cPais = '1058';
+        $std->xPais = 'BRASIL';
+        $std->fone = preg_replace('/\D/', '', $this->order['client']['phone']);
+
+        $this->nfe->tagenderDest($std);
+    }
+
+    private function tagtransp()
+    {
+        $std = new \stdClass();
+        $std->modFrete = $this->order['modFrete'];
+
+        $this->nfe->tagtransp($std);
+    }
+
+    private function tagpag()
+    {
+        $std = new \stdClass();
+        $std->vTroco = 0.00; //aqui pode ter troco
+
+        $this->nfe->tagpag($std);
+    }
+
+    private function taginfAdic()
+    {
+        $std = new \stdClass();
+        $std->infCpl = 'DOCUMENTO EMITIDO POR ME OU EPP OPTANTE PELO SIMPLES NACIONAL NAO GERA DIREITO A CREDITO FISCAL DE ICMS E DE ISS E IPI CFE LEI 123/2006.';
+
+        $this->nfe->taginfAdic($std);
     }
 
 }
