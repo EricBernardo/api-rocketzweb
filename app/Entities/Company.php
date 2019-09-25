@@ -27,7 +27,8 @@ class Company extends Model
         'pis',
         'csll',
         'iss',
-        'phone'
+        'phone',
+        'complement'
     ];
 
     public function state()
