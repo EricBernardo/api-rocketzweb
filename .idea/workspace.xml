@@ -3,11 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="efd01ed8-c730-47cb-95da-7f5a6492fb49" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Entities/ShippingCompany.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Entities/ShippingCompany.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CNPJController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CNPJController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Requests/ShippingCompanyRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/ShippingCompanyRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ShippingCompanyResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ShippingCompanyResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/ShippingCompanyServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ShippingCompanyServices.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -75,8 +71,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Requests/ShippingCompanyRequest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
+            <state relative-caret-position="393">
+              <caret line="34" column="38" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -427,12 +423,12 @@
       <workItem from="1569248204259" duration="2565000" />
       <workItem from="1569413451552" duration="979000" />
       <workItem from="1569425245222" duration="53000" />
-      <workItem from="1569430289504" duration="1369000" />
+      <workItem from="1569430289504" duration="1689000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48078000" />
+    <option name="totallyTimeSpent" value="48398000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -812,8 +808,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Requests/ShippingCompanyRequest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
+        <state relative-caret-position="393">
+          <caret line="34" column="38" selection-start-line="34" selection-start-column="38" selection-end-line="34" selection-end-column="38" />
         </state>
       </provider>
     </entry>

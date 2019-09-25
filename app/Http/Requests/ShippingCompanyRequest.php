@@ -33,7 +33,6 @@ class ShippingCompanyRequest extends FormRequest
             'number' => 'required',
             'neighborhood' => 'required',
             'cnpj' => 'nullable|cnpj',
-            'fantasy' => 'required'
         ];
     }
 }
