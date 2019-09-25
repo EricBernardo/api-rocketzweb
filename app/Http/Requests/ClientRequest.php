@@ -30,7 +30,9 @@ class ClientRequest extends FormRequest
             'city_id'      => 'required',
             'neighborhood' => 'required',
             'number'       => 'required|integer',
-            'cep'          => 'required'
+            'cep'          => 'required',
+            'cpf'          => 'nullable|cpf',
+            'cnpj'         => 'nullable|cnpj',
         ];
     }
 }

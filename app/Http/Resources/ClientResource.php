@@ -18,6 +18,8 @@ class ClientResource extends JsonResource
             'id'                 => $this->id,
             'title'              => $this->title,
             'cnpj'               => $this->cnpj,
+            'cpf'                => $this->cpf,
+            'fantasy'            => $this->fantasy,
             'address'            => $this->address,
             'phone'              => $this->phone,
             'state_id'           => $this->state_id,
