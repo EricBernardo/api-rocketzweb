@@ -86,6 +86,8 @@ Route::group(['middleware' => 'auth:api'], function () {
                 Route::put('company/{id}', 'CompanyController@update')->name('company.update');
                 Route::post('company', 'CompanyController@store')->name('company.store');
                 Route::post('company/file', 'CompanyController@store_file')->name('company.store.file');
+                Route::post('company/image', 'CompanyController@store_image')->name('company.store.image');
+                Route::get('company/image', 'CompanyController@show_image')->name('company.show.image');
                 Route::delete('company/file', 'CompanyController@destroy_file')->name('company.destoy.file');
                 Route::delete('company/{id}', 'CompanyController@destroy')->name('company.destroy');
 

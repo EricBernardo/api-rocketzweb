@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyFileRequest;
+use App\Http\Requests\CompanyImageRequest;
 use App\Http\Requests\CompanyRequest;
 use App\Services\CompanyServices;
 use Illuminate\Http\Request;
@@ -45,6 +46,11 @@ class CompanyController extends Controller
     public function store_file(CompanyFileRequest $request)
     {
         return $this->services->create_file($request);
+    }
+
+    public function store_image(CompanyImageRequest $request)
+    {
+        return $this->services->create_image($request);
     }
 
     public function show($id)

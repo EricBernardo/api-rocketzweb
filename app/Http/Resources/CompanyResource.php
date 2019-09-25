@@ -36,6 +36,7 @@ class CompanyResource extends JsonResource
             'iss'           => $this->iss,
             'phone'         => $this->phone,
             'complement'    => $this->complement,
+            'image'         => $this->image
         ];
     }
 }

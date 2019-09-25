@@ -2,33 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="efd01ed8-c730-47cb-95da-7f5a6492fb49" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Entities/Company.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Entities/Company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Entities/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Entities/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Entities/ShippingCompany.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Entities/ShippingCompany.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CompanyRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CompanyRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/OrderRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/OrderRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/ProductRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/ProductRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/ShippingCompanyRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/ShippingCompanyRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/ShippingCompanyVehicleRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/ShippingCompanyVehicleRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ClientResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ClientResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CompanyController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Resources/CompanyResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/CompanyResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/OrderResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/OrderResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ProductCategoryResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ProductCategoryResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ProductResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ProductResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ProfileResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ProfileResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ShippingCompanyResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ShippingCompanyResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ShippingCompanyVehicleResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ShippingCompanyVehicleResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/UserResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/UserResource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/CNPJServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CNPJServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/ClientServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ClientServices.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/CompanyServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CompanyServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/NotaFiscalEletronicaServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/NotaFiscalEletronicaServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/OrderServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/OrderServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/ProductServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ProductServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/ShippingCompanyServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ShippingCompanyServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/ShippingCompanyVehicleServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/ShippingCompanyVehicleServices.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,18 +47,53 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="rocketzweb: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="MySQL - rocketzweb@192.168.10.10" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="rocketzweb: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="shipping_companies: table" type="285a2a93:MysqlImplModel$Table" />
-      </path>
     </expand>
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Services/CompanyServices.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="246">
+              <caret line="112" column="54" lean-forward="true" selection-start-line="112" selection-start-column="54" selection-end-line="112" selection-end-column="54" />
+              <folding>
+                <element signature="e#32#57#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Services/DefaultServices.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="24" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Resources/CompanyResource.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="393">
+              <caret line="38" column="43" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://ecf40e5a-158e-4465-89e0-a1d58733ca02/schema/rocketzweb/table/companies">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state projectRestartId="e503a741-05dd-4e8d-8a75-89b3d89550d5">
+              <filtering>
+                <filter text="" />
+              </filtering>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -154,7 +167,6 @@
         <option value="$PROJECT_DIR$/app/Http/Requests/ShippingCompanyVehicleRequest.php" />
         <option value="$PROJECT_DIR$/app/Http/Requests/UserRequest.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/ClientResource.php" />
-        <option value="$PROJECT_DIR$/app/Http/Resources/CompanyResource.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/OrderResource.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/ProductCategoryResource.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/ProductResource.php" />
@@ -171,9 +183,10 @@
         <option value="$PROJECT_DIR$/app/Services/NotaFiscalEletronicaServices.php" />
         <option value="$PROJECT_DIR$/app/Services/DefaultServices.php" />
         <option value="$PROJECT_DIR$/app/Services/DashboardService.php" />
-        <option value="$PROJECT_DIR$/app/Services/CompanyServices.php" />
         <option value="$PROJECT_DIR$/app/Services/CNPJServices.php" />
         <option value="$PROJECT_DIR$/app/Services/ClientServices.php" />
+        <option value="$PROJECT_DIR$/app/Http/Resources/CompanyResource.php" />
+        <option value="$PROJECT_DIR$/app/Services/CompanyServices.php" />
       </list>
     </option>
   </component>
@@ -315,7 +328,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -344,8 +356,7 @@
               <item name="api-rocketzweb" type="b2602c69:ProjectViewProjectNode" />
               <item name="api-rocketzweb" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="Services" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="api-rocketzweb" type="b2602c69:ProjectViewProjectNode" />
@@ -356,6 +367,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -448,16 +460,18 @@
       <workItem from="1569413451552" duration="979000" />
       <workItem from="1569425245222" duration="53000" />
       <workItem from="1569430289504" duration="3275000" />
+      <workItem from="1569443584935" duration="1669000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49984000" />
+    <option name="totallyTimeSpent" value="51653000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24583964" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24962178" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -516,13 +530,6 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vendor/nfephp-org/sped-nfe/src/Tools.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1047">
-          <caret line="823" column="31" selection-start-line="823" selection-start-column="23" selection-end-line="823" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/NotaFiscalEletronicaController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -684,9 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Resources/CompanyResource.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Resources/OrderResource.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="416">
@@ -740,27 +744,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/DefaultServices.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Services/DashboardService.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/CompanyServices.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-          <folding>
-            <element signature="e#32#57#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -853,6 +840,39 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
           <caret line="87" column="22" selection-start-line="87" selection-start-column="22" selection-end-line="87" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Resources/CompanyResource.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="38" column="43" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://ecf40e5a-158e-4465-89e0-a1d58733ca02/schema/rocketzweb/table/companies">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="e503a741-05dd-4e8d-8a75-89b3d89550d5">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/DefaultServices.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="24" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/CompanyServices.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="112" column="54" lean-forward="true" selection-start-line="112" selection-start-column="54" selection-end-line="112" selection-end-column="54" />
+          <folding>
+            <element signature="e#32#57#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
