@@ -15,6 +15,11 @@ class ShippingCompany extends Model
         'state_id',
         'city_id',
         'company_id',
+        'cep',
+        'number',
+        'neighborhood',
+        'cnpj',
+        'fantasy'
     ];
 
     public function company()

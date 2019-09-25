@@ -25,11 +25,15 @@ class ShippingCompanyRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'cpf' => 'required|cpf',
-            'ie' => 'required',
+            'cpf' => 'nullable|cpf',
             'address' => 'required',
             'state_id' => 'required',
             'city_id' => 'required',
+            'cep' => 'required',
+            'number' => 'required',
+            'neighborhood' => 'required',
+            'cnpj' => 'nullable|cnpj',
+            'fantasy' => 'required'
         ];
     }
 }

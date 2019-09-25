@@ -20,6 +20,11 @@ class ShippingCompanyResource extends JsonResource
             'cpf' => $this->cpf,
             'ie' => $this->ie,
             'address' => $this->address,
+            'cep' => $this->cep,
+            'number' => $this->number,
+            'neighborhood' => $this->neighborhood,
+            'cnpj' => $this->cnpj,
+            'fantasy' => $this->fantasy,
             'company' => new CompanyResource($this->company()->first())
         ];
     }

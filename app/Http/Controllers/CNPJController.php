@@ -16,7 +16,7 @@ class CNPJController extends Controller
 
     public function __construct(CNPJServices $services)
     {
-//        $this->middleware('auth');
+        $this->middleware('auth');
         $this->services = $services;
     }
 
