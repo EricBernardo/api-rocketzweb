@@ -27,13 +27,13 @@ class ProductRequest extends FormRequest
             'product_category_id' => 'required',
             'title'               => 'required',
             'price'               => 'required|numeric',
-            'cfop' => 'required',
-            'ucom' => 'required',
-            'icms' => 'required',
-            'ipi' => 'required',
-            'pis' => 'required',
-            'cofins' => 'required',
-            'weigh' => 'required'
+            'cfop'                => 'required',
+            'ucom'                => 'required',
+            'icms'                => 'required',
+            'ipi'                 => 'required',
+            'pis'                 => 'required',
+            'cofins'              => 'required',
+            'weigh'               => 'required'
         ];
     }
 }

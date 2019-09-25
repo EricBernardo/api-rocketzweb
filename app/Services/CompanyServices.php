@@ -21,7 +21,7 @@ class CompanyServices extends DefaultServices
 
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
         $data['cep'] = preg_replace('/\D/', '', $data['cep']);
-        
+
         $result = $this->entity::create($data);
 
         return ['data' => $result];
@@ -31,16 +31,16 @@ class CompanyServices extends DefaultServices
     public function create_file($request)
     {
 
-        if(substr($_FILES['file']['name'], -4) != '.pfx') {
+        if (substr($_FILES['file']['name'], -4) != '.pfx') {
             return response()->json([
                 'message' => 'The given data was invalid.',
-                'errors' => ['file' => ["O arquivo deve ser do tipo: pfx."]]
+                'errors'  => ['file' => ["O arquivo deve ser do tipo: pfx."]]
             ])->setStatusCode(422);
         }
 
         $result = null;
 
-        if($request->file('file')) {
+        if ($request->file('file')) {
             $result = $request->file('file')->store(
                 'certs',
                 's3'
@@ -56,13 +56,13 @@ class CompanyServices extends DefaultServices
 
         $result = $this->entity::where('id', $id)->first();
 
-        if($request->get('cert_file')) {
+        if ($request->get('cert_file')) {
 
             $certDigital = Storage::disk('s3')->get($request->get('cert_file'));
 
             $isExpired = Certificate::readPfx($certDigital, $request->get('cert_password'))->isExpired();
 
-            if($isExpired) {
+            if ($isExpired) {
                 return response()->json([
                     'message' => "O arquivo .PFX expirou."
                 ])->setStatusCode(500);
@@ -70,7 +70,7 @@ class CompanyServices extends DefaultServices
 
         }
 
-        if($result['cert_file'] && $result['cert_file'] != $request->get('cert_file')) {
+        if ($result['cert_file'] && $result['cert_file'] != $request->get('cert_file')) {
             $this->delete_file($result['cert_file']);
         }
 
@@ -85,7 +85,8 @@ class CompanyServices extends DefaultServices
 
     }
 
-    public function delete_file($id) {
+    public function delete_file($id)
+    {
         return ['data' => Storage::disk('s3')->delete($id)];
     }
 

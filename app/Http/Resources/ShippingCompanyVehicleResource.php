@@ -15,11 +15,11 @@ class ShippingCompanyVehicleResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'board' => $this->board,
-            'state_id' => $this->state_id,
+            'id'                  => $this->id,
+            'board'               => $this->board,
+            'state_id'            => $this->state_id,
             'shipping_company_id' => $this->shipping_company_id,
-            'shipping_company' => new ShippingCompanyResource($this->shipping_company()->first())
+            'shipping_company'    => new ShippingCompanyResource($this->shipping_company()->first())
         ];
     }
 }

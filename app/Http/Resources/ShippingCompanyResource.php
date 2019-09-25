@@ -15,17 +15,18 @@ class ShippingCompanyResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'cpf' => $this->cpf,
-            'ie' => $this->ie,
-            'address' => $this->address,
-            'cep' => $this->cep,
-            'number' => $this->number,
+            'id'           => $this->id,
+            'title'        => $this->title,
+            'cpf'          => $this->cpf,
+            'ie'           => $this->ie,
+            'address'      => $this->address,
+            'cep'          => $this->cep,
+            'number'       => $this->number,
             'neighborhood' => $this->neighborhood,
-            'cnpj' => $this->cnpj,
-            'fantasy' => $this->fantasy,
-            'company' => new CompanyResource($this->company()->first())
+            'cnpj'         => $this->cnpj,
+            'fantasy'      => $this->fantasy,
+            'complement'   => $this->complement,
+            'company'      => new CompanyResource($this->company()->first())
         ];
     }
 }

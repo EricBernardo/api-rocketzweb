@@ -21,10 +21,10 @@ class NotaFiscalEletronicaServices
     {
         $this->config = [
             "atualizacao" => date('Y-m-d\TH:i:sT:00'),
-            "tpAmb" => 2, // Se deixar o tpAmb como 2 você emitir a nota em ambiente de homologação(teste) e as notas fiscais aqui não tem valor fiscal
-            "schemes" => "PL_008i2",
-            "versao" => "4.00",
-            "tokenIBPT" => "AAAAAAA"
+            "tpAmb"       => 2, // Se deixar o tpAmb como 2 você emitir a nota em ambiente de homologação(teste) e as notas fiscais aqui não tem valor fiscal
+            "schemes"     => "PL_008i2",
+            "versao"      => "4.00",
+            "tokenIBPT"   => "AAAAAAA"
         ];
         $this->service = $service;
     }
@@ -337,7 +337,7 @@ class NotaFiscalEletronicaServices
 
                             return [
                                 'receipt' => $receipt,
-                                'xml' => $path_xml
+                                'xml'     => $path_xml
                             ];
 
                         } catch (\Exception $e) {

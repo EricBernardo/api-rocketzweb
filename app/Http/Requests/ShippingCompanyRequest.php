@@ -24,15 +24,15 @@ class ShippingCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'cpf' => 'nullable|cpf',
-            'address' => 'required',
-            'state_id' => 'required',
-            'city_id' => 'required',
-            'cep' => 'required',
-            'number' => 'required',
+            'title'        => 'required',
+            'cpf'          => 'nullable|cpf',
+            'address'      => 'required',
+            'state_id'     => 'required',
+            'city_id'      => 'required',
+            'cep'          => 'required',
+            'number'       => 'required',
             'neighborhood' => 'required',
-            'cnpj' => 'nullable|cnpj',
+            'cnpj'         => 'nullable|cnpj',
         ];
     }
 }

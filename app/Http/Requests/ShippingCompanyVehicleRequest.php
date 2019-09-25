@@ -24,8 +24,8 @@ class ShippingCompanyVehicleRequest extends FormRequest
     public function rules()
     {
         return [
-            'board' => 'required|max:7',
-            'state_id' => 'required',
+            'board'               => 'required|max:7',
+            'state_id'            => 'required',
             'shipping_company_id' => 'required'
         ];
     }

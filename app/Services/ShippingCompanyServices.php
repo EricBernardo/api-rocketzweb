@@ -21,7 +21,7 @@ class ShippingCompanyServices extends DefaultServices
     public function all()
     {
 
-        $result = $this->entity::where(function($q) {
+        $result = $this->entity::where(function ($q) {
 
             if (request()->get('company_id')) {
                 $q->where('company_id', '=', request()->get('company_id'));

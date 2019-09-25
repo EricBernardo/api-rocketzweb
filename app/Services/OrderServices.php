@@ -24,7 +24,7 @@ class OrderServices extends DefaultServices
 
         $data = $request->all();
 
-        $data_insert = array();
+        $data_insert = [];
 
         if ($request->user()->hasAnyRole('client')) {
             $data_insert['client_id'] = $request->user()->client_id;
@@ -61,8 +61,8 @@ class OrderServices extends DefaultServices
 
             $products[] = [
                 'product_id' => $product['id'],
-                'price' => $product['price'],
-                'quantity' => $value['quantity'],
+                'price'      => $product['price'],
+                'quantity'   => $value['quantity'],
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ];
@@ -83,7 +83,7 @@ class OrderServices extends DefaultServices
 
         $data = $request->all();
 
-        $data_update = array();
+        $data_update = [];
 
         if ($request->user()->hasAnyRole('client')) {
             $data_update['client_id'] = $request->user()->client_id;
@@ -121,8 +121,8 @@ class OrderServices extends DefaultServices
 
                 $products_old[$value['id']] = [
                     'product_id' => $value['product_id'],
-                    'price' => $value['price'],
-                    'quantity' => $value['quantity'],
+                    'price'      => $value['price'],
+                    'quantity'   => $value['quantity'],
                     'updated_at' => date('Y-m-d H:i:s')
                 ];
 
@@ -134,8 +134,8 @@ class OrderServices extends DefaultServices
 
                 $products_new[] = [
                     'product_id' => $value['product_id'],
-                    'price' => $product['price'],
-                    'quantity' => $value['quantity'],
+                    'price'      => $product['price'],
+                    'quantity'   => $value['quantity'],
                     'updated_at' => date('Y-m-d H:i:s'),
                     'created_at' => date('Y-m-d H:i:s')
                 ];

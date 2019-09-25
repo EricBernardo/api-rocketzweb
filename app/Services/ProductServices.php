@@ -21,7 +21,7 @@ class ProductServices extends DefaultServices
     public function list($request)
     {
 
-        $result = $this->entity::whereHas('category', function($q) use ($request) {
+        $result = $this->entity::whereHas('category', function ($q) use ($request) {
 
             if ($request->get('company_id')) {
                 $q->where('company_id', '=', $request->get('company_id'));

@@ -33,9 +33,9 @@ class Order extends Model
     ];
 
     protected $casts = [
-        'discount' => 'float',
-        'subtotal' => 'float',
-        'total' => 'float',
+        'discount'      => 'float',
+        'subtotal'      => 'float',
+        'total'         => 'float',
         'freight_value' => 'float'
     ];
 

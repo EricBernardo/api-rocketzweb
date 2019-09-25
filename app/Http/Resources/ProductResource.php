@@ -9,7 +9,7 @@ class ProductResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -18,13 +18,13 @@ class ProductResource extends JsonResource
             'id'       => $this->id,
             'title'    => $this->title,
             'price'    => $this->price,
-            'cfop' => $this->cfop,
-            'ucom' => $this->ucom,
-            'icms' => $this->icms,
-            'ipi' => $this->ipi,
-            'pis' => $this->pis,
-            'cofins' => $this->cofins,
-            'weigh' => $this->weigh,
+            'cfop'     => $this->cfop,
+            'ucom'     => $this->ucom,
+            'icms'     => $this->icms,
+            'ipi'      => $this->ipi,
+            'pis'      => $this->pis,
+            'cofins'   => $this->cofins,
+            'weigh'    => $this->weigh,
             'category' => new ProductCategoryResource($this->category),
         ];
     }

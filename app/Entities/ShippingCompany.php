@@ -19,7 +19,8 @@ class ShippingCompany extends Model
         'number',
         'neighborhood',
         'cnpj',
-        'fantasy'
+        'fantasy',
+        'complement'
     ];
 
     public function company()
