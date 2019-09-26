@@ -79,6 +79,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::delete('user/{id}', 'UserController@destroy')->name('user.destroy');
 
             Route::get('company', 'CompanyController@index')->name('company.index');
+            Route::get('company/all', 'CompanyController@all')->name('company.all');
             Route::get('company/{id}', 'CompanyController@show')->name('company.show');
             Route::put('company/{id}', 'CompanyController@update')->name('company.update');
             Route::post('company/file', 'CompanyController@store_file')->name('company.store.file');
@@ -88,7 +89,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
             Route::group(['middleware' => ['role:root']], function () {
 
-                Route::get('company/all', 'CompanyController@all')->name('company.all');
                 Route::post('company', 'CompanyController@store')->name('company.store');
                 Route::delete('company/{id}', 'CompanyController@destroy')->name('company.destroy');
 
