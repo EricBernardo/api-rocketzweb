@@ -18,7 +18,9 @@ class Product extends Model
         'ipi',
         'pis',
         'cofins',
-        'weigh'
+        'weigh',
+        'ncm',
+        'cean'
     ];
 
     protected $casts = [

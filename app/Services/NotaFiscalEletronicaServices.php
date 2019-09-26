@@ -154,9 +154,9 @@ class NotaFiscalEletronicaServices
             $std = new \stdClass();
             $std->item = $count;
             $std->cProd = $item['id'];
-            $std->cEAN = 'SEM GTIN';
+            $std->cEAN = $item['cean'];
             $std->xProd = $item['title'];
-            $std->NCM = '68101900'; //Outros. DEIXAR FIXO
+            $std->NCM = $item['ncm'];
             $std->CFOP = $item['cfop'];
             $std->uCom = $item['ucom'];
             $std->qCom = $item['pivot']['quantity'];

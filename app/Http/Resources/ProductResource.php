@@ -25,6 +25,8 @@ class ProductResource extends JsonResource
             'pis'      => $this->pis,
             'cofins'   => $this->cofins,
             'weigh'    => $this->weigh,
+            'ncm'      => $this->ncm,
+            'cean'     => $this->cean,
             'category' => new ProductCategoryResource($this->category),
         ];
     }
