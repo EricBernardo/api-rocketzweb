@@ -24,7 +24,7 @@ class CompanyImageRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required|image|mimes:jpeg,jpg',
+            'file' => 'required|image|mimes:jpeg,jpg,png',
         ];
     }
 }

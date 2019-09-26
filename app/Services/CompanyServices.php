@@ -69,7 +69,7 @@ class CompanyServices extends DefaultServices
 
         return [
             'data' => [
-                'temporary_url' => $result ? getenv('AWS_BUCKET') . 's3.amazonaws.com/' . $result : null,
+                'temporary_url' => $result ? getenv('AWS_URL_PUBLIC') . $result : null,
                 'image'         => $result
             ]
         ];

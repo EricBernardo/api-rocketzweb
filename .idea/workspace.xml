@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="efd01ed8-c730-47cb-95da-7f5a6492fb49" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Resources/CompanyDetailResource.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ProfileResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ProfileResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CompanyImageRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CompanyImageRequest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Services/CompanyServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CompanyServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Services/NotaFiscalEletronicaServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/NotaFiscalEletronicaServices.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,12 +51,12 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Services/NotaFiscalEletronicaServices.php">
+        <entry file="file://$PROJECT_DIR$/app/Services/CompanyServices.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="47" column="55" selection-start-line="47" selection-start-column="55" selection-end-line="47" selection-end-column="55" />
+            <state relative-caret-position="362">
+              <caret line="71" column="69" selection-start-line="71" selection-start-column="69" selection-end-line="71" selection-end-column="69" />
               <folding>
-                <element signature="e#32#71#0#PHP" expanded="true" />
+                <element signature="e#32#57#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,8 +65,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Resources/CompanyDetailResource.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
+            <state relative-caret-position="393">
               <caret line="39" column="68" selection-start-line="39" selection-start-column="54" selection-end-line="39" selection-end-column="68" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Requests/CompanyImageRequest.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="139">
+              <caret line="10" column="6" lean-forward="true" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -77,7 +84,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>tagdest</find>
       <find>tagenderDest</find>
       <find>tagprod</find>
       <find>setProducts</find>
@@ -107,6 +113,7 @@
       <find>Storage</find>
       <find>url</find>
       <find>danfe</find>
+      <find>mpo file deve ser um arquiv</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Projects\rocketzweb\api-rocketzweb\app\Entities</dir>
@@ -124,7 +131,6 @@
         <option value="$PROJECT_DIR$/database/migrations/2019_09_18_084823_alter_order_add_fields_ide2_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_09_18_130030_alter_table_order_add_receipt_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_09_18_134644_alter_table_order_add_xml_table.php" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/NotaFiscalEletronicaController.php" />
         <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CNPJController.php" />
@@ -167,8 +173,10 @@
         <option value="$PROJECT_DIR$/app/Http/Resources/ProfileResource.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/CompanyDetailResource.php" />
         <option value="$PROJECT_DIR$/.env" />
-        <option value="$PROJECT_DIR$/app/Services/CompanyServices.php" />
         <option value="$PROJECT_DIR$/app/Services/NotaFiscalEletronicaServices.php" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
+        <option value="$PROJECT_DIR$/app/Http/Requests/CompanyImageRequest.php" />
+        <option value="$PROJECT_DIR$/app/Services/CompanyServices.php" />
       </list>
     </option>
   </component>
@@ -298,7 +306,7 @@
       <path value="$PROJECT_DIR$/vendor/nfephp-org/sped-da" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="65" />
     <option name="y" value="-4" />
     <option name="width" value="1299" />
@@ -333,7 +341,7 @@
               <item name="api-rocketzweb" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="Requests" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="api-rocketzweb" type="b2602c69:ProjectViewProjectNode" />
@@ -443,12 +451,12 @@
       <workItem from="1569413451552" duration="979000" />
       <workItem from="1569425245222" duration="53000" />
       <workItem from="1569430289504" duration="3275000" />
-      <workItem from="1569443584935" duration="7247000" />
+      <workItem from="1569443584935" duration="8256000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57231000" />
+    <option name="totallyTimeSpent" value="58240000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -513,23 +521,6 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CNPJController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="22" lean-forward="true" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
-          <folding>
-            <element signature="e#40#74#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/nfephp-org/sped-nfe/src/Make.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="28" column="6" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Entities/State.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -844,29 +835,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/CompanyServices.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="102" column="45" selection-start-line="102" selection-start-column="45" selection-end-line="102" selection-end-column="45" />
-          <folding>
-            <element signature="e#32#57#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Resources/CompanyDetailResource.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="39" column="68" selection-start-line="39" selection-start-column="54" selection-end-line="39" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Services/NotaFiscalEletronicaServices.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="47" column="55" selection-start-line="47" selection-start-column="55" selection-end-line="47" selection-end-column="55" />
           <folding>
             <element signature="e#32#71#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://ecf40e5a-158e-4465-89e0-a1d58733ca02/schema/rocketzweb/table/orders">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state projectRestartId="e503a741-05dd-4e8d-8a75-89b3d89550d5">
+          <filtering>
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Requests/CompanyImageRequest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="10" column="6" lean-forward="true" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Resources/CompanyDetailResource.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="39" column="68" selection-start-line="39" selection-start-column="54" selection-end-line="39" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/CompanyServices.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="71" column="69" selection-start-line="71" selection-start-column="69" selection-end-line="71" selection-end-column="69" />
+          <folding>
+            <element signature="e#32#57#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
