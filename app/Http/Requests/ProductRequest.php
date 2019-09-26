@@ -33,7 +33,8 @@ class ProductRequest extends FormRequest
             'ipi'                 => 'required',
             'pis'                 => 'required',
             'cofins'              => 'required',
-            'weigh'               => 'required'
+            'weigh'               => 'required',
+            'ncm'                 => 'required'
         ];
     }
 }
