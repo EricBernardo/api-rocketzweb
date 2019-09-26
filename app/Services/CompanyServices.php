@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Entities\Company;
-use Carbon\Carbon;
+use App\Http\Resources\CompanyDetailResource;
 use Illuminate\Support\Facades\Storage;
 use NFePHP\Common\Certificate;
 
@@ -17,15 +17,7 @@ class CompanyServices extends DefaultServices
 
     public function show($id)
     {
-
-        $result = $this->entity::where('id', '=', $id)->get()->first();
-
-        $result['temporary_url'] = null;
-
-        if ($result['image']) {
-            $result['temporary_url'] = Storage::disk('s3')->temporaryUrl($result['image'], Carbon::now()->addMinutes(5));
-        }
-
+        $result = new CompanyDetailResource($this->entity::where('id', '=', $id)->get()->first());
         return ['data' => $result];
     }
 
@@ -72,15 +64,12 @@ class CompanyServices extends DefaultServices
         $result = null;
 
         if ($request->file('file')) {
-            $result = $request->file('file')->store(
-                'image',
-                's3'
-            );
+            $result = Storage::disk('s3')->put('image', $request->file('file'), 'public');
         }
 
         return [
             'data' => [
-                'temporary_url' => Storage::disk('s3')->temporaryUrl($result, Carbon::now()->addMinutes(5)),
+                'temporary_url' => $result ? getenv('AWS_BUCKET') . 's3.amazonaws.com/' . $result : null,
                 'image'         => $result
             ]
         ];
@@ -111,7 +100,7 @@ class CompanyServices extends DefaultServices
         }
 
         if ($result['image'] && $result['image'] != $request->get('image')) {
-            Storage::disk('s3')->delete($result['image']);
+            $this->delete_file($result['image']);
         }
 
         $data = $request->all();

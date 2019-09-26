@@ -42,7 +42,13 @@ class NotaFiscalEletronicaServices
 
                 if ($xml) {
 
-                    $data = new Danfe($xml, 'P', 'A4', '', 'I', '');
+                    $image = '';
+
+                    if ($order['client']['company']['image']) {
+                        $image = getenv('AWS_URL_PUBLIC') . $order['client']['company']['image'];
+                    }
+
+                    $data = new Danfe($xml, 'P', 'A4', $image, 'I', '');
 
                     $data->montaDANFE();
 
