@@ -285,7 +285,7 @@ class NotaFiscalEletronicaServices
 
             if ($xmlKey) {
 
-                $path_xml = 'xml/' . $xmlKey . '.xml';
+                $path_xml = 'companies/' . $this->order['client']['company']['cnpj'] . '/xml/' . $xmlKey . '.xml';
 
                 if (Storage::disk('s3')->put($path_xml, $xml)) {
 
@@ -448,7 +448,7 @@ class NotaFiscalEletronicaServices
         $std->CEP = $this->order['client']['company']['cep'];
         $std->cPais = '1058';
         $std->xPais = 'BRASIL';
-        $std->fone = preg_replace('/\D/', '', $this->order['client']['company']['phone']);
+        $std->fone = preg_replace('/\D/', '', explode('/', $this->order['client']['company']['phone'])[0]);
 
         $this->nfe->tagenderEmit($std);
     }
@@ -457,8 +457,8 @@ class NotaFiscalEletronicaServices
     {
         $std = new \stdClass();
         $std->xNome = $this->order['client']['title'];
-        $std->CNPJ = $this->order['client']['cnpj']; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
-        $std->CPF = "";
+        $std->CNPJ = $this->order['client']['cnpj'];
+        $std->CPF = $this->order['client']['cpf'];
         $std->IE = $this->order['client']['ie'];
         $std->indIEDest = $this->order['client']['indIEDest'];
 
@@ -477,7 +477,7 @@ class NotaFiscalEletronicaServices
         $std->CEP = $this->order['client']['cep'];
         $std->cPais = '1058';
         $std->xPais = 'BRASIL';
-        $std->fone = preg_replace('/\D/', '', $this->order['client']['phone']);
+        $std->fone = preg_replace('/\D/', '', explode('/', $this->order['client']['phone'])[0]);
 
         $this->nfe->tagenderDest($std);
     }

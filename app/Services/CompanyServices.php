@@ -29,6 +29,20 @@ class CompanyServices extends DefaultServices
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
         $data['cep'] = preg_replace('/\D/', '', $data['cep']);
 
+        if (substr($data['image'], 0, 3) == 'tmp') {
+            $to = 'companies/' . $data['cnpj'] . substr($data['image'], 3);
+            if (Storage::disk('s3')->move($data['image'], $to)) {
+                $data['image'] = $to;
+            }
+        }
+
+        if (substr($data['cert_file'], 0, 3) == 'tmp') {
+            $to = 'companies/' . $data['cnpj'] . substr($data['cert_file'], 3);
+            if (Storage::disk('s3')->move($data['cert_file'], $to)) {
+                $data['cert_file'] = $to;
+            }
+        }
+
         $result = $this->entity::create($data);
 
         return ['data' => $result];
@@ -49,7 +63,7 @@ class CompanyServices extends DefaultServices
 
         if ($request->file('file')) {
             $result = $request->file('file')->store(
-                'certs',
+                'tmp/certificate',
                 's3'
             );
         }
@@ -64,7 +78,7 @@ class CompanyServices extends DefaultServices
         $result = null;
 
         if ($request->file('file')) {
-            $result = Storage::disk('s3')->put('image', $request->file('file'), 'public');
+            $result = Storage::disk('s3')->put('tmp/image', $request->file('file'), 'public');
         }
 
         return [
@@ -107,6 +121,20 @@ class CompanyServices extends DefaultServices
 
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
         $data['cep'] = preg_replace('/\D/', '', $data['cep']);
+
+        if (substr($data['image'], 0, 3) == 'tmp') {
+            $to = 'companies/' . $data['cnpj'] . substr($data['image'], 3);
+            if (Storage::disk('s3')->move($data['image'], $to)) {
+                $data['image'] = $to;
+            }
+        }
+
+        if (substr($data['cert_file'], 0, 3) == 'tmp') {
+            $to = 'companies/' . $data['cnpj'] . substr($data['cert_file'], 3);
+            if (Storage::disk('s3')->move($data['cert_file'], $to)) {
+                $data['cert_file'] = $to;
+            }
+        }
 
         $result->update($data);
 
