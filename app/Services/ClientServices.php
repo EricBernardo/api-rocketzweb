@@ -23,8 +23,8 @@ class ClientServices extends DefaultServices
 
         $result = $this->entity::where(function ($q) use ($request) {
 
-            if ($request->get('company_id')) {
-                $q->where('company_id', '=', $request->get('company_id'));
+            if ($request->get('companies')) {
+                $q->whereIn('company_id', $request->get('companies'));
             }
 
         })->get();

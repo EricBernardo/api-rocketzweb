@@ -21,6 +21,7 @@ class UserResource extends JsonResource
             'role'    => $this->roles()->first()->name,
             'client'  => new ClientResource($this->client),
             'company' => new CompanyResource($this->company),
+            'companies' => CompanyResource::collection($this->companies),
         ];
     }
 }

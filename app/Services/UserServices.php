@@ -30,7 +30,7 @@ class UserServices
         if ($result->roles()) {
             $result['role'] = $result->roles()->first()->name;
         }
-        return ['data' => $result];
+        return ['data' => new UserResource($result)];
     }
 
     public function create($request)
@@ -44,20 +44,13 @@ class UserServices
             $data['client_id'] = $request->user()->client_id;
         }
 
-        if (!$request->user()->hasAnyRole('root')) {
-            $data['company_id'] = $request->user()->company_id;
-        }
-
-        if ($request->get('role') == 'root') {
-            $data['client_id'] = null;
-            $data['company_id'] = null;
-        }
-
-        if ($request->get('role') == 'administrator') {
+        if ($request->get('role') == 'root' || $request->get('role') == 'administrator') {
             $data['client_id'] = null;
         }
 
         $result = $this->entity::create($data);
+
+        $result->companies()->sync($data['companies']);
 
         $result->assignRole($data['role']);
 
@@ -82,20 +75,13 @@ class UserServices
             $data['client_id'] = $request->user()->client_id;
         }
 
-        if (!$request->user()->hasAnyRole('root')) {
-            $data['company_id'] = $request->user()->company_id;
-        }
-
-        if ($request->get('role') == 'root') {
-            $data['client_id'] = null;
-            $data['company_id'] = null;
-        }
-
-        if ($request->get('role') == 'administrator') {
+        if ($request->get('role') == 'root' || $request->get('role') == 'administrator') {
             $data['client_id'] = null;
         }
 
         $result->update($data);
+
+        $result->companies()->sync($data['companies']);
 
         $result->syncRoles($data['role']);
 

@@ -23,12 +23,19 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name'       => 'required',
-            'email'      => 'required|email',
-            'password'   => 'confirmed',
-            'client_id'  => 'required_if:role,client',
-            'company_id' => 'required_if:role,administrator|required_if:role,client'
-        ];
+
+        $roles = [
+                'name'       => 'required',
+                'email'      => 'required|email',
+                'password'   => 'confirmed',
+                'client_id'  => 'required_if:role,client',
+                'companies' => 'required_if:role,administrator|required_if:role,client|array'
+            ];
+
+        if(request()->get('role') == 'client') {
+            $roles['companies'] = 'required_if:role,administrator|required_if:role,client|array|between::1,1';
+        }
+
+        return $roles;
     }
 }

@@ -18,9 +18,9 @@ class CompanyScope implements Scope
 
     public function apply(Builder $builder, Model $model)
     {
-        $role = $this->user->roles()->first()->name;
-        if ($role != 'root') {
-            $builder->where('companies.id', '=', $this->user->company_id);
-        }
+        // $role = $this->user->roles()->first()->name;
+        // if ($role != 'root') {
+            // $builder->where('companies.id', '=', $this->user->company_id);
+        // }
     }
 }

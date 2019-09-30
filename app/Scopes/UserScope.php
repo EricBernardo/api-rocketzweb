@@ -23,5 +23,7 @@ class UserScope implements Scope
             $builder->where('company_id', '=', $this->user->company_id);
         }
 
+        $builder->whereHas('companies');
+
     }
 }
