@@ -18,8 +18,6 @@ class ProductScope implements Scope
 
     public function apply(Builder $builder, Model $model)
     {
-
-        $builder->whereHas('category');        
-
+        $builder->whereHas('category');
     }
 }

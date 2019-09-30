@@ -15,9 +15,14 @@ class CompanyServices extends DefaultServices
         $this->entity = Company::class;
     }
 
+    public function paginate()
+    {
+        return $this->entity::where('companies.id', '=', request()->user()->company_id)->paginate();
+    }
+
     public function show($id)
     {
-        $result = new CompanyDetailResource($this->entity::where('id', '=', $id)->get()->first());
+        $result = new CompanyDetailResource($this->entity::where('companies.id', '=', $id)->get()->first());
         return ['data' => $result];
     }
 

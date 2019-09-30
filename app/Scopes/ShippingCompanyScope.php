@@ -2,9 +2,9 @@
 
 namespace App\Scopes;
 
-use Illuminate\Database\Eloquent\Scope;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Scope;
 
 class ShippingCompanyScope implements Scope
 {
@@ -18,14 +18,6 @@ class ShippingCompanyScope implements Scope
 
     public function apply(Builder $builder, Model $model)
     {
-
-        $role = $this->user->roles()->first()->name;
-
-        if ($role != 'root') {
-
-            $builder->where('company_id', '=', $this->user->company_id);
-
-        }
-
+        $builder->where('company_id', '=', $this->user->company_id);
     }
 }

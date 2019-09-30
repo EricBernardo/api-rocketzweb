@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
         Route::get('profile', 'ProfileController@index')->name('profile.index');
         Route::put('profile', 'ProfileController@update')->name('profile.update');
+        Route::put('profile/choose-company', 'ProfileController@chooseCompany')->name('profile.choose.company');
 
         Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
 
@@ -75,7 +76,7 @@ Route::group(['middleware' => 'auth:api'], function () {
             Route::get('user', 'UserController@index')->name('user.index');
             Route::get('user/{id}', 'UserController@show')->name('user.show');
             Route::put('user/{id}', 'UserController@update')->name('user.update');
-            Route::post('user', 'UserController@store')->name('user.store');
+            Route::post('user', 'UserController@store')->name('user.store');            
             Route::delete('user/{id}', 'UserController@destroy')->name('user.destroy');
 
             Route::get('company', 'CompanyController@index')->name('company.index');

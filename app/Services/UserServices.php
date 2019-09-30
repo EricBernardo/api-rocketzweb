@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\UserResource;
+use App\Http\Resources\ProfileResource;
 use App\User;
 
 class UserServices
@@ -99,6 +100,19 @@ class UserServices
         $result->syncRoles($data['role']);
 
         return ['data' => $result];
+
+    }
+
+    public function chooseCompany($request, $id)
+    {
+
+        $company_id = $request->get('company_id');
+
+        $result = $this->entity::where('id', $id)->first();
+        
+        $result->update(['company_id' => $company_id]);
+
+        return ['data' => new ProfileResource($result)];
 
     }
 

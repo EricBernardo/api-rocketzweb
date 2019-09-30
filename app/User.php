@@ -5,11 +5,10 @@ namespace App;
 use App\Entities\Client;
 use App\Entities\Company;
 use App\Scopes\UserScope;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Auth;
-use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -62,5 +61,10 @@ class User extends Authenticatable
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function companies()
+    {
+        return $this->belongsToMany(Company::class, 'users_companies', 'user_id', 'company_id');
     }
 }
