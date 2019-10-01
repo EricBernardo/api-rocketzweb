@@ -15,19 +15,18 @@ class ProductResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'       => $this->id,
-            'title'    => $this->title,
-            'price'    => $this->price,
-            'cfop'     => $this->cfop,
-            'ucom'     => $this->ucom,
-            'icms'     => $this->icms,
-            'ipi'      => $this->ipi,
-            'pis'      => $this->pis,
-            'cofins'   => $this->cofins,
-            'weigh'    => $this->weigh,
-            'ncm'      => $this->ncm,
-            'cean'     => $this->cean,
-            'category' => new ProductCategoryResource($this->category),
+            'id'     => $this->id,
+            'title'  => $this->title,
+            'price'  => $this->price,
+            'cfop'   => $this->cfop,
+            'ucom'   => $this->ucom,
+            'icms'   => $this->icms,
+            'ipi'    => $this->ipi,
+            'pis'    => $this->pis,
+            'cofins' => $this->cofins,
+            'weigh'  => $this->weigh,
+            'ncm'    => $this->ncm,
+            'cean'   => $this->cean
         ];
     }
 }

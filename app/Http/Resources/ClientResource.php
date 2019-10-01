@@ -31,8 +31,7 @@ class ClientResource extends JsonResource
             'cep'                => $this->cep,
             'ie'                 => $this->ie,
             'indIEDest'          => $this->indIEDest,
-            'email'              => $this->email,
-            'company'            => new CompanyResource($this->company()->first())
+            'email'              => $this->email
         ];
     }
 }

@@ -19,10 +19,7 @@ class UserScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
 
-        if ($this->user) {
-            $builder->where('company_id', '=', $this->user->company_id);
-        }
-
+        $builder->where('users.company_id', '=', $this->user->company_id);
         $builder->whereHas('companies');
 
     }

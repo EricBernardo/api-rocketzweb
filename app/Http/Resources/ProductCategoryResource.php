@@ -15,9 +15,8 @@ class ProductCategoryResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'      => $this->id,
-            'title'   => $this->title,
-            'company' => new CompanyResource($this->company()->first())
+            'id'    => $this->id,
+            'title' => $this->title,
         ];
     }
 }

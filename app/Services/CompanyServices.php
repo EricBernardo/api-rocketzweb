@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Entities\Company;
-use App\Http\Resources\CompanyDetailResource;
+use App\Http\Resources\CompanyResource;
 use Illuminate\Support\Facades\Storage;
 use NFePHP\Common\Certificate;
 
@@ -15,6 +15,16 @@ class CompanyServices extends DefaultServices
         $this->entity = Company::class;
     }
 
+    public function all()
+    {
+        if (request()->user()->roles->first()->name == 'root') {
+            $result = $this->entity::all();
+        } else {
+            $result = $this->entity::whereHas('users')->get();
+        }
+        return ['data' => $result];
+    }
+
     public function paginate()
     {
         return $this->entity::where('companies.id', '=', request()->user()->company_id)->paginate();
@@ -22,7 +32,7 @@ class CompanyServices extends DefaultServices
 
     public function show($id)
     {
-        $result = new CompanyDetailResource($this->entity::where('companies.id', '=', $id)->get()->first());
+        $result = new CompanyResource($this->entity::where('companies.id', '=', $id)->get()->first());
         return ['data' => $result];
     }
 
@@ -88,8 +98,8 @@ class CompanyServices extends DefaultServices
 
         return [
             'data' => [
-                'temporary_url' => $result ? getenv('AWS_URL_PUBLIC') . $result : null,
-                'image'         => $result
+                'image_url' => $result ? getenv('AWS_URL_PUBLIC') . $result : null,
+                'image'     => $result
             ]
         ];
 
@@ -98,7 +108,7 @@ class CompanyServices extends DefaultServices
     public function update($request, $id)
     {
 
-        $result = $this->entity::where('id', $id)->first();
+        $result = $this->entity::where('id', $id)->where('companies.id', '=', $request->user()->company_id)->first();
 
         if ($request->get('cert_file')) {
 
@@ -131,6 +141,7 @@ class CompanyServices extends DefaultServices
             $to = 'companies/' . $data['cnpj'] . substr($data['image'], 3);
             if (Storage::disk('s3')->move($data['image'], $to)) {
                 $data['image'] = $to;
+                $data['image_url'] = getenv('AWS_URL_PUBLIC') . $to;
             }
         }
 

@@ -5,6 +5,7 @@ namespace App\Entities;
 use App\Models\City;
 use App\Models\State;
 use App\Scopes\CompanyScope;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
@@ -30,7 +31,8 @@ class Company extends Model
         'iss',
         'phone',
         'complement',
-        'image'
+        'image',
+        'image_url'
     ];
 
     public function state()
@@ -43,16 +45,9 @@ class Company extends Model
         return $this->belongsTo(City::class);
     }
 
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    protected static function boot()
+    public function users()
     {
-        parent::boot();
-
-        static::addGlobalScope(new CompanyScope(auth()->guard('api')->user()));
+        return $this->belongsToMany(User::class);
     }
 
 }

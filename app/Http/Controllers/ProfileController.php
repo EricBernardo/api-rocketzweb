@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
 use App\Http\Requests\ProfileChooseCompanyRequest;
 use App\Http\Resources\ProfileResource;
+use App\Services\ProfileServices;
 use App\Services\UserServices;
 use Illuminate\Http\Request;
 
@@ -22,7 +22,7 @@ class ProfileController extends Controller
      *
      * @param UserServices $services
      */
-    public function __construct(UserServices $services)
+    public function __construct(ProfileServices $services)
     {
         $this->middleware('auth');
         $this->services = $services;
@@ -35,12 +35,12 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        return $this->services->update($request, $request->user()->id);
+        return $this->services->update($request);
     }
 
     public function chooseCompany(ProfileChooseCompanyRequest $request)
     {
-        return $this->services->chooseCompany($request, $request->user()->id);
+        return $this->services->chooseCompany($request);
     }
 
 }

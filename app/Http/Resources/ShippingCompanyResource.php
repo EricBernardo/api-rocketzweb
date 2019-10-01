@@ -26,7 +26,6 @@ class ShippingCompanyResource extends JsonResource
             'cnpj'         => $this->cnpj,
             'fantasy'      => $this->fantasy,
             'complement'   => $this->complement,
-            'company'      => new CompanyResource($this->company()->first())
         ];
     }
 }
