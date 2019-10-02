@@ -26,7 +26,8 @@ class ProductResource extends JsonResource
             'cofins' => $this->cofins,
             'weigh'  => $this->weigh,
             'ncm'    => $this->ncm,
-            'cean'   => $this->cean
+            'cean'   => $this->cean,
+            'category' => new ProductCategoryResource($this->category),
         ];
     }
 }
