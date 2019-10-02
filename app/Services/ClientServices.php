@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Entities\Client;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\ClientDetailResource;
 
 class ClientServices extends DefaultServices
 {
@@ -30,6 +31,12 @@ class ClientServices extends DefaultServices
         })->get();
 
         return ClientResource::collection($result);
+    }
+
+    public function show($id)
+    {
+        $result = $this->entity::where('id', '=', $id)->get()->first();
+        return new ClientDetailResource($result);
     }
 
     public function create($request)

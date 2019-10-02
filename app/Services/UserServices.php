@@ -16,12 +16,28 @@ class UserServices
 
     public function paginate()
     {
-        return UserResource::collection($this->entity::where('ID', '!=', request()->user()->id)->paginate());
+        return UserResource::collection($this->entity::where('ID', '!=', request()->user()->id)->whereHas('roles', function($q) {
+            if(request()->user()->roles->first()->name == 'client') {
+                $q->where('name', '=', 'client');
+            }
+            if(request()->user()->roles->first()->name == 'administrator') {
+                $q->where('name', '=', 'client');
+                $q->orWhere('name', '=', 'administrator');
+            }
+        })->paginate());
     }
 
     public function all($request)
     {
-        return UserResource::collection($this->entity::where('ID', '!=', $request->user()->id)->all());
+        return UserResource::collection($this->entity::where('ID', '!=', $request->user()->id)->whereHas('roles', function($q) {
+            if(request()->user()->roles->first()->name == 'client') {
+                $q->where('name', '=', 'client');
+            }
+            if(request()->user()->roles->first()->name == 'administrator') {
+                $q->where('name', '=', 'client');
+                $q->orWhere('name', '=', 'administrator');
+            }
+        })->all());
     }
 
     public function show($id)
