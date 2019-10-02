@@ -20,7 +20,9 @@ class CompanyServices extends DefaultServices
         if (request()->user()->roles->first()->name == 'root') {
             $result = $this->entity::all();
         } else {
-            $result = $this->entity::whereHas('users')->get();
+            $result = $this->entity::whereHas('users', function($q) {
+                $q->where('user_id', '=', request()->user()->id);
+            })->get();
         }
         return ['data' => $result];
     }
