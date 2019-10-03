@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Entities\Company;
-use App\Http\Resources\CompanyListResource;
 use App\Http\Resources\CompanyDetailResource;
+use App\Http\Resources\CompanyListResource;
 use Illuminate\Support\Facades\Storage;
 use NFePHP\Common\Certificate;
 
@@ -21,7 +21,7 @@ class CompanyServices extends DefaultServices
         if (request()->user()->roles->first()->name == 'root') {
             $result = $this->entity::all();
         } else {
-            $result = $this->entity::whereHas('users', function($q) {
+            $result = $this->entity::whereHas('users', function ($q) {
                 $q->where('user_id', '=', request()->user()->id);
             })->get();
         }
@@ -42,6 +42,22 @@ class CompanyServices extends DefaultServices
     {
 
         $data = $request->all();
+
+        if ($data['cert_file']) {
+
+            $certDigital = Storage::disk('s3')->get($data['cert_file']);
+
+            $certificate = Certificate::readPfx($certDigital, $data['cert_password']);
+
+            $data['cert_expiration_date'] = $certificate->getValidTo();
+
+            if ($certificate->isExpired()) {
+                return response()->json([
+                    'message' => "O arquivo .PFX expirou."
+                ])->setStatusCode(500);
+            }
+
+        }
 
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
         $data['cep'] = preg_replace('/\D/', '', $data['cep']);
@@ -110,15 +126,19 @@ class CompanyServices extends DefaultServices
     public function update($request, $id)
     {
 
+        $data = $request->all();
+
         $result = $this->entity::where('id', $id)->where('companies.id', '=', $request->user()->company_id)->first();
 
         if ($request->get('cert_file')) {
 
             $certDigital = Storage::disk('s3')->get($request->get('cert_file'));
 
-            $isExpired = Certificate::readPfx($certDigital, $request->get('cert_password'))->isExpired();
+            $certificate = Certificate::readPfx($certDigital, $request->get('cert_password'));
 
-            if ($isExpired) {
+            $data['cert_expiration_date'] = $certificate->getValidTo();
+
+            if ($certificate->isExpired()) {
                 return response()->json([
                     'message' => "O arquivo .PFX expirou."
                 ])->setStatusCode(500);
@@ -133,8 +153,6 @@ class CompanyServices extends DefaultServices
         if ($result['image'] && $result['image'] != $request->get('image')) {
             $this->delete_file($result['image']);
         }
-
-        $data = $request->all();
 
         $data['cnpj'] = preg_replace('/\D/', '', $data['cnpj']);
         $data['cep'] = preg_replace('/\D/', '', $data['cep']);

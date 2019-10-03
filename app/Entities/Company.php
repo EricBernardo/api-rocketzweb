@@ -14,6 +14,7 @@ class Company extends Model
         'title',
         'cert_file',
         'cert_password',
+        'cert_expiration_date',
         'fantasy',
         'ie',
         'crt',

@@ -18,7 +18,7 @@ class ProfileResource extends JsonResource
             'id'        => $this->id,
             'name'      => $this->name,
             'email'     => $this->email,
-            'company'   => new CompanyListResource($this->company),
+            'company'   => new CompanyDetailResource($this->company),
             'companies' => CompanyListResource::collection($this->companies),
             'role'      => $this->roles()->first()->name
         ];
