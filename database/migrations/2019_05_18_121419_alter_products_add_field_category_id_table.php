@@ -15,7 +15,7 @@ class AlterProductsAddFieldCategoryIdTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->unsignedInteger('product_category_id')->nullable();
-            $table->foreign('product_category_id')->references('id')->on('es')->onDelete('restrict');
+            $table->foreign('product_category_id')->references('id')->on('product_categories')->onDelete('restrict');
             $table->index(['product_category_id']);
         });
     }

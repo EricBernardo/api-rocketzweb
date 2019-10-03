@@ -13,7 +13,7 @@ class AlterProductsCategoriesAddFieldCompanyIdTable extends Migration
      */
     public function up()
     {
-        Schema::table('es', function (Blueprint $table) {
+        Schema::table('product_categories', function (Blueprint $table) {
             $table->unsignedInteger('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('restrict');
             $table->index(['company_id']);
@@ -27,7 +27,7 @@ class AlterProductsCategoriesAddFieldCompanyIdTable extends Migration
      */
     public function down()
     {
-        Schema::table('es', function (Blueprint $table) {
+        Schema::table('product_categories', function (Blueprint $table) {
             $table->dropColumn('company_id');
         });
     }
