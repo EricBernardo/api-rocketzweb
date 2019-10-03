@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ShippingCompanyVehicleResource extends JsonResource
+class ShippingCompanyVehicleDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +19,6 @@ class ShippingCompanyVehicleResource extends JsonResource
             'board'               => $this->board,
             'state_id'            => $this->state_id,
             'shipping_company_id' => $this->shipping_company_id,
-            'shipping_company'    => new ShippingCompanyResource($this->shipping_company()->first())
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Http\Resources\UserResource;
+use App\Http\Resources\UserListResource;
 use App\Http\Resources\ProfileResource;
 use App\User;
 
@@ -16,7 +16,7 @@ class UserServices
 
     public function paginate()
     {
-        return UserResource::collection($this->entity::where('ID', '!=', request()->user()->id)->whereHas('roles', function($q) {
+        return UserListResource::collection($this->entity::where('ID', '!=', request()->user()->id)->whereHas('roles', function($q) {
             if(request()->user()->roles->first()->name == 'client') {
                 $q->where('name', '=', 'client');
             }
@@ -29,7 +29,7 @@ class UserServices
 
     public function all($request)
     {
-        return UserResource::collection($this->entity::where('ID', '!=', $request->user()->id)->whereHas('roles', function($q) {
+        return UserListResource::collection($this->entity::where('ID', '!=', $request->user()->id)->whereHas('roles', function($q) {
             if(request()->user()->roles->first()->name == 'client') {
                 $q->where('name', '=', 'client');
             }
@@ -46,7 +46,7 @@ class UserServices
         if ($result->roles()) {
             $result['role'] = $result->roles()->first()->name;
         }
-        return ['data' => new UserResource($result)];
+        return ['data' => new UserListResource($result)];
     }
 
     public function create($request)

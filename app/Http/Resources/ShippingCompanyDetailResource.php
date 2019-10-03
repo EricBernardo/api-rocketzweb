@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ShippingCompanyResource extends JsonResource
+class ShippingCompanyDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -26,6 +26,8 @@ class ShippingCompanyResource extends JsonResource
             'cnpj'         => $this->cnpj,
             'fantasy'      => $this->fantasy,
             'complement'   => $this->complement,
+            'state_id'     => $this->state_id,
+            'city_id'      => $this->city_id,
         ];
     }
 }

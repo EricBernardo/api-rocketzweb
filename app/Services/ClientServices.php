@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Entities\Client;
-use App\Http\Resources\ClientResource;
 use App\Http\Resources\ClientDetailResource;
+use App\Http\Resources\ClientListResource;
 
 class ClientServices extends DefaultServices
 {
@@ -16,27 +16,26 @@ class ClientServices extends DefaultServices
 
     public function paginate()
     {
-        return ClientResource::collection($this->entity::paginate());
+        return ClientListResource::collection($this->entity::paginate());
     }
 
-    public function list($request)
+    public function all()
     {
 
-        $result = $this->entity::where(function ($q) use ($request) {
+        $result = $this->entity::where(function ($q) {
 
-            if ($request->get('companies')) {
-                $q->whereIn('company_id', $request->get('companies'));
+            if (request()->get('companies')) {
+                $q->whereIn('company_id', request()->get('companies'));
             }
 
         })->get();
 
-        return ClientResource::collection($result);
+        return ClientListResource::collection($result);
     }
 
     public function show($id)
     {
-        $result = $this->entity::where('id', '=', $id)->get()->first();
-        return new ClientDetailResource($result);
+        return new ClientDetailResource($this->entity::where('id', '=', $id)->get()->first());
     }
 
     public function create($request)

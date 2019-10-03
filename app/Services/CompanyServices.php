@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Entities\Company;
-use App\Http\Resources\CompanyResource;
+use App\Http\Resources\CompanyListResource;
 use App\Http\Resources\CompanyDetailResource;
 use Illuminate\Support\Facades\Storage;
 use NFePHP\Common\Certificate;
@@ -25,12 +25,12 @@ class CompanyServices extends DefaultServices
                 $q->where('user_id', '=', request()->user()->id);
             })->get();
         }
-        return CompanyResource::collection($result);
+        return CompanyListResource::collection($result);
     }
 
     public function paginate()
     {
-        return $this->entity::where('companies.id', '=', request()->user()->company_id)->paginate();
+        return CompanyListResource::collection($this->entity::where('companies.id', '=', request()->user()->company_id)->paginate());
     }
 
     public function show($id)

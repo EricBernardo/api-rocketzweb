@@ -3,7 +3,8 @@
 namespace App\Services;
 
 use App\Entities\ShippingCompany;
-use App\Http\Resources\ShippingCompanyResource;
+use App\Http\Resources\ShippingCompanyDetailResource;
+use App\Http\Resources\ShippingCompanyListResource;
 
 class ShippingCompanyServices extends DefaultServices
 {
@@ -15,7 +16,7 @@ class ShippingCompanyServices extends DefaultServices
 
     public function paginate()
     {
-        return ShippingCompanyResource::collection($this->entity::paginate());
+        return ShippingCompanyListResource::collection($this->entity::paginate());
     }
 
     public function all()
@@ -29,7 +30,12 @@ class ShippingCompanyServices extends DefaultServices
 
         })->get();
 
-        return ShippingCompanyResource::collection($result);
+        return ShippingCompanyListResource::collection($result);
+    }
+
+    public function show($id)
+    {
+        return new ShippingCompanyDetailResource($this->entity::where('id', '=', $id)->get()->first());
     }
 
     public function create($request)

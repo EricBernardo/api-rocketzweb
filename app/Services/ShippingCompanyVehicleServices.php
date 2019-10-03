@@ -3,7 +3,8 @@
 namespace App\Services;
 
 use App\Entities\ShippingCompanyVehicle;
-use App\Http\Resources\ShippingCompanyVehicleResource;
+use App\Http\Resources\ShippingCompanyVehicleDetailResource;
+use App\Http\Resources\ShippingCompanyVehicleListResource;
 
 class ShippingCompanyVehicleServices extends DefaultServices
 {
@@ -15,13 +16,17 @@ class ShippingCompanyVehicleServices extends DefaultServices
 
     public function paginate()
     {
-        return ShippingCompanyVehicleResource::collection($this->entity::paginate());
+        return ShippingCompanyVehicleListResource::collection($this->entity::paginate());
+    }
+
+    public function all()
+    {
+        return ShippingCompanyVehicleListResource::collection($this->entity::all());
     }
 
     public function show($id)
     {
-        $result = new ShippingCompanyVehicleResource($this->entity::where('id', '=', $id)->get()->first());
-        return ['data' => $result];
+        return new ShippingCompanyVehicleDetailResource($this->entity::where('id', '=', $id)->get()->first());
     }
 
 }

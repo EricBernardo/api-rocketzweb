@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductListResource;
 use App\Services\ProductServices;
 use Illuminate\Http\Request;
 

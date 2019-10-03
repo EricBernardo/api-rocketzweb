@@ -23,14 +23,17 @@ class ProductCategoryServices extends DefaultServices
         return ProductCategoryResource::collection($this->entity::all());
     }
 
+    public function show($id)
+    {
+        return new ProductCategoryResource($this->entity::where('id', '=', $id)->get()->first());
+    }
+
     public function create($request)
     {
 
         $data = $request->all();
 
-        if ($request->user()->roles()->first()->name != 'root') {
-            $data['company_id'] = $request->user()->company_id;
-        }
+        $data['company_id'] = $request->user()->company_id;
 
         $result = $this->entity::create($data);
 
@@ -44,10 +47,6 @@ class ProductCategoryServices extends DefaultServices
         $data = $request->all();
 
         $result = $this->entity::where('id', $id)->first();
-
-        if ($request->user()->roles()->first()->name != 'root') {
-            $data['company_id'] = $result['company_id'];
-        }
 
         $result->update($data);
 

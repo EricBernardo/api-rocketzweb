@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\ProfileResource;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\UserListResource;
 use App\User;
 
 class ProfileServices
@@ -20,7 +20,7 @@ class ProfileServices
         if ($result->roles()) {
             $result['role'] = $result->roles()->first()->name;
         }
-        return ['data' => new UserResource($result)];
+        return ['data' => new UserListResource($result)];
     }
 
     public function update($request)

@@ -32,7 +32,7 @@ class ClientDetailResource extends JsonResource
             'ie'                 => $this->ie,
             'indIEDest'          => $this->indIEDest,
             'email'              => $this->email,
-            'company'            => new CompanyResource($this->company)
+            'company'            => new CompanyListResource($this->company)
         ];
     }
 }
