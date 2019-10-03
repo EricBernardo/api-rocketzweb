@@ -32,9 +32,9 @@ class ProductController extends Controller
         return $this->services->paginate();
     }
 
-    public function all(Request $request)
+    public function all()
     {
-        return $this->services->list($request);
+        return $this->services->all();
     }
 
     public function store(ProductRequest $request)
