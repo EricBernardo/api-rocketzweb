@@ -130,6 +130,8 @@ class CompanyServices extends DefaultServices
 
         $data = $request->all();
 
+        $data['cert_expiration_date'] = null;
+
         $result = $this->entity::where('id', $id)->where('companies.id', '=', $request->user()->company_id)->first();
 
         if ($request->get('cert_file')) {
