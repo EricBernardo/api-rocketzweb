@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="efd01ed8-c730-47cb-95da-7f5a6492fb49" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Services/CompanyServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Services/CompanyServices.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,12 +49,12 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Entities/Company.php">
+        <entry file="file://$PROJECT_DIR$/app/Services/CompanyServices.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="16" column="29" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="29" />
+            <state relative-caret-position="119">
+              <caret line="45" column="35" selection-start-line="45" selection-start-column="15" selection-end-line="45" selection-end-column="35" />
               <folding>
-                <element signature="e#32#52#0#PHP" expanded="true" />
+                <element signature="e#32#57#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -72,6 +72,8 @@
       <find>root</find>
       <find>show</find>
       <find>isex</find>
+      <find>aws</find>
+      <find>laravel</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -125,9 +127,9 @@
         <option value="$PROJECT_DIR$/app/Services/OrderServices.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/CompanyDetailResource.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_10_03_141415_alter_company_add_cert_expiration_date_table.php" />
-        <option value="$PROJECT_DIR$/app/Services/CompanyServices.php" />
         <option value="$PROJECT_DIR$/app/Entities/Company.php" />
         <option value="$PROJECT_DIR$/app/Http/Resources/ProfileResource.php" />
+        <option value="$PROJECT_DIR$/app/Services/CompanyServices.php" />
       </list>
     </option>
   </component>
@@ -285,14 +287,7 @@
               <item name="api-rocketzweb" type="b2602c69:ProjectViewProjectNode" />
               <item name="api-rocketzweb" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="api-rocketzweb" type="b2602c69:ProjectViewProjectNode" />
-              <item name="api-rocketzweb" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Resources" type="462c0819:PsiDirectoryNode" />
+              <item name="Services" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -412,12 +407,12 @@
       <workItem from="1570107237471" duration="4021000" />
       <workItem from="1570122475464" duration="3421000" />
       <workItem from="1570125979843" duration="702000" />
-      <workItem from="1570132350367" duration="521000" />
+      <workItem from="1570132350367" duration="1449000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22516000" />
+    <option name="totallyTimeSpent" value="23444000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -430,8 +425,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18003026" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18003026" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -446,7 +442,7 @@
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3289689" />
       <window_info anchor="bottom" id="Database Changes" order="10" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.45499182" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.45499182" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -491,23 +487,6 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Scopes/ProductScope.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Scopes/ProductCategoryScope.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-          <folding>
-            <element signature="e#30#71#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Scopes/ShippingCompanyScope.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -799,16 +778,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Services/CompanyServices.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="59" column="9" selection-start-line="59" selection-start-column="9" selection-end-line="59" selection-end-column="9" />
-          <folding>
-            <element signature="e#32#57#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Resources/OrderDetailResource.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -893,12 +862,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="14" column="16" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Entities/Company.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="87">
           <caret line="16" column="29" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="29" />
           <folding>
             <element signature="e#32#52#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-242" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Services/CompanyServices.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="45" column="35" selection-start-line="45" selection-start-column="15" selection-end-line="45" selection-end-column="35" />
+          <folding>
+            <element signature="e#32#57#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

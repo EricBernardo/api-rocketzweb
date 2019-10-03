@@ -43,6 +43,8 @@ class CompanyServices extends DefaultServices
 
         $data = $request->all();
 
+        $data['cert_expiration_date'] = null;
+
         if ($data['cert_file']) {
 
             $certDigital = Storage::disk('s3')->get($data['cert_file']);
