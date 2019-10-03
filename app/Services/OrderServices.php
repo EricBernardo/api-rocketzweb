@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Entities\Order;
 use App\Entities\Product;
+use App\Http\Resources\OrderDetailResource;
 use App\Http\Resources\OrderListResource;
 
 class OrderServices extends DefaultServices
@@ -17,6 +18,11 @@ class OrderServices extends DefaultServices
     public function paginate()
     {
         return OrderListResource::collection($this->entity::orderBy('created_at', 'desc')->paginate());
+    }
+
+    public function show($id)
+    {
+        return new OrderDetailResource($this->entity::where('id', '=', $id)->get()->first());
     }
 
     public function create($request)
@@ -163,11 +169,6 @@ class OrderServices extends DefaultServices
 
         return redirect()->back()->with('success', $response['message']);
 
-    }
-
-    public function show($id)
-    {
-        return new OrderListResource($this->entity::where('id', '=', $id)->get()->first());
     }
 
 }
