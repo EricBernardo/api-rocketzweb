@@ -26,7 +26,6 @@ class CompanyRequest extends FormRequest
         return [
             'title'        => 'required',
             'fantasy'      => 'required',            
-            'crt'          => 'required',
             'cnpj'         => 'required|cnpj',
             'address'      => 'required',
             'number'       => 'required',

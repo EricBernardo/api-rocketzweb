@@ -14,6 +14,8 @@
 
 Route::post('/auth', 'Auth\AccessTokenController@issueToken');
 
+Route::post('register', 'RegisterController@store')->name('register.store');            
+
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::group(['middleware' => ['role:root|administrator|client']], function () {
